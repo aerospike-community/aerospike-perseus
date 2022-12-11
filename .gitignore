@@ -11,6 +11,7 @@
 .gradle
 build
 .DS_*
+target
 
 # AWS User-specific
 .idea/**/aws.xml
