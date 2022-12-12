@@ -9,7 +9,7 @@ import java.time.Period;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SalesDataGenerator implements dataGenerator {
+public class SalesDataGenerator implements DataGenerator {
 
     private final static String[] segments = {
             "Government",

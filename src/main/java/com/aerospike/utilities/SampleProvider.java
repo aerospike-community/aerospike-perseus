@@ -1,5 +1,5 @@
 package com.aerospike.utilities;
 
-public interface SampleProvider{
-    int getSample();
+public interface SampleProvider <T>{
+    T getSample();
 }

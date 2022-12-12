@@ -1,5 +1,5 @@
 package com.aerospike.utilities;
 
-public interface SampleCollector{
-    void collectSample(int value);
+public interface SampleCollector <T>{
+    void collectSample(T value);
 }

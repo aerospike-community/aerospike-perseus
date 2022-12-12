@@ -11,11 +11,11 @@ import java.time.Instant;
 import java.util.stream.Stream;
 
 public class UpdateTest extends Test{
-    private final SampleProvider sampleProvider;
+    private final SampleProvider<Integer> sampleProvider;
     private final WritePolicy policy;
 
-    public UpdateTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider sampleProvider) {
-        super(client, namespace, setName, numberOfThreads);
+    public UpdateTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
+        super(client, namespace, setName, numberOfThreads, "Updates", 1);
         this.sampleProvider = sampleProvider;
 
         policy = new WritePolicy();
@@ -23,7 +23,7 @@ public class UpdateTest extends Test{
     }
 
     protected void loop(){
-        Stream.generate(() -> sampleProvider.getSample())
+        Stream.generate(sampleProvider::getSample)
                 .forEach(key -> update(new Key(namespace, setName, key)));
     }
 
@@ -31,14 +31,10 @@ public class UpdateTest extends Test{
         Bin updated = new Bin("Updated", Instant.now().toString());
         try{
             client.add(policy, key, updated);
-        } catch(Exception e) {
+        } catch(Exception ignored) {
 
         }
 
         counter.getAndIncrement();
-    }
-
-    protected void printMessage() {
-        System.out.println( counter.getAndSet(0) + " Updates Per Second.");
     }
 }

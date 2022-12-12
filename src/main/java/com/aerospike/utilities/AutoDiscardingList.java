@@ -1,10 +1,9 @@
 package com.aerospike.utilities;
 
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AutoDiscardingList implements SampleCollector, SampleProvider {
+public class AutoDiscardingList implements SampleCollector<Integer>, SampleProvider<Integer> {
     private final int size;
     private final int saveRatio;
     private final int missRatio;
@@ -20,7 +19,7 @@ public class AutoDiscardingList implements SampleCollector, SampleProvider {
         random = ThreadLocalRandom.current();
     }
 
-    public void collectSample(int value){
+    public void collectSample(Integer value){
         if(random.nextInt() % saveRatio == 0)
             return;
         long i = location.getAndIncrement();
@@ -28,7 +27,7 @@ public class AutoDiscardingList implements SampleCollector, SampleProvider {
         list[(int) (i % size)] = value;
     }
 
-    public int getSample(){
+    public Integer getSample(){
         if(random.nextInt() % missRatio == 0)
             return random.nextInt();
         int l = (int) location.get();
