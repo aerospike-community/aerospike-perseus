@@ -2,10 +2,7 @@ package com.aerospike;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Host;
-import com.aerospike.testCases.LoadTest;
-import com.aerospike.testCases.SearchTest;
-import com.aerospike.testCases.Test;
-import com.aerospike.testCases.UpdateTest;
+import com.aerospike.testCases.*;
 import com.aerospike.utilities.AutoDiscardingList;
 
 public class Main {
@@ -25,5 +22,8 @@ public class Main {
 
         Test searchTest = new SearchTest(client2, "HorseRaceEvents", "test", 1, list);
         searchTest.run();
+
+        Test aggregationTest = new AggregationTest(client2, "HorseRaceEvents", "test", 10, list);
+        aggregationTest.run();
     }
 }
