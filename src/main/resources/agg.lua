@@ -113,3 +113,20 @@ function average_range(stream, bin)
     end
     return stream : map(rec_to_bins) : aggregate(map(), aggregate_stats) : reduce(merge_stats) : map(compute_final_stats)
 end
+
+-- lua test
+function lua_test(rec)
+    local ret = map()
+    if not aerospike:exists(rec) then
+        return   -- Set the return status
+    else
+        local x = (rec['keyPlus20'] - rec['keyPlus10']) / rec['octet']
+        if  x > 100  then
+            rec['UDFRes'] = 'Yes'
+        else
+            rec['UDFRes'] = 'No'
+        end
+
+        aerospike:update(rec)
+    end
+end

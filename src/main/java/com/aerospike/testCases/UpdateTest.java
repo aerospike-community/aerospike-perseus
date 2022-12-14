@@ -28,7 +28,7 @@ public class UpdateTest extends Test{
     }
 
     private void update(Key key){
-        Bin updated = new Bin("Updated", Instant.now().toString());
+        Bin updated = new Bin("UpdateRes", Instant.now().toString());
         try{
             client.add(policy, key, updated);
         } catch(Exception ignored) {

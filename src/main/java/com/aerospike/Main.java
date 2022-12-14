@@ -23,6 +23,7 @@ public class Main {
         Test expressionReaderTest = new ExpressionReaderTest(client2, "Barclays", "test", 10, list);
         Test expressionWriterTest = new ExpressionWriterTest(client2, "Barclays", "test", 10, list);
         Test searchTest = new SearchTest(client2, "Barclays", "test", 10, list);
+        Test udfTest = new UDFTest(client2, "Barclays", "test", 10, list);
         Test udfAggregationTest = new UDFAggregationTest(client2, "Barclays", "test", 10, list);
 
 
@@ -44,6 +45,9 @@ public class Main {
         searchTest.run();
 
         Thread.sleep(30000);
-        udfAggregationTest.run();
+        udfTest.run();
+//
+//        Thread.sleep(30000);
+//        udfAggregationTest.run();
     }
 }

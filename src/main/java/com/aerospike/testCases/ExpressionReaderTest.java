@@ -37,7 +37,7 @@ public class ExpressionReaderTest extends Test{
                                 Exp.val(100)),
                         Exp.val("Yes"),
                         Exp.val("No")));
-        Operation readExpOp = ExpOperation.read("r",
+        Operation readExpOp = ExpOperation.read("EXPRes",
                 readExp,
                 ExpReadFlags.DEFAULT);
 

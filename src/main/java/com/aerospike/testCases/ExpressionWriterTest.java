@@ -36,7 +36,7 @@ public class ExpressionWriterTest extends Test{
                             Exp.val(100)),
                         Exp.val("Yes"),
                         Exp.val("No")));
-        Operation writeExpOp = ExpOperation.write("exp_result",
+        Operation writeExpOp = ExpOperation.write("EXPRes",
                 writeExp,
                 ExpWriteFlags.DEFAULT);
 
