@@ -25,14 +25,6 @@ public class UDFAggregationTest extends Test{
         Policy policy = new Policy(client.queryPolicyDefault);
         policy.setTimeout(120000);
         client.createIndex(null, namespace, setName, "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
-        registerUDF();
-    }
-    void registerUDF() {
-        LuaCache.clearPackages();
-        String UDFFile = "agg.lua";
-        client.removeUdf(null, UDFFile);
-        RegisterTask task = client.register(null, "./agg.lua", UDFFile, Language.LUA);
-        task.waitTillComplete();
     }
     protected void loop(){
         Stream.generate(sampleProvider::getSample)
@@ -50,7 +42,7 @@ public class UDFAggregationTest extends Test{
         statement.setNamespace(namespace);
         statement.setSetName(setName);
         statement.setFilter(Filter.range("date", begin, end));
-        statement.setAggregateFunction("agg", "average_range", Value.get("octet"));
+        statement.setAggregateFunction("example", "average_range", Value.get("octet"));
 
         ResultSet rs = client.queryAggregate(null, statement);
         while (rs.next()) {

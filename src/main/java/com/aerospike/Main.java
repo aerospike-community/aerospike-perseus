@@ -4,8 +4,10 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Host;
 import com.aerospike.testCases.*;
 import com.aerospike.utilities.AutoDiscardingList;
+import com.aerospike.utilities.LuaSetup;
 import com.aerospike.utilities.StatLogger;
 import com.aerospike.utilities.Statable;
+import org.luaj.vm2.Lua;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,8 @@ public class Main {
                 new Host("172.31.45.155", 3000),
                 new Host("172.31.34.13", 3000),
                 new Host("172.31.46.191", 3000));
+
+        LuaSetup.registerUDF(client, "lua2", "example.lua");
         var list = new AutoDiscardingList(5000000, .1, .5);
 
 
