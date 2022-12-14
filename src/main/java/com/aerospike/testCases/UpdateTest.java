@@ -15,7 +15,7 @@ public class UpdateTest extends Test{
     private final WritePolicy policy;
 
     public UpdateTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Updates", 1);
+        super(client, namespace, setName, numberOfThreads, "Updates");
         this.sampleProvider = sampleProvider;
 
         policy = new WritePolicy();

@@ -1,7 +1,8 @@
-package com.aerospike.random;
+package com.aerospike.data.dataGenator.random;
 
-import com.aerospike.raw.Data;
-import com.aerospike.raw.SimpleData;
+import com.aerospike.data.Data;
+import com.aerospike.data.SimpleData;
+import com.aerospike.data.dataGenator.DataGenerator;
 
 import java.nio.charset.Charset;
 import java.time.Instant;
@@ -27,7 +28,7 @@ public class SimpleDataGenerator implements DataGenerator {
         String country = new Locale("", locales[ random.nextInt( locales.length) ] ).getDisplayCountry();
         long date = between(Instant.now().minus(Period.ofWeeks(300)), Instant.now()).getEpochSecond();
 
-        byte[] array = new byte[1100];
+        byte[] array = new byte[1180];
         random.nextBytes(array);
         String dummy = new String(array, Charset.forName("UTF-8"));
 

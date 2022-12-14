@@ -2,8 +2,8 @@ package com.aerospike.testCases;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Key;
-import com.aerospike.random.SimpleDataGenerator;
-import com.aerospike.raw.Data;
+import com.aerospike.data.dataGenator.random.SimpleDataGenerator;
+import com.aerospike.data.Data;
 import com.aerospike.utilities.SampleCollector;
 
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ public class WriteTest extends Test{
     private final SampleCollector sampleCollector;
 
     public WriteTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleCollector<Integer> sampleCollector) {
-        super(client, namespace, setName, numberOfThreads, "Writes", 1);
+        super(client, namespace, setName, numberOfThreads, "Writes");
         this.sampleCollector = sampleCollector;
     }
 

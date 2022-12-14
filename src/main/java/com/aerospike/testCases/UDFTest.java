@@ -21,7 +21,7 @@ public class UDFTest extends Test{
     private final SampleProvider<Integer> sampleProvider;
 
     public UDFTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "LUAs", 1);
+        super(client, namespace, setName, numberOfThreads, "LUAs");
         this.sampleProvider = sampleProvider;
         Policy policy = new Policy(client.queryPolicyDefault);
         policy.setTimeout(120000);

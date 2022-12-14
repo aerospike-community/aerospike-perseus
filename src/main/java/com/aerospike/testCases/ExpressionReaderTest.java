@@ -17,7 +17,7 @@ public class ExpressionReaderTest extends Test{
     private final SampleProvider<Integer> sampleProvider;
 
     public ExpressionReaderTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Exp Reads", 1);
+        super(client, namespace, setName, numberOfThreads, "Exp Reads");
         this.sampleProvider = sampleProvider;
     }
 

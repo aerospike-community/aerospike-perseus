@@ -16,7 +16,7 @@ public class ExpressionWriterTest extends Test{
     private final SampleProvider<Integer> sampleProvider;
 
     public ExpressionWriterTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Exp Writes", 1);
+        super(client, namespace, setName, numberOfThreads, "Exp Writes");
         this.sampleProvider = sampleProvider;
     }
 

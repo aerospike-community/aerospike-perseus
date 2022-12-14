@@ -6,16 +6,16 @@ import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.RecordSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.utilities.RandomSampleProvider;
 
 import java.util.stream.Stream;
 
 public class SearchTest extends Test{
-    private final SampleProvider<Integer> sampleProvider;
+    private final RandomSampleProvider<Integer> randomSampleProvider;
     private final QueryPolicy policy;
-    public SearchTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Searches", 1);
-        this.sampleProvider = sampleProvider;
+    public SearchTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, RandomSampleProvider<Integer> randomSampleProvider) {
+        super(client, namespace, setName, numberOfThreads, "Searches");
+        this.randomSampleProvider = randomSampleProvider;
         policy = new QueryPolicy(client.queryPolicyDefault);
         policy.shortQuery = true;
         policy.includeBinData = false;
@@ -23,7 +23,7 @@ public class SearchTest extends Test{
     }
 
     protected void loop(){
-        Stream.generate(sampleProvider::getRandomSample)
+        Stream.generate(randomSampleProvider::getRandomSample)
                 .forEach(this::find);
     }
 

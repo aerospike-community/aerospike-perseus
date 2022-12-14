@@ -2,21 +2,22 @@ package com.aerospike.testCases;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Key;
+import com.aerospike.utilities.RandomSampleProvider;
 import com.aerospike.utilities.SampleProvider;
 
 import java.util.stream.Stream;
 
 public class ReadTest extends Test{
 
-    private final SampleProvider<Integer> sampleProvider;
+    private final RandomSampleProvider<Integer> randomSampleProvider;
 
-    public ReadTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Reads", 1);
-        this.sampleProvider = sampleProvider;
+    public ReadTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, RandomSampleProvider<Integer> randomSampleProvider) {
+        super(client, namespace, setName, numberOfThreads, "Reads");
+        this.randomSampleProvider = randomSampleProvider;
     }
 
     protected void loop(){
-        Stream.generate(() -> sampleProvider.getRandomSample())
+        Stream.generate(() -> randomSampleProvider.getRandomSample())
                 .forEach(key -> put(new Key(namespace, setName, key)));
     }
     private void put(Key key) {

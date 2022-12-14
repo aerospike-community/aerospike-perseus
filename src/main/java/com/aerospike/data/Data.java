@@ -1,4 +1,4 @@
-package com.aerospike.raw;
+package com.aerospike.data;
 
 import com.aerospike.client.Bin;
 

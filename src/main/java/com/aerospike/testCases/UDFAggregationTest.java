@@ -20,7 +20,7 @@ public class UDFAggregationTest extends Test{
     private final SampleProvider<Integer> sampleProvider;
 
     public UDFAggregationTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "LUA Aggs", 1);
+        super(client, namespace, setName, numberOfThreads, "LUA Aggs");
         this.sampleProvider = sampleProvider;
         Policy policy = new Policy(client.queryPolicyDefault);
         policy.setTimeout(120000);
