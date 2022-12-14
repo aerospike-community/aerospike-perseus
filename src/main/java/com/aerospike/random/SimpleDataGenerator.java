@@ -25,9 +25,9 @@ public class SimpleDataGenerator implements DataGenerator {
         int keyPlus10 = key+10;
         int keyPlus20 = key+20;
         String country = new Locale("", locales[ random.nextInt( locales.length) ] ).getDisplayCountry();
-        long date = between(Instant.now().minus(Period.ofWeeks(300)), Instant.now()).toEpochMilli();
+        long date = between(Instant.now().minus(Period.ofWeeks(300)), Instant.now()).getEpochSecond();
 
-        byte[] array = new byte[520];
+        byte[] array = new byte[1100];
         random.nextBytes(array);
         String dummy = new String(array, Charset.forName("UTF-8"));
 

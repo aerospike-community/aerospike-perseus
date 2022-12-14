@@ -27,12 +27,24 @@ public class AutoDiscardingList implements SampleCollector<Integer>, SampleProvi
         list[(int) (i % size)] = value;
     }
 
-    public Integer getSample(){
+    public Integer getRandomSample(){
         if(random.nextInt() % missRatio == 0)
             return random.nextInt();
         int l = (int) location.get();
         if(l > size)
             l = size;
+        if(l == 0)
+            return random.nextInt();
+        return list[ThreadLocalRandom.current().nextInt(l)];
+    }
+
+    @Override
+    public Integer getSample() {
+        int l = (int) location.get();
+        if(l > size)
+            l = size;
+        if(l == 0)
+            return random.nextInt();
         return list[ThreadLocalRandom.current().nextInt(l)];
     }
 }

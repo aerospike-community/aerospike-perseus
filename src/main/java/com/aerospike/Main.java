@@ -7,23 +7,43 @@ import com.aerospike.utilities.AutoDiscardingList;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        AerospikeClient client = new AerospikeClient(null, new Host("172.31.19.239", 3000),
-                new Host("172.31.25.96", 3000));
-        AerospikeClient client2 = new AerospikeClient(null, new Host("172.31.19.239", 3000),
-                new Host("172.31.25.96", 3000));
+        AerospikeClient client = new AerospikeClient(null,
+                new Host("172.31.45.155", 3000),
+                new Host("172.31.34.13", 3000),
+                new Host("172.31.46.191", 3000));
+        AerospikeClient client2 = new AerospikeClient(null,
+                new Host("172.31.45.155", 3000),
+                new Host("172.31.34.13", 3000),
+                new Host("172.31.46.191", 3000));
         var list = new AutoDiscardingList(500000, 10, 2);
 
-        Test loadTest = new LoadTest(client, "HorseRaceEvents", "test", 90, list);
-        loadTest.run();
+        Test writeTest = new WriteTest(client, "Barclays", "test", 100, list);
+        Test readTest = new ReadTest(client2, "Barclays", "test", 50, list);
+        Test updateTest = new UpdateTest(client2, "Barclays", "test", 20, list);
+        Test expressionReaderTest = new ExpressionReaderTest(client2, "Barclays", "test", 10, list);
+        Test expressionWriterTest = new ExpressionWriterTest(client2, "Barclays", "test", 10, list);
+        Test searchTest = new SearchTest(client2, "Barclays", "test", 10, list);
+        Test udfAggregationTest = new UDFAggregationTest(client2, "Barclays", "test", 10, list);
 
-        Thread.sleep(10000);
-        Test updateTest = new UpdateTest(client2, "HorseRaceEvents", "test", 10, list);
+
+        writeTest.run();
+
+        Thread.sleep(30000);
+        readTest.run();
+
+        Thread.sleep(30000);
         updateTest.run();
 
-        Test searchTest = new SearchTest(client2, "HorseRaceEvents", "test", 1, list);
+        Thread.sleep(30000);
+        expressionReaderTest.run();
+
+        Thread.sleep(30000);
+        expressionWriterTest.run();
+
+        Thread.sleep(30000);
         searchTest.run();
 
-        Test aggregationTest = new AggregationTest(client2, "HorseRaceEvents", "test", 10, list);
-        aggregationTest.run();
+        Thread.sleep(30000);
+        udfAggregationTest.run();
     }
 }

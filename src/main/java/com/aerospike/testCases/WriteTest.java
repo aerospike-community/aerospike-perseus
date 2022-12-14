@@ -8,11 +8,11 @@ import com.aerospike.utilities.SampleCollector;
 
 import java.util.stream.Stream;
 
-public class LoadTest extends Test{
+public class WriteTest extends Test{
 
     private final SampleCollector sampleCollector;
 
-    public LoadTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleCollector<Integer> sampleCollector) {
+    public WriteTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleCollector<Integer> sampleCollector) {
         super(client, namespace, setName, numberOfThreads, "Writes", 1);
         this.sampleCollector = sampleCollector;
     }
