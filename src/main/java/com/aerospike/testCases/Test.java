@@ -1,7 +1,7 @@
 package com.aerospike.testCases;
 
 import com.aerospike.client.Key;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 import com.aerospike.utilities.logger.Logable;
 

@@ -1,6 +1,6 @@
-package com.aerospike.data.dataGenator.key;
+package com.aerospike.data.collector;
 
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;

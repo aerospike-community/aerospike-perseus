@@ -5,8 +5,8 @@ import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.ResultSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.data.dataGenator.DataProvider;
-import com.aerospike.data.dataGenator.TimePeriod;
+import com.aerospike.data.provider.DataProvider;
+import com.aerospike.data.TimePeriod;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class UDFAggregationTest extends Test<TimePeriod>{
@@ -18,7 +18,6 @@ public class UDFAggregationTest extends Test<TimePeriod>{
 
     protected void execute(TimePeriod timePeriod){
         Statement statement = new Statement();
-
 
         statement.setNamespace(connection.getNamespace());
         statement.setSetName(connection.getSetName());

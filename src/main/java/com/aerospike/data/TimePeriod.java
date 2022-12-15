@@ -1,4 +1,4 @@
-package com.aerospike.data.dataGenator;
+package com.aerospike.data;
 
 public record TimePeriod(long begin, long end) {
 }

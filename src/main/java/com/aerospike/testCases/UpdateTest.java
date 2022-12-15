@@ -3,7 +3,7 @@ package com.aerospike.testCases;
 import com.aerospike.client.Bin;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 import java.time.Instant;

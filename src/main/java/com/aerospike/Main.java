@@ -1,12 +1,12 @@
 package com.aerospike;
 
 import com.aerospike.client.Host;
-import com.aerospike.data.dataGenator.TimePeriodProvider;
-import com.aerospike.data.dataGenator.random.SimpleDataProvider;
+import com.aerospike.data.provider.random.TimePeriodProvider;
+import com.aerospike.data.provider.random.SimpleRecordProvider;
 import com.aerospike.testCases.*;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 import com.aerospike.utilities.aerospike.LuaSetup;
-import com.aerospike.data.dataGenator.key.AutoDiscardingKeyCollector;
+import com.aerospike.data.collector.AutoDiscardingKeyCollector;
 import com.aerospike.utilities.logger.StatLogger;
 import com.aerospike.utilities.logger.Logable;
 
@@ -25,7 +25,7 @@ public class Main {
 
         LuaSetup.registerUDF(con1, "lua2", "example.lua");
 
-        var simpleDataProvider = new SimpleDataProvider();
+        var simpleDataProvider = new SimpleRecordProvider();
         var discardingKeyList = new AutoDiscardingKeyCollector(5000000, .1);
         var timePeriodProvider = new TimePeriodProvider();
 

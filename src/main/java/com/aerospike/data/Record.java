@@ -2,10 +2,10 @@ package com.aerospike.data;
 
 import com.aerospike.client.Bin;
 
-public abstract class Data {
+public abstract class Record {
     private final int key;
 
-    protected Data(int key) {
+    protected Record(int key) {
         this.key = key;
     }
 

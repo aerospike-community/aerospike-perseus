@@ -5,7 +5,7 @@ import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.RecordSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class SearchTest extends Test<Integer>{

@@ -1,4 +1,4 @@
-package com.aerospike.data.dataGenator;
+package com.aerospike.data.provider;
 
 public interface DataProvider<T> {
     T next();

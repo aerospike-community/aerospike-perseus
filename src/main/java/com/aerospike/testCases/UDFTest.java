@@ -1,7 +1,7 @@
 package com.aerospike.testCases;
 
 import com.aerospike.client.query.IndexType;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class UDFTest extends Test<Integer>{

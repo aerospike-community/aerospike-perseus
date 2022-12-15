@@ -1,4 +1,7 @@
-package com.aerospike.data.dataGenator;
+package com.aerospike.data.provider.random;
+
+import com.aerospike.data.provider.DataProvider;
+import com.aerospike.data.TimePeriod;
 
 import java.time.Instant;
 import java.time.Period;
@@ -6,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TimePeriodProvider implements DataProvider<TimePeriod> {
     protected final ThreadLocalRandom random;
-
     public TimePeriodProvider() {
         random = ThreadLocalRandom.current();
     }

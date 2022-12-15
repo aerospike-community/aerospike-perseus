@@ -7,7 +7,7 @@ import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpWriteFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class ExpressionWriterTest extends Test<Integer>{

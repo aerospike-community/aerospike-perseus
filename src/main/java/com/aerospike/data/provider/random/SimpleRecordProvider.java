@@ -1,8 +1,8 @@
-package com.aerospike.data.dataGenator.random;
+package com.aerospike.data.provider.random;
 
-import com.aerospike.data.Data;
-import com.aerospike.data.SimpleData;
-import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.data.Record;
+import com.aerospike.data.SimpleRecord;
+import com.aerospike.data.provider.DataProvider;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -10,17 +10,15 @@ import java.time.Period;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SimpleDataProvider implements DataProvider<Data> {
+public class SimpleRecordProvider implements DataProvider<Record> {
     private final static String [] locales = Locale.getISOCountries();
-
     final ThreadLocalRandom random ;
-
-    public SimpleDataProvider() {
+    public SimpleRecordProvider() {
         this.random = ThreadLocalRandom.current();
     }
 
     @Override
-    public Data next() {
+    public Record next() {
         var key = random.nextInt();
         int octet = random.nextInt(16);
         int keyPlus10 = key+10;
@@ -32,7 +30,7 @@ public class SimpleDataProvider implements DataProvider<Data> {
         random.nextBytes(array);
         String dummy = new String(array, StandardCharsets.UTF_8);
 
-        return new SimpleData(key, octet, keyPlus10, keyPlus20, country, date, dummy);
+        return new SimpleRecord(key, octet, keyPlus10, keyPlus20, country, date, dummy);
     }
 
     public Instant between(Instant startInclusive, Instant endExclusive) {
