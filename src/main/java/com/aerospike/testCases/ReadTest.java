@@ -1,27 +1,19 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Key;
-import com.aerospike.utilities.RandomSampleProvider;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
 
-import java.util.stream.Stream;
-
-public class ReadTest extends Test{
-
-    private final RandomSampleProvider<Integer> randomSampleProvider;
-
-    public ReadTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, RandomSampleProvider<Integer> randomSampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Reads");
-        this.randomSampleProvider = randomSampleProvider;
+public class ReadTest extends Test<Integer>{
+    public ReadTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
+        super(connection, numberOfThreads, provider);
     }
 
-    protected void loop(){
-        Stream.generate(() -> randomSampleProvider.getRandomSample())
-                .forEach(key -> put(new Key(namespace, setName, key)));
+    @Override
+    protected void execute(Integer key) {
+        connection.getClient().get(null, getKey(key));
     }
-    private void put(Key key) {
-        client.get(null, key);
-        counter.getAndIncrement();
+
+    public String getHeader(){
+        return String.format( "Reads (%d)", numberOfThreads);
     }
 }

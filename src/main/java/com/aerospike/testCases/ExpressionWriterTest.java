@@ -1,30 +1,23 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Key;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
-import com.aerospike.client.exp.*;
-import com.aerospike.client.policy.Policy;
+import com.aerospike.client.exp.Exp;
+import com.aerospike.client.exp.ExpOperation;
+import com.aerospike.client.exp.ExpWriteFlags;
+import com.aerospike.client.exp.Expression;
 import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
 
-import java.util.stream.Stream;
+public class ExpressionWriterTest extends Test<Integer>{
 
-public class ExpressionWriterTest extends Test{
-
-    private final SampleProvider<Integer> sampleProvider;
-
-    public ExpressionWriterTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Exp Writes");
-        this.sampleProvider = sampleProvider;
+    public ExpressionWriterTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
+        super(connection, numberOfThreads, provider);
     }
 
-    protected void loop(){
-        Stream.generate(() -> sampleProvider.getSample())
-                .forEach(key -> put(new Key(namespace, setName, key)));
-    }
-    private void put(Key key) {
+    @Override
+    protected void execute(Integer key) {
         Expression writeExp = Exp.build(
                     Exp.cond(
                         Exp.gt(
@@ -40,10 +33,13 @@ public class ExpressionWriterTest extends Test{
                 writeExp,
                 ExpWriteFlags.DEFAULT);
 
-        WritePolicy policy = new WritePolicy(client.writePolicyDefault);
-        Record operate = client.operate(policy, key, writeExpOp);
+        WritePolicy policy = new WritePolicy(connection.getClient().writePolicyDefault);
+        Record operate = connection.getClient().operate(policy, getKey(key), writeExpOp);
 //        if(operate != null)
 //            System.out.println(operate.toString());
-        counter.getAndIncrement();
+    }
+
+    public String getHeader(){
+        return String.format("Exp Writes (%d)", numberOfThreads);
     }
 }

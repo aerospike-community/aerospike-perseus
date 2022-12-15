@@ -1,43 +1,48 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.utilities.Statable;
+import com.aerospike.client.Key;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.logger.Logable;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
-public abstract class Test implements Statable {
-    protected final AerospikeClient client;
-    protected final String namespace;
-    protected final String setName;
-    protected final int numberOfThreads;
-    private final String printMessage;
-    protected final ThreadPoolExecutor executor;
-    protected AtomicInteger counter = new AtomicInteger();
-    protected final ThreadLocalRandom random;
+public abstract class Test<T> implements Logable {
+        protected final AerospikeConnection connection;
+        protected final int numberOfThreads;
+        private final DataProvider<T> dataProvider;
+        private final ThreadPoolExecutor executor;
+        private final AtomicInteger tpsCounter = new AtomicInteger();
 
-    protected Test(AerospikeClient client, String namespace, String setName, int numberOfThreads, String printMessage) {
-        this.client = client;
-        this.namespace = namespace;
-        this.setName = setName;
-        this.numberOfThreads = numberOfThreads;
-        this.printMessage = printMessage;
+        protected Test(AerospikeConnection connection, int numberOfThreads, DataProvider<T> dataProvider) {
+            this.connection = connection;
+            this.numberOfThreads = numberOfThreads;
+            this.dataProvider = dataProvider;
+            executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 100, TimeUnit.MINUTES, new ArrayBlockingQueue<>(500000));
+        }
 
-        random = ThreadLocalRandom.current();
-        executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 100, TimeUnit.MINUTES, new ArrayBlockingQueue<>(500000));
-    }
+        public void run() {
+            for (int i = 0; i < numberOfThreads; i++)
+                executor.execute(this::loop);
+        }
+        private void loop(){
+            Stream.generate(dataProvider::next).forEach(this::action);
+        }
 
-    public void run() {
-        for (int i = 0; i < numberOfThreads; i++)
-            executor.execute(this::loop);
-    }
+        private void action(T t){
+            execute(t);
+            tpsCounter.getAndIncrement();
+        }
 
-    protected abstract void loop();
+        protected abstract void execute(T t);
 
-    public String getStat() {
-        return String.format("%6d %-10s on %3d threads.",
-                counter.getAndSet(0),
-                printMessage,
-                numberOfThreads);
-    }
+        public int getTPS() {
+            return tpsCounter.getAndSet(0);
+        }
+
+        protected Key getKey(int key){
+            return new Key(connection.getNamespace(), connection.getSetName(), key);
+        }
 }

@@ -1,34 +1,21 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Key;
-import com.aerospike.client.Language;
-import com.aerospike.client.lua.LuaCache;
-import com.aerospike.client.policy.Policy;
 import com.aerospike.client.query.IndexType;
-import com.aerospike.client.task.RegisterTask;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
 
-import java.util.stream.Stream;
+public class UDFTest extends Test<Integer>{
 
-public class UDFTest extends Test{
-    private final SampleProvider<Integer> sampleProvider;
-
-    public UDFTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "LUAs");
-        this.sampleProvider = sampleProvider;
-        Policy policy = new Policy(client.queryPolicyDefault);
-        policy.setTimeout(120000);
-        client.createIndex(null, namespace, setName, "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
+    public UDFTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
+        super(connection, numberOfThreads, provider);
+        connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
-    protected void loop(){
-        Stream.generate(sampleProvider::getSample)
-                .forEach(key -> find(new Key(namespace, setName, key)));
+    protected void execute(Integer key){
+        connection.getClient().execute(null, getKey(key), "example", "lua_test");
     }
 
-    private void find(Key key){
-        client.execute(null, key, "example", "lua_test");
-        counter.getAndIncrement();
+    public String getHeader(){
+        return String.format("LUAs (%d)", numberOfThreads);
     }
 }

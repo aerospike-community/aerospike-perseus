@@ -1,40 +1,31 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Bin;
-import com.aerospike.client.Key;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 import java.time.Instant;
-import java.util.stream.Stream;
 
-public class UpdateTest extends Test{
-    private final SampleProvider<Integer> sampleProvider;
+public class UpdateTest extends Test<Integer>{
     private final WritePolicy policy;
 
-    public UpdateTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Updates");
-        this.sampleProvider = sampleProvider;
-
+    public UpdateTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> generator) {
+        super(connection, numberOfThreads, generator);
         policy = new WritePolicy();
         policy.recordExistsAction = RecordExistsAction.UPDATE_ONLY;
     }
 
-    protected void loop(){
-        Stream.generate(sampleProvider::getSample)
-                .forEach(key -> update(new Key(namespace, setName, key)));
-    }
-
-    private void update(Key key){
+    protected void execute(Integer key){
         Bin updated = new Bin("UpdateRes", Instant.now().toString());
         try{
-            client.add(policy, key, updated);
+            connection.getClient().add(policy, getKey(key), updated);
         } catch(Exception ignored) {
-
         }
+    }
 
-        counter.getAndIncrement();
+    public String getHeader(){
+        return String.format("Updates (%d)", numberOfThreads);
     }
 }

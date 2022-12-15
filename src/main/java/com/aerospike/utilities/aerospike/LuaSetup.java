@@ -1,24 +1,18 @@
-package com.aerospike.utilities;
+package com.aerospike.utilities.aerospike;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Language;
 import com.aerospike.client.lua.LuaCache;
 import com.aerospike.client.lua.LuaConfig;
 import com.aerospike.client.task.RegisterTask;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class LuaSetup {
-    public static void registerUDF(AerospikeClient client, String luaDirectory, String luaFileName) {
-        InputStream luaStream = LuaSetup.class.getClassLoader().getResourceAsStream(luaFileName);
+    public static void registerUDF(AerospikeConnection connection, String luaDirectory, String luaFileName) {
         String fullPath = luaDirectory + "/" + luaFileName;
         try {
             Path dir = Paths.get(luaDirectory);
@@ -26,6 +20,7 @@ public class LuaSetup {
                 Files.createDirectory(dir);
             }
 
+            InputStream luaStream = LuaSetup.class.getClassLoader().getResourceAsStream(luaFileName);
             java.nio.file.Files.copy(
                     luaStream,
                     Paths.get(fullPath),
@@ -39,9 +34,9 @@ public class LuaSetup {
 
         LuaCache.clearPackages();
         LuaConfig.SourceDirectory = luaDirectory;
-        client.removeUdf(null, luaFileName);
+        connection.getClient().removeUdf(null, luaFileName);
 
-        RegisterTask task = client.register(null, fullPath, luaFileName, Language.LUA);
+        RegisterTask task = connection.getClient().register(null, fullPath, luaFileName, Language.LUA);
         task.waitTillComplete();
     }
 }

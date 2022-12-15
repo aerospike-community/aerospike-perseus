@@ -1,30 +1,28 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Key;
-import com.aerospike.data.dataGenator.random.SimpleDataGenerator;
 import com.aerospike.data.Data;
-import com.aerospike.utilities.SampleCollector;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.data.dataGenator.key.KeyCollector;
 
-import java.util.stream.Stream;
+public class WriteTest extends Test<Data>{
 
-public class WriteTest extends Test{
+    private final KeyCollector<Integer> keyCollector;
 
-    private final SampleCollector sampleCollector;
-
-    public WriteTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleCollector<Integer> sampleCollector) {
-        super(client, namespace, setName, numberOfThreads, "Writes");
-        this.sampleCollector = sampleCollector;
+    public WriteTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Data> provider, KeyCollector<Integer> keyCollector) {
+        super(connection, numberOfThreads, provider);
+        this.keyCollector = keyCollector;
     }
 
-    protected void loop(){
-        Stream.generate(new SimpleDataGenerator()::next)
-                .forEach(this::put);
+    @Override
+    protected void execute(Data sales) {
+        com.aerospike.client.Key key = getKey(sales.getKey());
+        connection.getClient().put(null, key, sales.getBins());
+        keyCollector.collect(sales.getKey());
+
     }
-    private void put(Data sales) {
-        com.aerospike.client.Key key = new Key(namespace, setName, sales.getKey());
-        client.put(null, key, sales.getBins());
-        sampleCollector.collectSample(sales.getKey());
-        counter.getAndIncrement();
+
+    public String getHeader(){
+        return String.format("Writes (%d)", numberOfThreads);
     }
 }

@@ -1,31 +1,21 @@
 package com.aerospike.testCases;
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Key;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
 import com.aerospike.client.exp.Exp;
 import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpReadFlags;
 import com.aerospike.client.exp.Expression;
-import com.aerospike.utilities.SampleProvider;
+import com.aerospike.data.dataGenator.DataProvider;
+import com.aerospike.utilities.aerospike.AerospikeConnection;
 
-import java.util.stream.Stream;
-
-public class ExpressionReaderTest extends Test{
-
-    private final SampleProvider<Integer> sampleProvider;
-
-    public ExpressionReaderTest(AerospikeClient client, String namespace, String setName, int numberOfThreads, SampleProvider<Integer> sampleProvider) {
-        super(client, namespace, setName, numberOfThreads, "Exp Reads");
-        this.sampleProvider = sampleProvider;
+public class ExpressionReaderTest extends Test<Integer>{
+    public ExpressionReaderTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
+        super(connection, numberOfThreads, provider);
     }
 
-    protected void loop(){
-        Stream.generate(() -> sampleProvider.getSample())
-                .forEach(key -> put(new Key(namespace, setName, key)));
-    }
-    private void put(Key key) {
+    @Override
+    protected void execute(Integer key) {
         Expression readExp = Exp.build(
                 Exp.cond(
                         Exp.gt(
@@ -41,9 +31,12 @@ public class ExpressionReaderTest extends Test{
                 readExp,
                 ExpReadFlags.DEFAULT);
 
-        Record operate = client.operate(null, key, readExpOp);
+        Record operate = connection.getClient().operate(null, getKey(key), readExpOp);
 //        if(operate != null)
 //            System.out.println(operate.getString("r"));
-        counter.getAndIncrement();
+    }
+
+    public String getHeader(){
+        return String.format("Exp Reads (%d)", numberOfThreads);
     }
 }
