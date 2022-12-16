@@ -10,8 +10,8 @@ import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class ExpressionReaderTest extends Test<Integer>{
-    public ExpressionReaderTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
-        super(connection, numberOfThreads, provider);
+    public ExpressionReaderTest(AerospikeConnection connection, DataProvider<Integer> provider) {
+        super(connection, provider);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class ExpressionReaderTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("Exp Reads (%d)", numberOfThreads);
+        return String.format("Exp Reads (%d)", threadCount.get());
     }
 }

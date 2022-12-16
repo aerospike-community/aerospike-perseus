@@ -4,8 +4,8 @@ import com.aerospike.data.provider.DataProvider;
 import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class ReadTest extends Test<Integer>{
-    public ReadTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
-        super(connection, numberOfThreads, provider);
+    public ReadTest(AerospikeConnection connection, DataProvider<Integer> provider) {
+        super(connection, provider);
     }
 
     @Override
@@ -14,6 +14,6 @@ public class ReadTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format( "Reads (%d)", numberOfThreads);
+        return String.format( "Reads (%d)", threadCount.get());
     }
 }

@@ -11,8 +11,8 @@ import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class UDFAggregationTest extends Test<TimePeriod>{
 
-    public UDFAggregationTest(AerospikeConnection connection, int numberOfThreads, DataProvider<TimePeriod> provider) {
-        super(connection, numberOfThreads, provider);
+    public UDFAggregationTest(AerospikeConnection connection, DataProvider<TimePeriod> provider) {
+        super(connection, provider);
         connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
@@ -38,6 +38,6 @@ public class UDFAggregationTest extends Test<TimePeriod>{
     }
 
     public String getHeader(){
-        return String.format("LUA Aggs (%d)", numberOfThreads);
+        return String.format("LUA Aggs (%d)", threadCount.get());
     }
 }

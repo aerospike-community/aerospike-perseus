@@ -32,4 +32,8 @@ public class AerospikeConnection {
     public String getSetName() {
         return setName;
     }
+
+    public void close() {
+        client.close();
+    }
 }

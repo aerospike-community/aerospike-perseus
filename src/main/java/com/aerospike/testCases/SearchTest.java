@@ -10,8 +10,8 @@ import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class SearchTest extends Test<Integer>{
     private final QueryPolicy policy;
-    public SearchTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
-        super(connection, numberOfThreads, provider);
+    public SearchTest(AerospikeConnection connection, DataProvider<Integer> provider) {
+        super(connection, provider);
         policy = new QueryPolicy(connection.getClient().queryPolicyDefault);
         policy.shortQuery = true;
         policy.includeBinData = false;
@@ -26,9 +26,10 @@ public class SearchTest extends Test<Integer>{
         statement.setSetName(connection.getSetName());
         RecordSet records = connection.getClient().query(policy, statement);
         records.next();
+        records.close();
     }
 
     public String getHeader(){
-        return String.format("Searches (%d)", numberOfThreads);
+        return String.format("Searches (%d)", threadCount.get());
     }
 }

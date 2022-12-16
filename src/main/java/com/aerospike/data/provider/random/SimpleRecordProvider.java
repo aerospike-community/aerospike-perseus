@@ -26,7 +26,7 @@ public class SimpleRecordProvider implements DataProvider<Record> {
         String country = new Locale("", locales[ random.nextInt( locales.length) ] ).getDisplayCountry();
         long date = between(Instant.now().minus(Period.ofWeeks(300)), Instant.now()).getEpochSecond();
 
-        byte[] array = new byte[1180];
+        byte[] array = new byte[1220];
         random.nextBytes(array);
         String dummy = new String(array, StandardCharsets.UTF_8);
 

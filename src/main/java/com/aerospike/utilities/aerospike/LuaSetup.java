@@ -38,5 +38,6 @@ public class LuaSetup {
 
         RegisterTask task = connection.getClient().register(null, fullPath, luaFileName, Language.LUA);
         task.waitTillComplete();
+        connection.close();
     }
 }

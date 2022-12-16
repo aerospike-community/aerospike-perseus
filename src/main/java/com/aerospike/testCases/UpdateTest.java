@@ -11,8 +11,8 @@ import java.time.Instant;
 public class UpdateTest extends Test<Integer>{
     private final WritePolicy policy;
 
-    public UpdateTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> generator) {
-        super(connection, numberOfThreads, generator);
+    public UpdateTest(AerospikeConnection connection, DataProvider<Integer> generator) {
+        super(connection, generator);
         policy = new WritePolicy();
         policy.recordExistsAction = RecordExistsAction.UPDATE_ONLY;
     }
@@ -26,6 +26,6 @@ public class UpdateTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("Updates (%d)", numberOfThreads);
+        return String.format("Updates (%d)", threadCount.get());
     }
 }

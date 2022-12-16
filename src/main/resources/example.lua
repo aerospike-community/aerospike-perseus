@@ -120,7 +120,7 @@ function lua_test(rec)
     if not aerospike:exists(rec) then
         return   -- Set the return status
     else
-        local x = (rec['keyPlus20'] - rec['keyPlus10']) / rec['octet']
+        local x = (rec['keyPlus20'] - rec['keyPlus10']) * rec['octet']
         if  x > 100  then
             rec['UDFRes'] = 'Yes'
         else

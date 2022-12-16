@@ -9,8 +9,8 @@ public class WriteTest extends Test<Record>{
 
     private final KeyCollector<Integer> keyCollector;
 
-    public WriteTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Record> provider, KeyCollector<Integer> keyCollector) {
-        super(connection, numberOfThreads, provider);
+    public WriteTest(AerospikeConnection connection, DataProvider<Record> provider, KeyCollector<Integer> keyCollector) {
+        super(connection, provider);
         this.keyCollector = keyCollector;
     }
 
@@ -23,6 +23,6 @@ public class WriteTest extends Test<Record>{
     }
 
     public String getHeader(){
-        return String.format("Writes (%d)", numberOfThreads);
+        return String.format("Writes (%d)", threadCount.get());
     }
 }

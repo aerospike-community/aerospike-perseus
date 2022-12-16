@@ -6,8 +6,8 @@ import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class UDFTest extends Test<Integer>{
 
-    public UDFTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
-        super(connection, numberOfThreads, provider);
+    public UDFTest(AerospikeConnection connection, DataProvider<Integer> provider) {
+        super(connection, provider);
         connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
@@ -16,6 +16,6 @@ public class UDFTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("LUAs (%d)", numberOfThreads);
+        return String.format("LUAs (%d)", threadCount.get());
     }
 }

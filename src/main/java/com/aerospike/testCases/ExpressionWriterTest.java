@@ -12,8 +12,8 @@ import com.aerospike.utilities.aerospike.AerospikeConnection;
 
 public class ExpressionWriterTest extends Test<Integer>{
 
-    public ExpressionWriterTest(AerospikeConnection connection, int numberOfThreads, DataProvider<Integer> provider) {
-        super(connection, numberOfThreads, provider);
+    public ExpressionWriterTest(AerospikeConnection connection, DataProvider<Integer> provider) {
+        super(connection, provider);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class ExpressionWriterTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("Exp Writes (%d)", numberOfThreads);
+        return String.format("Exp Writes (%d)", threadCount.get());
     }
 }
