@@ -1,43 +1,27 @@
 package com.aerospike.utilities.aerospike;
 
+import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Language;
 import com.aerospike.client.lua.LuaCache;
 import com.aerospike.client.lua.LuaConfig;
 import com.aerospike.client.task.RegisterTask;
-
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import com.aerospike.utilities.ConfigFileProvider;
 
 public class LuaSetup {
-    public static void registerUDF(AerospikeConnection connection, String luaDirectory, String luaFileName) {
-        String fullPath = luaDirectory + "/" + luaFileName;
-        try {
-            Path dir = Paths.get(luaDirectory);
-            if (!Files.exists(dir)) {
-                Files.createDirectory(dir);
-            }
+    public static void registerUDF(AerospikeConfiguration conf, String luaFileName) {
 
-            InputStream luaStream = LuaSetup.class.getClassLoader().getResourceAsStream(luaFileName);
-            java.nio.file.Files.copy(
-                    luaStream,
-                    Paths.get(fullPath),
-                    StandardCopyOption.REPLACE_EXISTING);
-
-            luaStream.close();
-        }
-        catch (Exception e) {
-            System.out.format("Failed to create Lua module %s, exception: %s.", fullPath, e);
-        }
+        var configFileProvider = new ConfigFileProvider(luaFileName, "example.lua");
 
         LuaCache.clearPackages();
-        LuaConfig.SourceDirectory = luaDirectory;
-        connection.getClient().removeUdf(null, luaFileName);
+        LuaConfig.SourceDirectory = configFileProvider.getPath().getParent().toString();
+        AerospikeClient client = AerospikeClientProvider.getClient(conf);
+        client.removeUdf(null, luaFileName);
 
-        RegisterTask task = connection.getClient().register(null, fullPath, luaFileName, Language.LUA);
+        RegisterTask task = client.register(null,
+                configFileProvider.getPath().toString(),
+                configFileProvider.getPath().getFileName().toString(),
+                Language.LUA);
         task.waitTillComplete();
-        connection.close();
+        client.close();
     }
 }

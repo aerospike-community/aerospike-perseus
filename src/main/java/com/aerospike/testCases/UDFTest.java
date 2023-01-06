@@ -1,18 +1,22 @@
 package com.aerospike.testCases;
 
+import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.data.provider.DataProvider;
-import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.aerospike.AerospikeConfiguration;
 
 public class UDFTest extends Test<Integer>{
 
-    public UDFTest(AerospikeConnection connection, DataProvider<Integer> provider) {
-        super(connection, provider);
-        connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
+    public UDFTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+        super(conf, provider);
+        client.createIndex(null, conf.getNamespace(), conf.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
     protected void execute(Integer key){
-        connection.getClient().execute(null, getKey(key), "example", "lua_test");
+        WritePolicy writePolicy = new WritePolicy(client.writePolicyDefault);
+        writePolicy.timeoutDelay = 3000;
+        writePolicy.totalTimeout = 9000;
+        client.execute(writePolicy, getKey(key), "example", "lua_test");
     }
 
     public String getHeader(){

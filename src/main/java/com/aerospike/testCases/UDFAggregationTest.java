@@ -7,24 +7,24 @@ import com.aerospike.client.query.ResultSet;
 import com.aerospike.client.query.Statement;
 import com.aerospike.data.provider.DataProvider;
 import com.aerospike.data.TimePeriod;
-import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.aerospike.AerospikeConfiguration;
 
 public class UDFAggregationTest extends Test<TimePeriod>{
 
-    public UDFAggregationTest(AerospikeConnection connection, DataProvider<TimePeriod> provider) {
+    public UDFAggregationTest(AerospikeConfiguration connection, DataProvider<TimePeriod> provider) {
         super(connection, provider);
-        connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
+        client.createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
     protected void execute(TimePeriod timePeriod){
         Statement statement = new Statement();
 
-        statement.setNamespace(connection.getNamespace());
-        statement.setSetName(connection.getSetName());
+        statement.setNamespace(conf.getNamespace());
+        statement.setSetName(conf.getSetName());
         statement.setFilter(Filter.range("date", timePeriod.begin(), timePeriod.end()));
         statement.setAggregateFunction("example", "average_range", Value.get("octet"));
 
-        ResultSet rs = connection.getClient().queryAggregate(null, statement);
+        ResultSet rs = client.queryAggregate(null, statement);
         while (rs.next()) {
             Object obj = rs.getObject();
 //            System.out.printf(

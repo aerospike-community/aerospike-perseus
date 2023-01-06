@@ -8,12 +8,12 @@ import com.aerospike.client.exp.ExpWriteFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.data.provider.DataProvider;
-import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.aerospike.AerospikeConfiguration;
 
 public class ExpressionWriterTest extends Test<Integer>{
 
-    public ExpressionWriterTest(AerospikeConnection connection, DataProvider<Integer> provider) {
-        super(connection, provider);
+    public ExpressionWriterTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+        super(conf, provider);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class ExpressionWriterTest extends Test<Integer>{
                 writeExp,
                 ExpWriteFlags.DEFAULT);
 
-        WritePolicy policy = new WritePolicy(connection.getClient().writePolicyDefault);
-        Record operate = connection.getClient().operate(policy, getKey(key), writeExpOp);
+        WritePolicy policy = new WritePolicy(client.writePolicyDefault);
+        Record operate = client.operate(policy, getKey(key), writeExpOp);
 //        if(operate != null)
 //            System.out.println(operate.toString());
     }

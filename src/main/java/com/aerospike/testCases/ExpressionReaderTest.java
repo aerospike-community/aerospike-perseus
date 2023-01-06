@@ -7,11 +7,11 @@ import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpReadFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.data.provider.DataProvider;
-import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.aerospike.AerospikeConfiguration;
 
 public class ExpressionReaderTest extends Test<Integer>{
-    public ExpressionReaderTest(AerospikeConnection connection, DataProvider<Integer> provider) {
-        super(connection, provider);
+    public ExpressionReaderTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+        super(conf, provider);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ExpressionReaderTest extends Test<Integer>{
                 readExp,
                 ExpReadFlags.DEFAULT);
 
-        Record operate = connection.getClient().operate(null, getKey(key), readExpOp);
+        Record operate = client.operate(null, getKey(key), readExpOp);
 //        if(operate != null)
 //            System.out.println(operate.getString("r"));
     }

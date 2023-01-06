@@ -6,25 +6,25 @@ import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.RecordSet;
 import com.aerospike.client.query.Statement;
 import com.aerospike.data.provider.DataProvider;
-import com.aerospike.utilities.aerospike.AerospikeConnection;
+import com.aerospike.utilities.aerospike.AerospikeConfiguration;
 
 public class SearchTest extends Test<Integer>{
     private final QueryPolicy policy;
-    public SearchTest(AerospikeConnection connection, DataProvider<Integer> provider) {
-        super(connection, provider);
-        policy = new QueryPolicy(connection.getClient().queryPolicyDefault);
+    public SearchTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+        super(conf, provider);
+        policy = new QueryPolicy(client.queryPolicyDefault);
         policy.shortQuery = true;
         policy.includeBinData = false;
-        connection.getClient().createIndex(null, connection.getNamespace(), connection.getSetName(), "indexOnKeyPlus10", "keyPlus10", IndexType.NUMERIC).waitTillComplete();
+        client.createIndex(null, conf.getNamespace(), conf.getSetName(), "indexOnKeyPlus10", "keyPlus10", IndexType.NUMERIC).waitTillComplete();
     }
 
     @Override
     protected void execute(Integer key){
         Statement statement = new Statement();
         statement.setFilter(Filter.equal("keyPlus10", key+10));
-        statement.setNamespace(connection.getNamespace());
-        statement.setSetName(connection.getSetName());
-        RecordSet records = connection.getClient().query(policy, statement);
+        statement.setNamespace(conf.getNamespace());
+        statement.setSetName(conf.getSetName());
+        RecordSet records = client.query(policy, statement);
         records.next();
         records.close();
     }

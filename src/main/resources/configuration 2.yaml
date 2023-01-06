@@ -1,0 +1,16 @@
+Hosts:
+  - IP: "172.31.45.155"
+    Port: 3000
+  - IP: "172.31.34.13"
+    Port: 3000
+  - IP: "172.31.46.191"
+    Port: 3000
+  - IP: "172.31.40.156"
+    Port: 3000
+Namespace: "Barclays"
+SetName: "test"
+AutoDiscardingKeyCapacity: 5000000
+AutoDiscardingKeyRatio: .1
+PrintIntervalSec: 1
+ThreadConfFilePath: "threads.yaml"
+LuaFilePath: "lua2/example.lua"
