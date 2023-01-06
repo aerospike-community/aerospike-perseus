@@ -12,16 +12,18 @@ public class StatLogger {
     private final String headerCellFormat = String.format(" %s%ds |", " %-", columnWidth);
     private final String rowCellFormat = String.format(" %s%dd |", " %-", columnWidth);
 
+    private final int headerBreak;
     private long i = 1;
 
-    public StatLogger(List<Logable> list, int printDelay) {
+    public StatLogger(List<Logable> list, int printDelay, int headerBreak) {
         this.list = list;
+        this.headerBreak = headerBreak;
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(this::printRow, printDelay, printDelay, TimeUnit.SECONDS);
     }
 
     private void printRow() {
-        if(i % 25 == 1)
+        if(i % headerBreak == 1)
             printHeader();
 
         String template = getTemplate(rowCellFormat, rowCellFormat);

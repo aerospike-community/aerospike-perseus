@@ -44,6 +44,10 @@ public class AppConfiguration implements AerospikeConfiguration {
         return (int) yaml.get("PrintIntervalSec");
     }
 
+    public int getHeaderBreak() {
+        return (int) yaml.get("NumberOfLinesToReprintHeader");
+    }
+
     public String getThreadConfFilePath() {
         return (String) yaml.get("ThreadConfFilePath");
     }

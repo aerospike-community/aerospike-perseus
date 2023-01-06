@@ -12,5 +12,6 @@ SetName: "test"
 AutoDiscardingKeyCapacity: 5000000
 AutoDiscardingKeyRatio: .1
 PrintIntervalSec: 1
+NumberOfLinesToReprintHeader: 15
 ThreadConfFilePath: "threads.yaml"
 LuaFilePath: "lua2/example.lua"

@@ -43,7 +43,7 @@ public class Main {
         tests.put("Search", searchTest);
         tests.put("UDFAgg", udfAggregationTest);
 
-        new StatLogger(new ArrayList(tests.values()), conf.getPrintDelay());
+        new StatLogger(new ArrayList(tests.values()), conf.getPrintDelay(), conf.getHeaderBreak());
 
         new ThreadAdjuster(tests, conf.getThreadConfFilePath());
     }
