@@ -41,7 +41,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.aerospike.Main</mainClass>
+                            <mainClass>com.aerospike.perseus.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
