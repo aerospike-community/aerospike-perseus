@@ -1,7 +1,7 @@
 # Perseus
 Perseus is a tool for demonstrating some of the core capabilities of Aerospike technology. Perseus can generate a high number of transactions per second of varied types, such as reads, writes, updates, expressions, User Defined Functions (through LUA code running on the server), secondary index queries, and aggregations. The user can dynamically change the load of each transaction type to see how the server reacts to different shapes of throughputs. 
 
-This tool was tested against a 4-node aerospike cluster on i4i.4xlarge EC2 instances. The cluster handled 400+K transactions per second while managing around 3.5TB of data (the size before replication). 
+This tool was tested against a 4-node aerospike cluster on i4i.4xlarge EC2 instances. The cluster handled 400+K transactions per second while managing around 3 TB of data (the size before replication). 
 
 This document explains how to use this tool.
 
