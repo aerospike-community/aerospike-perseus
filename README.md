@@ -5,8 +5,7 @@ This code base is written for JDK 18 and won’t compile on lower versions!
 
 There are 3 files in the src/main/resources that control the behaviour of Perseus. 
 
-📦resources\
-┣ 📜configuration 2.yaml\
+📦src\main\java\resources\
 ┣ 📜configuration.yaml\
 ┣ 📜example.lua\
 ┗ 📜threads.yaml
