@@ -81,5 +81,7 @@ This file is checked every 1 second. You can change the number of threads the cl
 - Search: The number of threads that use a secondary index to retrieve a unique record. 
 - UDFAgg: The number of threads that use a secondary index to retrieve a group of records, aggregate them, and return the result. 
 
+Note: because updates, reads, SI queries, expressions, and UDF all depend on the samples stored in the AutoDiscardingList, and the list only being populated by writes, you always need to have some writer threads writing a record at the beginning until some samples are stored in the memory of the app. Running the application with 0 writer threads from the beginning won't yield a meaningful result.   
+
 ### example.lua
 The Lua code that will be used to run the UDF related test cases.
