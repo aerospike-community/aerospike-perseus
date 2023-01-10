@@ -1,20 +1,18 @@
 # Perseus
-Perseus is a tool that can demonstrate some of the core capabilities of Aerospike technology. This document explains how to use this tool.
+Perseus is a tool for demonstrating some of the core capabilities of Aerospike technology. Perseus can generate a high number of transactions per second of varied types, such as reads, writes, updates, expressions, User Defined Functions (through LUA code running on the server), secondary index queries, and aggregations. The user can dynamically change the load of each transaction type to see how the server reacts to different shapes of throughputs. 
 
-This code base is written for JDK 18 and won’t compile on lower versions!
+This tool was tested against a 4-node aerospike cluster on i4i.4xlarge EC2 instances. The cluster handled 400+K transactions per second while managing around 3.5TB of data (the size before replication). 
 
-There are 3 files in the src/main/resources that control the behaviour of Perseus. 
+This document explains how to use this tool.
 
-📦src\main\java\resources\
-┣ 📜configuration.yaml\
-┣ 📜example.lua\
-┗ 📜threads.yaml
-
-These 3 files are copied to the working directory at runtime if they are not already there. The application will use the files in the working directory. This would allow the user to change the configurations easily after the first run. 
+Note: This code base is written for JDK 18 and won’t compile on lower versions!
 
 ## How to Use
 
-To run the application, you need to have an aerospike cluster. You can build one in the cloud or run one locally. To set up a one-node cluster locally using docker, run: 
+To run the application, you need to have an aerospike cluster. 
+
+### The Aerospike Cluster
+You can build one in the cloud or run one locally. To set up a one-node cluster locally using docker, run: 
 
 ```docker run --rm -d --name aerospike -p 3000-3002:3000-3002 aerospike:ce-6.2.0.2```
 
@@ -25,6 +23,20 @@ You should be able to attach the node by running the following:
 You can look at the aerospike logs by running the following:
 
 ```docker logs aerospike```
+
+Note: After running the tool for a while, the instance resources can be exhausted; therefore, the application may start to get out of disk/memory exceptions. If that happens, you need to connect to the cluster and do a cleanup (perhaps truncate the namespace). If it’s a docker instance, you may stop the container with the following command and then rerun a fresh instance. 
+
+```docker container stop aerospike```
+
+### Running the Appplication
+There are 3 files in the src/main/resources that control the behaviour of Perseus. 
+
+📦src\main\java\resources\
+┣ 📜configuration.yaml\
+┣ 📜example.lua\
+┗ 📜threads.yaml
+
+These 3 files are copied to the working directory at runtime if they are not already there. The application will use the files in the working directory. This would allow the user to change the configurations easily after the first run. 
 
 To run the application in an IDE, run the Main method of Class:
 
@@ -44,10 +56,7 @@ To run the jar, you need JDK 18. You can run the jar with this command.
 
 The first time you run the application, configuration.yaml, threads.yaml, and lua/example.lua will be created in the working directory. After that, you can modify them to change the behaviour of Perseus.
 
-Note: After running the tool for a while, the instance resources can be exhausted; therefore, the application may start to get out of disk/memory exceptions. If that happens, you need to connect to the cluster and do a cleanup (perhaps truncate the namespace). If it’s a docker instance, you may stop the container with the following command and then rerun a fresh instance. 
-
-```docker container stop aerospike```
-
+## Configuring Perseus
 ### configuration.yaml
 This file is only checked once at the beginning of the execution:
 - Hosts: The IP and Port of the Aerospike nodes.
