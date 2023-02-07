@@ -7,7 +7,9 @@ Hosts:
     Port: 3000
   - IP: "172.31.40.156"
     Port: 3000
-Namespace: "Barclays"
+Username: ""
+Password: ""
+Namespace: "namespace"
 SetName: "test"
 AutoDiscardingKeyCapacity: 5000000
 AutoDiscardingKeyRatio: .1
@@ -16,3 +18,5 @@ NumberOfLinesToReprintHeader: 15
 ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
 SizeOfTheDummyPartOfTheRecord: 1220
+BatchSize: 10
+

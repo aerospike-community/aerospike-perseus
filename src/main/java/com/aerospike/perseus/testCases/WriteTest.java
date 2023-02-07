@@ -6,7 +6,6 @@ import com.aerospike.perseus.data.provider.DataProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 public class WriteTest extends Test<Record>{
-
     private final KeyCollector<Integer> keyCollector;
 
     public WriteTest(AerospikeConfiguration conf, DataProvider<Record> provider, KeyCollector<Integer> keyCollector) {
@@ -15,10 +14,10 @@ public class WriteTest extends Test<Record>{
     }
 
     @Override
-    protected void execute(Record sales) {
-        com.aerospike.client.Key key = getKey(sales.getKey());
-        client.put(null, key, sales.getBins());
-        keyCollector.collect(sales.getKey());
+    protected void execute(Record record) {
+        com.aerospike.client.Key key = getKey(record.getKey());
+        client.put(null, key, record.getBins());
+        keyCollector.collect(record.getKey());
     }
 
     public String getHeader(){

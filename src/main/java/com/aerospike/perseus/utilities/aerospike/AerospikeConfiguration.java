@@ -8,4 +8,8 @@ public interface AerospikeConfiguration {
     String getSetName();
 
     Host[] getHosts();
+
+    String getUsername();
+
+    String getPassword();
 }

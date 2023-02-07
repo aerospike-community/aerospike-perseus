@@ -2,6 +2,8 @@ package com.aerospike.perseus.data;
 
 import com.aerospike.client.Bin;
 
+import java.util.Map;
+
 public abstract class Record {
     private final int key;
 

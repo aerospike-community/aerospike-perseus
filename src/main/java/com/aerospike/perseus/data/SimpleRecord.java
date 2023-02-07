@@ -3,6 +3,9 @@ package com.aerospike.perseus.data;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Value;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SimpleRecord extends Record {
     private final int octet;
     private final int keyPlus10;
@@ -24,11 +27,11 @@ public class SimpleRecord extends Record {
     @Override
     public Bin[] getBins() {
         return new Bin[] {
-                new Bin("octet", this.octet),
-                new Bin("keyPlus10", this.keyPlus10),
-                new Bin("keyPlus20", this.keyPlus20),
+                new Bin("octet", Value.get( this.octet)),
+                new Bin("keyPlus10", Value.get( this.keyPlus10)),
+                new Bin("keyPlus20", Value.get( this.keyPlus20)),
                 new Bin("country", Value.get( this.country )),
-                new Bin("date", this.date),
+                new Bin("date", Value.get( this.date)),
                 new Bin("dummy", Value.get( this.dummy ))
         };
     }

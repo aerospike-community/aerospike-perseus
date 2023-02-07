@@ -22,6 +22,16 @@ public class AppConfiguration implements AerospikeConfiguration {
                 .toArray(new Host[0]);
     }
 
+    @Override
+    public String getUsername() {
+        return (String) yaml.get("Username");
+    }
+
+    @Override
+    public String getPassword() {
+        return (String) yaml.get("Password");
+    }
+
     public String getNamespace() {
         return (String) yaml.get("Namespace");
     }
@@ -56,5 +66,8 @@ public class AppConfiguration implements AerospikeConfiguration {
 
     public int getSizeOfTheDummyPartOfTheRecord() {
         return (int) yaml.get("SizeOfTheDummyPartOfTheRecord");
+    }
+    public int getBatchSize() {
+        return (int) yaml.get("BatchSize");
     }
 }

@@ -1,5 +1,6 @@
 package com.aerospike.perseus;
 
+import com.aerospike.perseus.data.provider.random.BatchSimpleRecordPeovider;
 import com.aerospike.perseus.data.provider.random.TimePeriodProvider;
 import com.aerospike.perseus.testCases.*;
 import com.aerospike.perseus.utilities.AppConfiguration;
@@ -19,6 +20,7 @@ public class Main {
         LuaSetup.registerUDF(conf, conf.getLuaFilePath());
 
         var simpleDataProvider = new SimpleRecordProvider(conf.getSizeOfTheDummyPartOfTheRecord());
+        var batchSimpleDataProvider = new BatchSimpleRecordPeovider(simpleDataProvider, conf.getBatchSize());
         var discardingKeyList = new AutoDiscardingKeyCollector(
                 conf.getAutoDiscardingKeyCapacity(),
                 conf.getAutoDiscardingKeyRatio());
@@ -32,6 +34,7 @@ public class Main {
         var searchTest = new SearchTest(conf, discardingKeyList);
         var udfTest = new UDFTest(conf, discardingKeyList);
         var udfAggregationTest = new UDFAggregationTest(conf, timePeriodProvider);
+        var batchWriteTest = new BatchWriteTest(conf, batchSimpleDataProvider, discardingKeyList);
 
         Map<String, Test> tests = new HashMap<>();
         tests.put("Write", writeTest);
@@ -42,6 +45,7 @@ public class Main {
         tests.put("UDF", udfTest);
         tests.put("Search", searchTest);
         tests.put("UDFAgg", udfAggregationTest);
+        tests.put("BatchW", batchWriteTest);
 
         new StatLogger(new ArrayList(tests.values()), conf.getPrintDelay(), conf.getHeaderBreak());
 
