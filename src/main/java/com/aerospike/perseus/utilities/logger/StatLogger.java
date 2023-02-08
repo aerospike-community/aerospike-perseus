@@ -8,16 +8,19 @@ import java.util.stream.Stream;
 
 public class StatLogger {
     private final List<Logable> list;
-    private final int columnWidth = 15;
-    private final String headerCellFormat = String.format(" %s%ds |", " %-", columnWidth);
-    private final String rowCellFormat = String.format(" %s%dd |", " %-", columnWidth);
+    private final int columnWidth;
+    private final String headerCellFormat;
+    private final String rowCellFormat;
 
     private final int headerBreak;
     private long i = 1;
 
-    public StatLogger(List<Logable> list, int printDelay, int headerBreak) {
+    public StatLogger(List<Logable> list, int printDelay, int columnWidth, int headerBreak) {
         this.list = list;
+        this.columnWidth = columnWidth;
         this.headerBreak = headerBreak;
+        headerCellFormat = String.format(" %s%ds |", " %-", columnWidth);
+        rowCellFormat = String.format(" %s%dd |", " %-", columnWidth);
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(this::printRow, printDelay, printDelay, TimeUnit.SECONDS);
     }

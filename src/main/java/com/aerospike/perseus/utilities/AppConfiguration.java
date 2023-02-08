@@ -70,4 +70,6 @@ public class AppConfiguration implements AerospikeConfiguration {
     public int getBatchSize() {
         return (int) yaml.get("BatchSize");
     }
+
+    public int getColumnWidth() { return (int) yaml.get("ColumnWidth"); }
 }

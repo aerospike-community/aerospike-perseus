@@ -37,6 +37,6 @@ public class ExpressionReaderTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("Exp Reads (%d)", threadCount.get());
+        return String.format("Exp R (%d)", threadCount.get());
     }
 }

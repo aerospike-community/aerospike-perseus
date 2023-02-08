@@ -6,6 +6,7 @@ import com.aerospike.perseus.data.provider.DataProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeClientProvider;
 import com.aerospike.perseus.utilities.logger.Logable;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+import com.aerospike.perseus.utilities.logger.Total;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 
 public abstract class Test<T> implements Logable {
     private static final int maxPoolSize = 200;
+    public static final Total totalTps = new Total();
     protected final AtomicInteger threadCount = new AtomicInteger(  0);
     protected final AerospikeClient client;
     protected final AerospikeConfiguration conf;
@@ -84,6 +86,7 @@ public abstract class Test<T> implements Logable {
             setThreads(0);
         }
         tpsCounter.getAndIncrement();
+        totalTps.increment();
     }
 
     protected abstract void execute(T t);

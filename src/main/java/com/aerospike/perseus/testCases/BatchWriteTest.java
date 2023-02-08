@@ -42,6 +42,6 @@ public class BatchWriteTest extends Test<List<Record>>{
     }
 
     public String getHeader(){
-        return String.format("Batch writes (%d)", threadCount.get());
+        return String.format("Batch W (%d)", threadCount.get());
     }
 }

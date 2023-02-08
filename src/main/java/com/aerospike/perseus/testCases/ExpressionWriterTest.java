@@ -40,6 +40,6 @@ public class ExpressionWriterTest extends Test<Integer>{
     }
 
     public String getHeader(){
-        return String.format("Exp Writes (%d)", threadCount.get());
+        return String.format("Exp W (%d)", threadCount.get());
     }
 }

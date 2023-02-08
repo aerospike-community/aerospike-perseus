@@ -15,6 +15,7 @@ AutoDiscardingKeyCapacity: 5000000
 AutoDiscardingKeyRatio: .1
 PrintIntervalSec: 1
 NumberOfLinesToReprintHeader: 15
+ColumnWidth: 12
 ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
 SizeOfTheDummyPartOfTheRecord: 1220

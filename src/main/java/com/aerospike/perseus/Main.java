@@ -8,6 +8,7 @@ import com.aerospike.perseus.data.collector.AutoDiscardingKeyCollector;
 import com.aerospike.perseus.data.provider.random.SimpleRecordProvider;
 import com.aerospike.perseus.utilities.ThreadAdjuster;
 import com.aerospike.perseus.utilities.aerospike.LuaSetup;
+import com.aerospike.perseus.utilities.logger.Logable;
 import com.aerospike.perseus.utilities.logger.StatLogger;
 
 import java.util.ArrayList;
@@ -47,7 +48,19 @@ public class Main {
         tests.put("UDFAgg", udfAggregationTest);
         tests.put("BatchW", batchWriteTest);
 
-        new StatLogger(new ArrayList(tests.values()), conf.getPrintDelay(), conf.getHeaderBreak());
+        var list = new ArrayList<Logable>();
+        list.add(writeTest);
+        list.add(readTest);
+        list.add(updateTest);
+        list.add(expressionReaderTest);
+        list.add(expressionWriterTest);
+        list.add(batchWriteTest);
+        list.add(searchTest);
+        list.add(udfTest);
+        list.add(udfAggregationTest);
+        list.add(Test.totalTps);
+
+        new StatLogger(list, conf.getPrintDelay(), conf.getColumnWidth(), conf.getHeaderBreak());
 
         new ThreadAdjuster(tests, conf.getThreadYamlFilePath());
     }
