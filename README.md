@@ -115,6 +115,6 @@ To connect to the machine that runs Perseus, run:
 
 You can edit thread.yaml (in /root) and change the number of threads that run each test case as described in the previous sections. 
 
-If you want to stop Perseus, run ```ps -ef | grep Perseus``` to get the process id to kill the process.
-
+If you want to stop Perseus, run ```ps -ef | grep Perseus``` to get the process id to kill it.
+ 
 Don't forget to run ```./destroy.sh``` when you are done. Jeff doesn't need more money.
