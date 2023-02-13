@@ -1,6 +1,6 @@
 . configure.sh
 
-aerolab client create ams -n ${CLIENT_NAME} -s ${CLUSTER_NAME}  --instance-type ${AWS_CLIENT_INSTANCE} --ebs=40 --secgroup-id=${SEC_GROUP} --subnet-id=${SUBNET} || exit 1
+aerolab client create ams -n ${CLIENT_NAME} -s ${CLUSTER_NAME}  --instance-type ${AWS_CLIENT_INSTANCE} --ebs=40 || exit 1
 
 aerolab files upload -c -n ${CLIENT_NAME} perseus.sh /root/perseus.sh || exit 1
 

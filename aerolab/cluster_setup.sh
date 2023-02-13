@@ -6,7 +6,7 @@ sed "s/_NAMESPACE_/${NAMESPACE}/g" ${TNF} > aerospike.conf
 
 # create cluster
 echo "Creating cluster"
-aerolab cluster create -n ${CLUSTER_NAME} -c ${NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${AWS_SERVER_INSTANCE} --ebs=20 --secgroup-id=${SEC_GROUP} --subnet-id=${SUBNET} || exit 1
+aerolab cluster create -n ${CLUSTER_NAME} -c ${NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${AWS_SERVER_INSTANCE} --ebs=20 || exit 1
 
 rm -f aerospike.conf
 

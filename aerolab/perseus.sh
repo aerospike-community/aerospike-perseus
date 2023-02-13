@@ -14,4 +14,5 @@ git clone https://github.com/behrockz/aerospike-perseus
 cd aerospike-perseus
 mvn package
 cd ..
-java -jar aerospike-perseus/target/perseus-1.0-SNAPSHOT-jar-with-dependencies.jar
+nohup java -jar aerospike-perseus/target/perseus-1.0-SNAPSHOT-jar-with-dependencies.jar & 
+tail -f nohup.out

@@ -91,11 +91,7 @@ This repository also has the scripts to set up an Aerospike cluster on AWS, conf
 
 To use these scripts, you must install and configure Aerolab on your machine: https://github.com/aerospike/aerolab. Follow the https://github.com/aerospike/aerolab/blob/master/docs/GETTING_STARTED.md guide to install and configure aws-cli.
 
-After the setup is complete, open a terminal and cd to the aerolab directory in this repository. Open the configure.sh file. The options are self-explanatory. You don't need to change anything except SEC_GROUP and SUBNET. Modify these two values based on your AWS account.
-
-HINT: Use the default subnet and Security Group of the region you want to use.
-
-NOTE: The Security Group should allow ALL TRAFFIC inside the security group, SSH from 0.0.0.0/0, and Custom TCP from 3000 on 0.0.0.0/0.
+After the setup is complete, open a terminal and cd to the aerolab directory in this repository. You don't need to change anything to run the demo, but if you want you can modify configure.sh file to change the specifications of the demo. The options in this file are self-explanatory. 
 
 Now run:
 ```./setup.sh```
@@ -112,9 +108,13 @@ Seconds      |  Writes (2)   |  Reads (2)    |  Updates (0)  |  Exp R (0)    |  
 3            |  2116         |  2178         |  0            |  0            |  0            |  0            |  0            |  0            |  0            |  4294         |
 ```
 
-Now, in another terminal, run:
+NOTE: Perseus runs in the background, if you accidentally Ctrl-C, it will continue running in the background. 
+
+To connect to the machine that runs Perseus, run:
 ```./connect_client.sh```
 
-Now, you are connected to the node that runs Perseus. you can pen thread.yaml (in /root) and change the number of threads as described in the previous sections. You can see the result in the other terminal and grafana.
+You can edit thread.yaml (in /root) and change the number of threads that run each test case as described in the previous sections. 
+
+If you want to stop Perseus, run ```ps -ef | grep Perseus``` to get the process id to kill the process.
 
 Don't forget to run ```./destroy.sh``` when you are done. Jeff doesn't need more money.
