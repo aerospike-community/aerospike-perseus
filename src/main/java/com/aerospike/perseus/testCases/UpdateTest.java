@@ -20,7 +20,7 @@ public class UpdateTest extends Test<Integer>{
     protected void execute(Integer key){
         Bin updated = new Bin("UpdateRes", Instant.now().toString());
         try{
-            client.add(policy, getKey(key), updated);
+            client.put(policy, getKey(key), updated);
         } catch(Exception ignored) {
         }
     }
