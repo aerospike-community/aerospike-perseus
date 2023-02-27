@@ -86,17 +86,21 @@ Note: because updates, reads, SI queries, expressions, and UDF all depend on the
 ### example.lua
 The Lua code will be used to run the UDF-related test cases.
 
-## How to demo Perseus
+## How to Run Perseus at Scale
 This repository also has the scripts to set up an Aerospike cluster on AWS, configure the Aerospike monitoring stack, and run the Perseus in a single command.
 
 To use these scripts, you must install and configure Aerolab on your machine: https://github.com/aerospike/aerolab. Follow the https://github.com/aerospike/aerolab/blob/master/docs/GETTING_STARTED.md guide to install and configure aws-cli.
 
-After the setup is complete, open a terminal and cd to the aerolab directory in this repository. You don't need to change anything to run the demo, but if you want you can modify configure.sh file to change the specifications of the demo. The options in this file are self-explanatory. 
+After the setup is complete, open a terminal and cd to the aerolab directory in this repository. 
+
+This demo requires Aerospike Enterprise License. You can get a 60-day license for free from here: https://aerospike.com/get-started-aerospike-database/. If you need your dev license to get extended, please contact Aerospike. We will be more than happy to help you. 
+
+You don't need to pre-configure much to run the demo. Just open the configure.sh file, and chanfe the 'FEATURES' to the address of the license key you downloaded from our website. 
 
 Now run:
 ```./setup.sh```
 
-NOTE: *Very important* to remember to run ```./destroy.sh``` soon. This demo uses relatively expensive hardware. Running it for a few days can easily cost hundreds of dollars. 
+NOTE: *Very important* You MUST remember to run ```./destroy.sh``` soon. This demo uses relatively expensive hardware. Running the demo costs roughly $7 per hour. Forgetting to release the resources can cost hundreds of dollars. 
 
 If everything runs successfully, the script will open a grafana dashboard (user: admin, password: admin) that shows the state of the cluster, and in the terminal, you should see something like this:
 ```
@@ -108,10 +112,11 @@ Seconds      |  Writes (2)   |  Reads (2)    |  Updates (0)  |  Exp R (0)    |  
 3            |  2116         |  2178         |  0            |  0            |  0            |  0            |  0            |  0            |  0            |  4294         |
 ```
 
-NOTE: Perseus runs in the background, if you accidentally Ctrl-C, it will continue running in the background. 
+NOTE: Perseus (the load tester app) runs in the background, if you accidentally Ctrl-C, it will continue running in the background. You can tail the nohup file to monitor the output again. 
 
-To connect to the machine that runs Perseus, run:
+While monitoring the number of transactions per second in the terminal, open another terminal to open another connection to the machine that is running the Test. To connect to the machine that runs Perseus, run:
 ```./connect_client.sh```
+
 
 You can edit thread.yaml (in /root) and change the number of threads that run each test case as described in the previous sections. 
 
