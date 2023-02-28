@@ -91,11 +91,11 @@ This repository also has the scripts to set up an Aerospike cluster on AWS, conf
 
 To use these scripts, you must install and configure Aerolab on your machine: https://github.com/aerospike/aerolab. Follow the https://github.com/aerospike/aerolab/blob/master/docs/GETTING_STARTED.md guide to install and configure aws-cli.
 
-After the setup is complete, open a terminal and cd to the aerolab directory in this repository. 
+After the setup is complete, open a terminal and cd to the Aerolab directory in this repository. 
 
 This demo requires Aerospike Enterprise License. You can get a 60-day license for free from here: https://aerospike.com/get-started-aerospike-database/. If you need your dev license to get extended, please contact Aerospike. We will be more than happy to help you. 
 
-You don't need to pre-configure much to run the demo. Just open the configure.sh file, and chanfe the 'FEATURES' to the address of the license key you downloaded from our website. 
+You don't need to pre-configure much to run the demo. Just open the configure.sh file, and change the 'FEATURES' to the address of the license key you downloaded from our website. 
 
 Now run:
 ```./setup.sh```
