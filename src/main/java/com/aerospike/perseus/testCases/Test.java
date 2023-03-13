@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public abstract class Test<T> implements Logable {
-    private static final int maxPoolSize = 300;
+    private static final int maxPoolSize = 600;
     public static final Total totalTps = new Total();
     protected final AtomicInteger threadCount = new AtomicInteger(  0);
     protected final AerospikeClient client;
