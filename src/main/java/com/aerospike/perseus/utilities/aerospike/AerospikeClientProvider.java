@@ -4,11 +4,16 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.policy.ClientPolicy;
 
 public class AerospikeClientProvider {
-    public static AerospikeClient getClient(AerospikeConfiguration conf){
+
+    private static AerospikeClient client = null;
+    public static synchronized AerospikeClient getClient(AerospikeConfiguration conf){
+        if(client != null)
+            return client;
         ClientPolicy policy = new ClientPolicy();
-        policy.maxConnsPerNode = 300;
+        policy.maxConnsPerNode = 3000;
         policy.user = conf.getUsername();
         policy.password = conf.getPassword();
-        return new AerospikeClient(policy, conf.getHosts());
+        client = new AerospikeClient(policy, conf.getHosts());
+        return client;
     }
 }
