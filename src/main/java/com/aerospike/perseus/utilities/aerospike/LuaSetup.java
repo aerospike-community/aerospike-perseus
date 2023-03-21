@@ -22,6 +22,5 @@ public class LuaSetup {
                 configFileProvider.getPath().getFileName().toString(),
                 Language.LUA);
         task.waitTillComplete();
-        client.close();
     }
 }
