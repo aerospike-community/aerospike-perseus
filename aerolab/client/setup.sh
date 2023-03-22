@@ -27,3 +27,6 @@ aerolab client attach -n ${CLIENT_NAME} -l all --parallel -- bash /root/perseus_
 echo "Building Perseus.sh"
 aerolab client attach -n ${CLIENT_NAME} -l all --detach --parallel -- bash /root/perseus.sh
 
+if [ -f $prefix"threads.yaml" ]; then
+  cp $prefix"../src/main/resources/threads.yaml" $prefix"."
+fi
