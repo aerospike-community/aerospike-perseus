@@ -42,7 +42,7 @@ public class BatchWriteTest extends Test<List<Record>>{
         records.stream().forEach(k -> keyCollector.collect(k.getKey()));
     }
 
-    public List<String> getHeader(){
-        return List.of(String.format("Batch W (%d)", batchSize), String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return String.format("Batch W (%d)", batchSize);
     }
 }

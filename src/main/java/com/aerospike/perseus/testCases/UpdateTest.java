@@ -25,8 +25,8 @@ public class UpdateTest extends Test<Integer>{
         } catch(Exception ignored) {
         }
     }
-    public List<String> getHeader(){
-        return List.of("Update", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "Update";
     }
 
 }

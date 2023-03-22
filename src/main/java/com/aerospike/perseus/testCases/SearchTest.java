@@ -31,7 +31,7 @@ public class SearchTest extends Test<Integer>{
         records.close();
     }
 
-    public List<String> getHeader(){
-        return List.of("Search", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "Search";
     }
 }

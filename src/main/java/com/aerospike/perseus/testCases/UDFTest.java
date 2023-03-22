@@ -21,7 +21,7 @@ public class UDFTest extends Test<Integer>{
         client.execute(writePolicy, getKey(key), "example", "lua_test");
     }
 
-    public List<String> getHeader(){
-        return List.of("UDF", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "UDF";
     }
 }

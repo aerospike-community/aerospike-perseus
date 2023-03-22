@@ -22,7 +22,7 @@ public class WriteTest extends Test<Record>{
         keyCollector.collect(record.getKey());
     }
 
-    public List<String> getHeader(){
-        return List.of("Write", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "Write";
     }
 }

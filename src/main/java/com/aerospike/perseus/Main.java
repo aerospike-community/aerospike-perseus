@@ -10,7 +10,7 @@ import com.aerospike.perseus.domain.key.AutoDiscardingKeyCollector;
 import com.aerospike.perseus.domain.data.random.SimpleRecordDataProvider;
 import com.aerospike.perseus.utilities.ThreadAdjuster;
 import com.aerospike.perseus.utilities.aerospike.LuaSetup;
-import com.aerospike.perseus.utilities.logger.Logable;
+import com.aerospike.perseus.utilities.logger.LogableTest;
 import com.aerospike.perseus.utilities.logger.StatLogger;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class Main {
         tests.put("UDFAgg", udfAggregationTest);
         tests.put("BatchW", batchWriteTest);
 
-        var list = new ArrayList<Logable>();
+        var list = new ArrayList<LogableTest>();
         list.add(writeTest);
         list.add(readTest);
         list.add(updateTest);

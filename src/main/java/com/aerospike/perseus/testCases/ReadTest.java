@@ -17,7 +17,7 @@ public class ReadTest extends Test<Integer>{
         client.get(null, getKey(key));
     }
 
-    public List<String> getHeader(){
-        return List.of(String.format("Read(Hit %s%d)", "%", (int)(hitRatio*100)), String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return String.format("Read(Hit %s%d)", "%", (int)(hitRatio*100));
     }
 }

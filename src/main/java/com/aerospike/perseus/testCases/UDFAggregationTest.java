@@ -39,7 +39,7 @@ public class UDFAggregationTest extends Test<TimePeriod>{
         rs.close();
     }
 
-    public List<String> getHeader(){
-        return List.of("UDF Aggregate", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "UDF Aggregate";
     }
 }

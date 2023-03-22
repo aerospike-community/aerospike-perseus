@@ -4,7 +4,7 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Key;
 import com.aerospike.perseus.domain.Provider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeClientProvider;
-import com.aerospike.perseus.utilities.logger.Logable;
+import com.aerospike.perseus.utilities.logger.LogableTest;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 import com.aerospike.perseus.utilities.logger.Total;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public abstract class Test<T> implements Logable {
+public abstract class Test<T> implements LogableTest {
     private static final int maxPoolSize = 600;
     public static final Total totalTps = new Total();
     protected final AtomicInteger threadCount = new AtomicInteger(  0);
@@ -31,7 +31,7 @@ public abstract class Test<T> implements Logable {
 
         client = AerospikeClientProvider.getClient(conf);
 
-        executor = new ThreadPoolExecutor(maxPoolSize, maxPoolSize, 10, TimeUnit.MINUTES, new ArrayBlockingQueue<>(50000));
+        executor = new ThreadPoolExecutor(maxPoolSize, maxPoolSize, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5));
         terminated = new boolean[maxPoolSize];
     }
 
@@ -97,5 +97,10 @@ public abstract class Test<T> implements Logable {
 
     protected Key getKey(int key) {
         return new Key(conf.getNamespace(), conf.getSetName(), key);
+    }
+
+    @Override
+    public String getThreadsInformation() {
+        return String.format("%d (%d)", threadCount.get(), executor.getPoolSize());
     }
 }

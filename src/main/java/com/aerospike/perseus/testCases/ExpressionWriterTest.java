@@ -41,7 +41,7 @@ public class ExpressionWriterTest extends Test<Integer>{
 //            System.out.println(operate.toString());
     }
 
-    public List<String> getHeader(){
-        return List.of("Expression W", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "Expression W";
     }
 }

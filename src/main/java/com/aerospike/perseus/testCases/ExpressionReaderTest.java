@@ -38,7 +38,7 @@ public class ExpressionReaderTest extends Test<Integer>{
 //            System.out.println(operate.getString("r"));
     }
 
-    public List<String> getHeader(){
-        return List.of("Expression R", String.format("%d", threadCount.get()));
+    public String getHeader(){
+        return "Expression R";
     }
 }
