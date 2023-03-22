@@ -1,3 +1,4 @@
+#!/bin/bash
 wget https://download.java.net/java/GA/jdk18/43f95e8614114aeaa8e8a5fcf20a682d/36/GPL/openjdk-18_linux-x64_bin.tar.gz
 tar -xvf openjdk-18_linux-x64_bin.tar.gz
 sudo mv jdk-18* /opt/
@@ -11,8 +12,7 @@ echo "export PATH=$PATH:/opt/jdk-18/bin:/opt/maven/bin" >> ~/.bashrc
 
 cd /root
 git clone https://github.com/behrockz/aerospike-perseus
-cd aerospike-perseus
+cd /root/aerospike-perseus
 mvn package
-cd ..
-nohup java -jar aerospike-perseus/target/perseus-1.0-SNAPSHOT-jar-with-dependencies.jar & 
-tail -f nohup.out
+
+echo "Setup of Perseus is finished!"
