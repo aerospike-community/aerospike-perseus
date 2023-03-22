@@ -4,33 +4,34 @@ import com.aerospike.client.BatchRecord;
 import com.aerospike.client.BatchWrite;
 import com.aerospike.client.Key;
 import com.aerospike.client.Operation;
-import com.aerospike.perseus.data.Record;
-import com.aerospike.perseus.data.collector.KeyCollector;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.data.DataProvider;
+import com.aerospike.perseus.domain.data.Record;
+import com.aerospike.perseus.domain.key.KeyCollector;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BatchWriteTest extends Test<List<Record>>{
     private final KeyCollector<Integer> keyCollector;
     private final String namespace;
     private final String setName;
+    private final int batchSize;
 
-    public BatchWriteTest(AerospikeConfiguration conf, DataProvider<List<Record>> provider, KeyCollector<Integer> keyCollector) {
+    public BatchWriteTest(AerospikeConfiguration conf, DataProvider<List<Record>> provider, KeyCollector<Integer> keyCollector, int batchSize) {
         super(conf, provider);
         this.keyCollector = keyCollector;
         this.namespace = conf.getNamespace();
         this.setName = conf.getSetName();
+        this.batchSize = batchSize;
     }
 
     @Override
     protected void execute(List<Record> records) {
         List<BatchRecord> batchWrites = records.stream().map(r ->
                 {
-                    Operation[] operations = Arrays.stream(r.getBins()).map(b -> new Operation(Operation.Type.WRITE, b.name, b.value)).collect(Collectors.toList()).toArray(Operation[]::new);
+                    Operation[] operations = Arrays.stream(r.getBins()).map(b -> new Operation(Operation.Type.WRITE, b.name, b.value)).toArray(Operation[]::new);
                     return new BatchWrite(
                             new Key(namespace, setName, r.getKey()),
                             operations);
@@ -41,7 +42,7 @@ public class BatchWriteTest extends Test<List<Record>>{
         records.stream().forEach(k -> keyCollector.collect(k.getKey()));
     }
 
-    public String getHeader(){
-        return String.format("Batch W (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of(String.format("Batch W (%d)", batchSize), String.format("%d", threadCount.get()));
     }
 }

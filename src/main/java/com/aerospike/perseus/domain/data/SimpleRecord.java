@@ -1,10 +1,7 @@
-package com.aerospike.perseus.data;
+package com.aerospike.perseus.domain.data;
 
 import com.aerospike.client.Bin;
 import com.aerospike.client.Value;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SimpleRecord extends Record {
     private final int octet;

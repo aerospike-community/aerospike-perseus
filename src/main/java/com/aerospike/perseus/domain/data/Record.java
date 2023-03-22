@@ -1,4 +1,4 @@
-package com.aerospike.perseus.data;
+package com.aerospike.perseus.domain.data;
 
 import com.aerospike.client.Bin;
 

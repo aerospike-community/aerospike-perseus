@@ -5,12 +5,14 @@ import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.RecordSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.key.KeyProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+
+import java.util.List;
 
 public class SearchTest extends Test<Integer>{
     private final QueryPolicy policy;
-    public SearchTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+    public SearchTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
         super(conf, provider);
         policy = new QueryPolicy(client.queryPolicyDefault);
         policy.shortQuery = true;
@@ -29,7 +31,7 @@ public class SearchTest extends Test<Integer>{
         records.close();
     }
 
-    public String getHeader(){
-        return String.format("Searches (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("Search", String.format("%d", threadCount.get()));
     }
 }

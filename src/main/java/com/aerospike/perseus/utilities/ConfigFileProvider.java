@@ -16,8 +16,8 @@ public class ConfigFileProvider {
 
     public ConfigFileProvider(String fileName, String resourceName) {
         this.path = Paths.get(fileName).toAbsolutePath();
-        InputStream testThreads = ConfigFileProvider.class.getClassLoader().getResourceAsStream(resourceName);
         try {
+            InputStream testThreads = ConfigFileProvider.class.getClassLoader().getResourceAsStream(resourceName);
             if(Files.exists(path))
                 return;
             if(!Files.exists(path.getParent()))
@@ -39,8 +39,9 @@ public class ConfigFileProvider {
             return load;
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException();
         }
+
+        return null;
     }
 
     public Path getPath() {

@@ -5,9 +5,11 @@ import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.ResultSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.perseus.data.TimePeriod;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.data.DataProvider;
+import com.aerospike.perseus.domain.data.TimePeriod;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+
+import java.util.List;
 
 public class UDFAggregationTest extends Test<TimePeriod>{
 
@@ -37,7 +39,7 @@ public class UDFAggregationTest extends Test<TimePeriod>{
         rs.close();
     }
 
-    public String getHeader(){
-        return String.format("LUA Aggs (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("UDF Aggregate", String.format("%d", threadCount.get()));
     }
 }

@@ -11,7 +11,7 @@ public class AppConfiguration implements AerospikeConfiguration {
 
     public AppConfiguration(String fileName) {
         var configFileProvider = new ConfigFileProvider(fileName, "configuration.yaml");
-        yaml = configFileProvider.ReadYaml();
+        yaml = configFileProvider.ReadYaml() ;
     }
 
     public Host[] getHosts(){
@@ -72,4 +72,6 @@ public class AppConfiguration implements AerospikeConfiguration {
     }
 
     public int getColumnWidth() { return (int) yaml.get("ColumnWidth"); }
+
+    public double getReadHitRatio() { return (double) yaml.get("ReadHitRatio"); }
 }

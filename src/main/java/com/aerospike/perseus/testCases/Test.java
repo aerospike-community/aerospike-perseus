@@ -2,7 +2,7 @@ package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Key;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.Provider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeClientProvider;
 import com.aerospike.perseus.utilities.logger.Logable;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
@@ -21,13 +21,13 @@ public abstract class Test<T> implements Logable {
     protected final AerospikeClient client;
     protected final AerospikeConfiguration conf;
     private final boolean[] terminated;
-    private final DataProvider<T> dataProvider;
+    private final Provider<T> provider;
     private final ThreadPoolExecutor executor;
     private final AtomicInteger tpsCounter = new AtomicInteger();
 
-    protected Test(AerospikeConfiguration conf, DataProvider<T> dataProvider) {
+    protected Test(AerospikeConfiguration conf, Provider<T> provider) {
         this.conf = conf;
-        this.dataProvider = dataProvider;
+        this.provider = provider;
 
         client = AerospikeClientProvider.getClient(conf);
 
@@ -70,7 +70,7 @@ public abstract class Test<T> implements Logable {
 
     private void loop(int i) {
         Stream
-            .generate(dataProvider::next)
+            .generate(provider::next)
             .takeWhile(d-> checkTermination(i)).forEach(this::action);
     }
 

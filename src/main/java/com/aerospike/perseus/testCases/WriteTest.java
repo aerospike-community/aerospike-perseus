@@ -1,9 +1,11 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.perseus.data.Record;
-import com.aerospike.perseus.data.collector.KeyCollector;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.data.DataProvider;
+import com.aerospike.perseus.domain.data.Record;
+import com.aerospike.perseus.domain.key.KeyCollector;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+
+import java.util.List;
 
 public class WriteTest extends Test<Record>{
     private final KeyCollector<Integer> keyCollector;
@@ -20,7 +22,7 @@ public class WriteTest extends Test<Record>{
         keyCollector.collect(record.getKey());
     }
 
-    public String getHeader(){
-        return String.format("Writes (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("Write", String.format("%d", threadCount.get()));
     }
 }

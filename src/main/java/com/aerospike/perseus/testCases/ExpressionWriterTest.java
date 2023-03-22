@@ -7,12 +7,14 @@ import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpWriteFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.key.KeyProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+
+import java.util.List;
 
 public class ExpressionWriterTest extends Test<Integer>{
 
-    public ExpressionWriterTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+    public ExpressionWriterTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
         super(conf, provider);
     }
 
@@ -39,7 +41,7 @@ public class ExpressionWriterTest extends Test<Integer>{
 //            System.out.println(operate.toString());
     }
 
-    public String getHeader(){
-        return String.format("Exp W (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("Expression W", String.format("%d", threadCount.get()));
     }
 }

@@ -6,11 +6,13 @@ import com.aerospike.client.exp.Exp;
 import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpReadFlags;
 import com.aerospike.client.exp.Expression;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.key.KeyProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
+import java.util.List;
+
 public class ExpressionReaderTest extends Test<Integer>{
-    public ExpressionReaderTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+    public ExpressionReaderTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
         super(conf, provider);
     }
 
@@ -36,7 +38,7 @@ public class ExpressionReaderTest extends Test<Integer>{
 //            System.out.println(operate.getString("r"));
     }
 
-    public String getHeader(){
-        return String.format("Exp R (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("Expression R", String.format("%d", threadCount.get()));
     }
 }

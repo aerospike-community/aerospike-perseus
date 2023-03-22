@@ -1,15 +1,15 @@
-package com.aerospike.perseus.data.provider.random;
+package com.aerospike.perseus.domain.data.random;
 
-import com.aerospike.perseus.data.TimePeriod;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.data.TimePeriod;
+import com.aerospike.perseus.domain.data.DataProvider;
 
 import java.time.Instant;
 import java.time.Period;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class TimePeriodProvider implements DataProvider<TimePeriod> {
+public class TimePeriodDataProvider implements DataProvider<TimePeriod> {
     protected final ThreadLocalRandom random;
-    public TimePeriodProvider() {
+    public TimePeriodDataProvider() {
         random = ThreadLocalRandom.current();
     }
 

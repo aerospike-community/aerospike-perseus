@@ -22,6 +22,7 @@ public class ThreadAdjuster {
 
     private void checkThreads() {
         Map<String, Object> conf = configFileProvider.ReadYaml();
-        conf.keySet().forEach(k -> tests.get(k).setThreads((Integer) conf.get(k)));
+        if(conf != null)
+            conf.keySet().forEach(k -> tests.get(k).setThreads((Integer) conf.get(k)));
     }
 }

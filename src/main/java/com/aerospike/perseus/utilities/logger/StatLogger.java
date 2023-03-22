@@ -10,8 +10,8 @@ public class StatLogger {
     private final List<Logable> list;
     private final int columnWidth;
     private final String headerCellFormat;
+    private final String threadsCellFormat;
     private final String rowCellFormat;
-
     private final int headerBreak;
     private long i = 1;
 
@@ -19,8 +19,9 @@ public class StatLogger {
         this.list = list;
         this.columnWidth = columnWidth;
         this.headerBreak = headerBreak;
-        headerCellFormat = String.format(" %s%ds |", " %-", columnWidth);
-        rowCellFormat = String.format(" %s%dd |", " %-", columnWidth);
+        headerCellFormat = String.format("%s%ds |", " %-", columnWidth);
+        threadsCellFormat = String.format("%s%ds |", " %-", columnWidth);
+        rowCellFormat = String.format("%s%dd |", " %-", columnWidth);
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(this::printRow, printDelay, printDelay, TimeUnit.SECONDS);
     }
@@ -36,9 +37,12 @@ public class StatLogger {
     }
 
     private void printHeader() {
-        String template = getTemplate(String.format(headerCellFormat, "Seconds"), headerCellFormat);
+        String firstRowTemplate = getTemplate(String.format(headerCellFormat,  "Task"), headerCellFormat);
+        String secondRowTemplate = getTemplate(String.format(headerCellFormat, "Thread #"), headerCellFormat);
         printLine();
-        System.out.printf(template, list.stream().map(Logable::getHeader).toList().toArray());
+        System.out.printf(firstRowTemplate, list.stream().map(l -> l.getHeader().get(0)).toList().toArray());
+        String space = " ".repeat(columnWidth * 9 / 20);
+        System.out.printf(secondRowTemplate, list.stream().map(l -> space+l.getHeader().get(1)).toList().toArray());
         printLine();
     }
 
@@ -47,10 +51,10 @@ public class StatLogger {
         format.append(String.valueOf(cellFormat).repeat(list.size()));
         format.append("\n");
 
-        return format.toString();
+        return "|" + format.toString();
     }
 
     private void printLine() {
-        System.out.println("-".repeat(columnWidth+4).repeat(list.size()+1));
+        System.out.println("-".repeat((columnWidth+3)*(list.size()+1)+1));
     }
 }

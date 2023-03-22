@@ -1,8 +1,8 @@
-package com.aerospike.perseus.data.provider.random;
+package com.aerospike.perseus.domain.data.random;
 
-import com.aerospike.perseus.data.Record;
-import com.aerospike.perseus.data.SimpleRecord;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.data.Record;
+import com.aerospike.perseus.domain.data.SimpleRecord;
+import com.aerospike.perseus.domain.data.DataProvider;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -10,12 +10,12 @@ import java.time.Period;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SimpleRecordProvider implements DataProvider<Record> {
+public class SimpleRecordDataProvider implements DataProvider<Record> {
     private final static String [] locales = Locale.getISOCountries();
     private final int sizeOfTheObject;
     final ThreadLocalRandom random ;
 
-    public SimpleRecordProvider(int sizeOfTheObject) {
+    public SimpleRecordDataProvider(int sizeOfTheObject) {
         this.sizeOfTheObject = sizeOfTheObject;
         this.random = ThreadLocalRandom.current();
     }

@@ -1,11 +1,13 @@
 package com.aerospike.perseus;
 
-import com.aerospike.perseus.data.provider.random.BatchSimpleRecordPeovider;
-import com.aerospike.perseus.data.provider.random.TimePeriodProvider;
+import com.aerospike.perseus.domain.data.random.BatchSimpleRecordDataProvider;
+import com.aerospike.perseus.domain.data.random.TimePeriodDataProvider;
+import com.aerospike.perseus.domain.key.CertainKeyProvider;
+import com.aerospike.perseus.domain.key.RandomKeyProvider;
 import com.aerospike.perseus.testCases.*;
 import com.aerospike.perseus.utilities.AppConfiguration;
-import com.aerospike.perseus.data.collector.AutoDiscardingKeyCollector;
-import com.aerospike.perseus.data.provider.random.SimpleRecordProvider;
+import com.aerospike.perseus.domain.key.AutoDiscardingKeyCollector;
+import com.aerospike.perseus.domain.data.random.SimpleRecordDataProvider;
 import com.aerospike.perseus.utilities.ThreadAdjuster;
 import com.aerospike.perseus.utilities.aerospike.LuaSetup;
 import com.aerospike.perseus.utilities.logger.Logable;
@@ -20,22 +22,24 @@ public class Main {
         AppConfiguration conf = new AppConfiguration("configuration.yaml");
         LuaSetup.registerUDF(conf, conf.getLuaFilePath());
 
-        var simpleDataProvider = new SimpleRecordProvider(conf.getSizeOfTheDummyPartOfTheRecord());
-        var batchSimpleDataProvider = new BatchSimpleRecordPeovider(simpleDataProvider, conf.getBatchSize());
-        var discardingKeyList = new AutoDiscardingKeyCollector(
+        var simpleDataProvider = new SimpleRecordDataProvider(conf.getSizeOfTheDummyPartOfTheRecord());
+        var batchSimpleDataProvider = new BatchSimpleRecordDataProvider(simpleDataProvider, conf.getBatchSize());
+        var discardingKeyCollector = new AutoDiscardingKeyCollector(
                 conf.getAutoDiscardingKeyCapacity(),
                 conf.getAutoDiscardingKeyRatio());
-        var timePeriodProvider = new TimePeriodProvider();
+        var certainKeyProvider = new CertainKeyProvider(discardingKeyCollector);
+        var randomKeyProvider = new RandomKeyProvider(discardingKeyCollector, conf.getReadHitRatio());
+        var timePeriodProvider = new TimePeriodDataProvider();
 
-        var writeTest = new WriteTest(conf, simpleDataProvider, discardingKeyList);
-        var readTest = new ReadTest(conf, discardingKeyList);
-        var updateTest = new UpdateTest(conf, discardingKeyList);
-        var expressionReaderTest = new ExpressionReaderTest(conf, discardingKeyList);
-        var expressionWriterTest = new ExpressionWriterTest(conf, discardingKeyList);
-        var searchTest = new SearchTest(conf, discardingKeyList);
-        var udfTest = new UDFTest(conf, discardingKeyList);
+        var writeTest = new WriteTest(conf, simpleDataProvider, discardingKeyCollector);
+        var readTest = new ReadTest(conf, randomKeyProvider, conf.getReadHitRatio());
+        var updateTest = new UpdateTest(conf, certainKeyProvider);
+        var expressionReaderTest = new ExpressionReaderTest(conf, certainKeyProvider);
+        var expressionWriterTest = new ExpressionWriterTest(conf, certainKeyProvider);
+        var searchTest = new SearchTest(conf, certainKeyProvider);
+        var udfTest = new UDFTest(conf, certainKeyProvider);
         var udfAggregationTest = new UDFAggregationTest(conf, timePeriodProvider);
-        var batchWriteTest = new BatchWriteTest(conf, batchSimpleDataProvider, discardingKeyList);
+        var batchWriteTest = new BatchWriteTest(conf, batchSimpleDataProvider, discardingKeyCollector, conf.getBatchSize());
 
         Map<String, Test> tests = new HashMap<>();
         tests.put("Write", writeTest);

@@ -1,11 +1,9 @@
-package com.aerospike.perseus.data.collector;
-
-import com.aerospike.perseus.data.provider.DataProvider;
+package com.aerospike.perseus.domain.key;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, DataProvider<Integer> {
+public class AutoDiscardingKeyCollector implements KeyCollector<Integer> {
     private final int size;
     private final double saveRatio;
     private final int[] list;
@@ -27,13 +25,12 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, DataPr
         list[(int) (i % size)] = value;
     }
 
-    @Override
-    public Integer next() {
+    Integer next() {
         int l = (int) location.get();
         if(l > size)
             l = size;
         if(l == 0)
             return random.nextInt();
-        return list[ThreadLocalRandom.current().nextInt(l)];
+        return list[random.nextInt(l)];
     }
 }

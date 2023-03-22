@@ -1,4 +1,4 @@
-package com.aerospike.perseus.data.collector;
+package com.aerospike.perseus.domain.key;
 
 public interface KeyCollector<T>{
     void collect(T value);

@@ -2,12 +2,14 @@ package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.client.query.IndexType;
-import com.aerospike.perseus.data.provider.DataProvider;
+import com.aerospike.perseus.domain.key.KeyProvider;
 import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+
+import java.util.List;
 
 public class UDFTest extends Test<Integer>{
 
-    public UDFTest(AerospikeConfiguration conf, DataProvider<Integer> provider) {
+    public UDFTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
         super(conf, provider);
         client.createIndex(null, conf.getNamespace(), conf.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
@@ -19,7 +21,7 @@ public class UDFTest extends Test<Integer>{
         client.execute(writePolicy, getKey(key), "example", "lua_test");
     }
 
-    public String getHeader(){
-        return String.format("LUAs (%d)", threadCount.get());
+    public List<String> getHeader(){
+        return List.of("UDF", String.format("%d", threadCount.get()));
     }
 }
