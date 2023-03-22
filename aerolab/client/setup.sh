@@ -27,6 +27,17 @@ aerolab client attach -n ${CLIENT_NAME} -l all --parallel -- bash /root/perseus_
 echo "Building Perseus.sh"
 aerolab client attach -n ${CLIENT_NAME} -l all --detach --parallel -- bash /root/perseus.sh
 
-if [ -f $prefix"threads.yaml" ]; then
+sleep 5
+
+for (( i=1; i  <= ${CLIENT_NUMBER_OF_NODES}; i++ ))
+  do
+    echo ". "$prefix"configure.sh\naerolab client attach -n "${CLIENT_NAME}" -l "${i}" -- tail -f out.log" > term.sh
+    chmod 744 term.sh
+    open -a iTerm term.sh
+    sleep 1
+    rm -f term.sh
+  done
+
+if [ ! -f $prefix"threads.yaml" ]; then
   cp $prefix"../src/main/resources/threads.yaml" $prefix"."
 fi

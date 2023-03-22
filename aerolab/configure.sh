@@ -20,12 +20,8 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 
 # Client Detail
 CLIENT_NAME="Perseus"
-CLIENT_INSTANCE_TYPE="c6a.32xlarge"
-CLIENT_NUMBER_OF_NODES=1
-
-# aerolab config file
-export AEROLAB_CONFIG_FILE="aerolab.conf"
-rm -f ${AEROLAB_CONFIG_FILE}
+CLIENT_INSTANCE_TYPE="c6a.8xlarge"
+CLIENT_NUMBER_OF_NODES=2
 
 # setup backend
 [ "${AWS_REGION}" = "" ] && aerolab config backend -t docker || aerolab config backend -t aws -r ${AWS_REGION}

@@ -12,7 +12,6 @@ fi
 # create cluster
 echo "Creating cluster"
 aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 || exit 1
-rm -f aerospike.conf
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
   echo "Configure NVMe"
@@ -23,6 +22,7 @@ if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
   sleep 5
   aerolab aerospike start -n ${CLUSTER_NAME} -l all
 fi
+
 # let the cluster do it's thing
 echo "Wait"
 sleep 10
