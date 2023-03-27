@@ -2,7 +2,7 @@
 AWS_REGION="eu-west-1"
 
 # Cluster Detail
-VER="6.2.0.3"
+VER="6.2.0.7"
 CLUSTER_NAME="Test"
 NAMESPACE="demo"
 CLUSTER_INSTANCE_TYPE="i4i.4xlarge"
@@ -20,8 +20,8 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 
 # Client Detail
 CLIENT_NAME="Perseus"
-CLIENT_INSTANCE_TYPE="c6g.8xlarge"
-CLIENT_NUMBER_OF_NODES=1
+CLIENT_INSTANCE_TYPE="c7g.2xlarge"
+CLIENT_NUMBER_OF_NODES=2
 
 # setup backend
 [ "${AWS_REGION}" = "" ] && aerolab config backend -t docker || aerolab config backend -t aws -r ${AWS_REGION}

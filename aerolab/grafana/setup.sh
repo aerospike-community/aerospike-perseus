@@ -8,11 +8,6 @@ fi
 
 . $prefix"configure.sh"
 
-
-# exporter
-echo "Adding exporter"
-aerolab cluster add exporter -n ${CLUSTER_NAME} -o $prefix"grafana/templates/ape.toml"
-
 echo "Adding Grafana"
 aerolab client create ams -n ${GRAFANA_NAME} -s ${CLUSTER_NAME} --instance-type ${GRAFANA_INSTANCE_TYPE} --ebs=40 || exit 1
 
