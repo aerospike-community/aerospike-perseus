@@ -22,9 +22,9 @@ sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Perseus_Conf} | sed "s/_IP_/${nip}/g" > con
 aerolab files upload -c -n ${CLIENT_NAME} configuration.yaml /root/configuration.yaml || exit 1
 rm -rf configuration.yaml
 
-echo "Building Perseus.sh"
+echo "Building Perseus"
 aerolab client attach -n ${CLIENT_NAME} -l all --parallel -- bash /root/perseus_setup.sh
-echo "Building Perseus.sh"
+echo "Running Perseus"
 aerolab client attach -n ${CLIENT_NAME} -l all --detach --parallel -- bash /root/perseus.sh
 
 sleep 5
