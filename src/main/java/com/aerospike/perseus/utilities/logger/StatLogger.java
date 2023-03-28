@@ -45,11 +45,12 @@ public class StatLogger {
     private void printHeader() {
         String firstRowTemplate = getTemplate(String.format(headerCellFormat,  "Task"), headerCellFormat);
         String secondRowTemplate = getTemplate(String.format(headerCellFormat, "Thread"), headerCellFormat);
-        printLine();
+        printLineOf("=");
         System.out.printf(statRowFormat, collectorStats.getStats());
+        printLineOf("-");
         System.out.printf(firstRowTemplate, list.stream().map(LogableTest::getHeader).toList().toArray());
         System.out.printf(secondRowTemplate, list.stream().map(LogableTest::getThreadsInformation).toList().toArray());
-        printLine();
+        printLineOf("=");
     }
 
     private String getTemplate(String start, String cellFormat) {
@@ -60,7 +61,7 @@ public class StatLogger {
         return "|" + format;
     }
 
-    private void printLine() {
-        System.out.println("-".repeat(totalWidth));
+    private void printLineOf(String character) {
+        System.out.println(character.repeat(totalWidth));
     }
 }

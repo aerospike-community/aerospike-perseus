@@ -14,6 +14,7 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
     private final int size;
     private final double saveRatio;
     private final  Pair<Integer, Long>[] list;
+    private final AtomicLong total = new AtomicLong(0);
     private final AtomicLong location = new AtomicLong(0);
     private final ThreadLocalRandom random;
 
@@ -25,7 +26,8 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
     }
 
     public void collect(Integer value){
-        if(random.nextFloat(0, 1) < saveRatio )
+        total.getAndIncrement();
+        if(random.nextFloat(0, 1) > saveRatio )
             return;
         long i = location.getAndIncrement();
 
@@ -62,12 +64,14 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
             numberOfItems = lastItemIndex;
         }
 
-        return String.format("Collected Keys Stat ----> Max: %d, Number of Collected Items: %d, Full Percent: %d%s, Duration: %s",
+        return String.format("Collected Keys Stat [Max: %d, Save Ratio: %d%s, # Processed: %d, # Collected: %d, Full Percent: %d%s, Duration: %s]",
                 size,
+                (int)(saveRatio*100),
+                "%",
+                total.get(),
                 numberOfItems,
                 100*numberOfItems/size,
                 "%",
                 DurationFormatUtils.formatPeriod(earliest, latest, "HH:mm:ss"));
-
     }
 }
