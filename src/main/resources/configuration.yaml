@@ -6,7 +6,7 @@ Password: ""
 Namespace: "test"
 SetName: "test"
 AutoDiscardingKeyCapacity: 5000000
-AutoDiscardingKeyRatio: .1
+AutoDiscardingKeyRatio: .25
 PrintIntervalSec: 1
 NumberOfLinesToReprintHeader: 25
 ColumnWidth: 13

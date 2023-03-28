@@ -31,11 +31,11 @@ sleep 5
 
 for (( i=1; i  <= ${CLIENT_NUMBER_OF_NODES}; i++ ))
   do
-    echo ". "$prefix"configure.sh\naerolab client attach -n "${CLIENT_NAME}" -l "${i}" -- tail -f out.log" > term.sh
-    chmod 744 term.sh
-    open -a iTerm term.sh
+    echo ". "$prefix"configure.sh\naerolab client attach -n "${CLIENT_NAME}" -l "${i}" -- tail -f out.log" > "term"${i}".sh"
+    chmod 744 "term"${i}".sh"
+    open -a iTerm "term"${i}".sh"
     sleep 1
-    rm -f term.sh
+    rm -f "term"${i}".sh"
   done
 
 if [ ! -f $prefix"threads.yaml" ]; then

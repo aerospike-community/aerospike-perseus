@@ -98,31 +98,48 @@ After the setup is complete, open a terminal and cd to the Aerolab directory in 
 
 This demo requires Aerospike Enterprise License. You can get a 60-day license for free from here: https://aerospike.com/get-started-aerospike-database/. If you need your dev license to get extended, please contact Aerospike. We will be more than happy to help you. 
 
-You don't need to pre-configure much to run the demo. Just open the configure.sh file, and change the 'FEATURES' to the address of the license key you downloaded from our website. 
+Configurations of the demo are in configure.sh file. You must change the 'FEATURES' to the address of the license key you downloaded from our website. The rest of the configurations in this file define the specifications of the demo. They are self-explanatory.
 
 Now run:
 ```./setup.sh```
 
 NOTE: *Very important* You MUST remember to run ```./destroy.sh``` soon. This demo uses relatively expensive hardware. Running the demo costs roughly $7 per hour. Forgetting to release the resources can cost hundreds of dollars. 
 
-If everything runs successfully, the script will open a grafana dashboard (user: admin, password: admin) that shows the state of the cluster, and in the terminal, you should see something like this:
+The script first creates a cluster by running ```./cluster/setup.sh```.
+Then it creates the requested number of clients by running ```./client/setup.sh```. This script open new terminals that tail the result of the demo. (You must have iTerm installed.)
+Then it creates the Grafana dashboard by running ```./grafana.setup.sh```, and open a window to its interface (user: admin, password: admin). 
+If any of the steps above fail, you can run the scripts individually.
+
+If everything runs successfully, the terminals should show you something like this:
 ```
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Seconds      |  Writes (2)   |  Reads (2)    |  Updates (0)  |  Exp R (0)    |  Exp W (0)    |  Batch W (0)  |  Searches (0) |  LUAs (0)     |  LUA Aggs (0) |  Total        |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-1            |  1985         |  2075         |  0            |  0            |  0            |  0            |  0            |  0            |  0            |  4060         |
-2            |  2271         |  2353         |  0            |  0            |  0            |  0            |  0            |  0            |  0            |  4624         |
-3            |  2116         |  2178         |  0            |  0            |  0            |  0            |  0            |  0            |  0            |  4294         |
+=================================================================================================================================================================================
+| Collected Keys Stat [Max: 5000000, Save Ratio: 10%, # Processed: 6461, # Collected: 618, Full Percent: 0%, Duration: 00:00:00]                                                |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Task          | Write         | Read(Hit %50) | Update        | Expression R  | Expression W  | Batch W (10)  | Search        | UDF           | UDF Aggregate | Total TPS     |
+| Thread        | 10 (10)       | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         |               |
+=================================================================================================================================================================================
+| 1             | 6711          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 6711          |
+| 2             | 7702          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 7702          |
+| 3             | 6567          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 6567          |
+| 4             | 5721          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 5721          |
+| 5             | 9420          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 9420          |
 ```
 
 NOTE: Perseus (the load tester app) runs in the background, if you accidentally Ctrl-C, it will continue running in the background. You can tail the nohup file to monitor the output again. 
 
-While monitoring the number of transactions per second in the terminal, open another terminal to open another connection to the machine that is running the Test. To connect to the machine that runs Perseus, run:
-```./connect_client.sh```
+In another terminal open ```./threads.yaml``` and enter the number of threads for each test case. Then run ```./copyThreads.sh``` to transfer the local file to all the clients.
 
+If you want to connect to any of the clients, run ```./connect_client.sh i``` where 'i' is the number of the client you want to connect to.
 
-You can edit thread.yaml (in /root) and change the number of threads that run each test case as described in the previous sections. 
+If you want to add a new node, run ```./cluster/addNode.sh```. 
 
-If you want to stop Perseus, run ```ps -ef | grep Perseus``` to get the process id to kill it.
- 
+If you want to stop the Aerospike process on a node, run ```./cluster/stopNode.sh i``` where 'i' is the number of the node you want to be stopped.
+
+If you want to restart the Aerospike process on a node, run ```./cluster/restartNode.sh i``` where 'i' is the number of the node you want to be restarted.
+
 Don't forget to run ```./destroy.sh``` when you are done. Jeff doesn't need more money.
+
+You can also run either iof these if you want to bring down and redeploy parts of the demo:
+ - ```./cluster/destroy.sh```
+ - ```./client/destroy.sh```
+ - ```./grafana/destroy.sh```
