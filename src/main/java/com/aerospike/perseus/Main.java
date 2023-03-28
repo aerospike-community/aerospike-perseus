@@ -64,7 +64,7 @@ public class Main {
         list.add(udfAggregationTest);
         list.add(Test.totalTps);
 
-        new StatLogger(list, conf.getPrintDelay(), conf.getColumnWidth(), conf.getHeaderBreak());
+        new StatLogger(list, discardingKeyCollector, conf.getPrintDelay(), conf.getColumnWidth(), conf.getHeaderBreak());
 
         new ThreadAdjuster(tests, conf.getThreadYamlFilePath());
     }

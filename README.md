@@ -69,6 +69,8 @@ This file is only checked once at the beginning of the execution:
 - ThreadYamlFilePath: the location of the thread.yaml relative to the working directory.
 - LuaFilePath: location of the example.lua relative to the working directory.
 - SizeOfTheDummyPartOfTheRecord: The size of the dummy part of the record. Modify to make the size of records smaller or larger.
+- BatchSize: The number of records in each batch write transaction.
+- ReadHitRatio: In real world scenarios, not all the reads requests return an existing records. This parameter defines the percentage of the requests that reads an existing record (.1 would mean 10% hit, 90% miss). The implementation is just an attempt to reach the suggested ratio, in practice the ratio of successful reads is usually a bit higher than this ratio.   
 
 ### threads.yaml
 This file is checked every 1 second. You can change the number of threads the client uses for each test case. The output would reflect the number of operations performed using the number of threads specified.
@@ -80,6 +82,7 @@ This file is checked every 1 second. You can change the number of threads the cl
 - UDF: The number of threads that run a simple operation using UDF (LUA) on a single record and return the result.
 - Search: The number of threads that use a secondary index to retrieve a unique record.
 - UDFAgg: The number of threads that use a secondary index to retrieve a group of records, aggregate them, and return the result.
+- BatchW: The number of threads that send batch write queries. The number of record in each batch is defined by BatchSize in configuration.yaml.
 
 Note: because updates, reads, SI queries, expressions, and UDF all depend on the samples stored in the AutoDiscardingList, and the list only being populated by writes, you always need to have some writer threads writing a record at the beginning until some samples are stored in the memory of the app. Running the application with 0 writer threads from the beginning won't yield a meaningful result.
 
