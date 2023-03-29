@@ -34,7 +34,7 @@ for (( i=1; i  <= ${CLIENT_NUMBER_OF_NODES}; i++ ))
     echo ". "$prefix"configure.sh\naerolab client attach -n "${CLIENT_NAME}" -l "${i}" -- tail -f out.log" > "term"${i}".sh"
     chmod 744 "term"${i}".sh"
     open -a iTerm "term"${i}".sh"
-    sleep 1
+    sleep 3
     rm -f "term"${i}".sh"
   done
 

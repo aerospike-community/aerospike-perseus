@@ -3,7 +3,7 @@ AWS_REGION="eu-west-1"
 
 # Cluster Detail
 VER="6.2.0.7"
-CLUSTER_NAME="Vio"
+CLUSTER_NAME="Demo"
 NAMESPACE="demo"
 CLUSTER_STORAGE_TYPE="HYBRID" #HYBRID OR MEMORY
 CLUSTER_REPLICATION_FACTOR=2
@@ -21,7 +21,7 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 # Client Detail
 CLIENT_NAME="Perseus"
 CLIENT_INSTANCE_TYPE="c7g.4xlarge"
-CLIENT_NUMBER_OF_NODES=2
+CLIENT_NUMBER_OF_NODES=5
 
 # setup backend
 [ "${AWS_REGION}" = "" ] && aerolab config backend -t docker || aerolab config backend -t aws -r ${AWS_REGION}
