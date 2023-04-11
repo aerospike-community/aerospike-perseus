@@ -41,17 +41,6 @@ public class Main {
         var udfAggregationTest = new UDFAggregationTest(conf, timePeriodProvider);
         var batchWriteTest = new BatchWriteTest(conf, batchSimpleDataProvider, discardingKeyCollector, conf.getBatchSize());
 
-        Map<String, Test> tests = new HashMap<>();
-        tests.put("Write", writeTest);
-        tests.put("Read", readTest);
-        tests.put("Update", updateTest);
-        tests.put("ExpRead", expressionReaderTest);
-        tests.put("ExpWrite", expressionWriterTest);
-        tests.put("UDF", udfTest);
-        tests.put("Search", searchTest);
-        tests.put("UDFAgg", udfAggregationTest);
-        tests.put("BatchW", batchWriteTest);
-
         var list = new ArrayList<LogableTest>();
         list.add(writeTest);
         list.add(readTest);
@@ -66,6 +55,16 @@ public class Main {
 
         new StatLogger(list, discardingKeyCollector, conf.getPrintDelay(), conf.getColumnWidth(), conf.getHeaderBreak());
 
+        Map<String, Test> tests = new HashMap<>();
+        tests.put("Write", writeTest);
+        tests.put("Read", readTest);
+        tests.put("Update", updateTest);
+        tests.put("ExpRead", expressionReaderTest);
+        tests.put("ExpWrite", expressionWriterTest);
+        tests.put("UDF", udfTest);
+        tests.put("Search", searchTest);
+        tests.put("UDFAgg", udfAggregationTest);
+        tests.put("BatchW", batchWriteTest);
         new ThreadAdjuster(tests, conf.getThreadYamlFilePath());
     }
 
