@@ -45,11 +45,11 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
 
     @Override
     public String getStats() {
-        int numberOfItems;
+        long numberOfItems;
         var firstItem = list[100];
         var lastItem = list[size-1];
-        int lastItemIndex = (int)location.get() - 1;
-        var previousItem = list[lastItemIndex % size];
+        int lastItemIndex = ((int)(location.get() - 1)% size);
+        var previousItem = list[lastItemIndex];
         var pastItem = list[(int) ((location.get()+10000) % size)];
         if (firstItem == null)
             return "No Stats Populated Yet";
