@@ -5,15 +5,15 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.List;
 
-public class ReadTest extends Test<Integer>{
+public class ReadTest extends Test<Long>{
     private final double hitRatio;
-    public ReadTest(AerospikeConfiguration conf, KeyProvider<Integer> provider, double hitRatio) {
+    public ReadTest(AerospikeConfiguration conf, KeyProvider<Long> provider, double hitRatio) {
         super(conf, provider);
         this.hitRatio = hitRatio;
     }
 
     @Override
-    protected void execute(Integer key) {
+    protected void execute(Long key) {
         client.get(null, getKey(key));
     }
 

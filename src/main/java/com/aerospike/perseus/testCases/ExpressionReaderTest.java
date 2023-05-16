@@ -11,13 +11,13 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.List;
 
-public class ExpressionReaderTest extends Test<Integer>{
-    public ExpressionReaderTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
+public class ExpressionReaderTest extends Test<Long>{
+    public ExpressionReaderTest(AerospikeConfiguration conf, KeyProvider<Long> provider) {
         super(conf, provider);
     }
 
     @Override
-    protected void execute(Integer key) {
+    protected void execute(Long key) {
         Expression readExp = Exp.build(
                 Exp.cond(
                         Exp.gt(

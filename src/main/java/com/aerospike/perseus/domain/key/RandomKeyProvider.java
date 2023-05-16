@@ -2,7 +2,7 @@ package com.aerospike.perseus.domain.key;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RandomKeyProvider implements KeyProvider<Integer> {
+public class RandomKeyProvider implements KeyProvider<Long> {
     private final AutoDiscardingKeyCollector autoDiscardingKeyCollector;
     private final double randomPercentage;
     private final ThreadLocalRandom random;
@@ -14,9 +14,9 @@ public class RandomKeyProvider implements KeyProvider<Integer> {
     }
 
     @Override
-    public Integer next() {
+    public Long next() {
         if(random.nextFloat(0, 1) > randomPercentage )
-            return random.nextInt();
+            return random.nextLong();
 
         return autoDiscardingKeyCollector.next();
     }

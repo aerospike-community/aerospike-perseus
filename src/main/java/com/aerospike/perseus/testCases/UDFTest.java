@@ -7,14 +7,14 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.List;
 
-public class UDFTest extends Test<Integer>{
+public class UDFTest extends Test<Long>{
 
-    public UDFTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
+    public UDFTest(AerospikeConfiguration conf, KeyProvider<Long> provider) {
         super(conf, provider);
         client.createIndex(null, conf.getNamespace(), conf.getSetName(), "indexOnDate", "date", IndexType.NUMERIC).waitTillComplete();
     }
 
-    protected void execute(Integer key){
+    protected void execute(Long key){
         WritePolicy writePolicy = new WritePolicy(client.writePolicyDefault);
         writePolicy.timeoutDelay = 3000;
         writePolicy.totalTimeout = 9000;

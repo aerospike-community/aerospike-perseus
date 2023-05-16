@@ -10,9 +10,9 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.List;
 
-public class SearchTest extends Test<Integer>{
+public class SearchTest extends Test<Long>{
     private final QueryPolicy policy;
-    public SearchTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
+    public SearchTest(AerospikeConfiguration conf, KeyProvider<Long> provider) {
         super(conf, provider);
         policy = new QueryPolicy(client.queryPolicyDefault);
         policy.shortQuery = true;
@@ -21,7 +21,7 @@ public class SearchTest extends Test<Integer>{
     }
 
     @Override
-    protected void execute(Integer key){
+    protected void execute(Long key){
         Statement statement = new Statement();
         statement.setFilter(Filter.equal("keyPlus10", key+10));
         statement.setNamespace(conf.getNamespace());

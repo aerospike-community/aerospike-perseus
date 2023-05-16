@@ -8,9 +8,9 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 import java.util.List;
 
 public class WriteTest extends Test<Record>{
-    private final KeyCollector<Integer> keyCollector;
+    private final KeyCollector<Long> keyCollector;
 
-    public WriteTest(AerospikeConfiguration conf, DataProvider<Record> provider, KeyCollector<Integer> keyCollector) {
+    public WriteTest(AerospikeConfiguration conf, DataProvider<Record> provider, KeyCollector<Long> keyCollector) {
         super(conf, provider);
         this.keyCollector = keyCollector;
     }

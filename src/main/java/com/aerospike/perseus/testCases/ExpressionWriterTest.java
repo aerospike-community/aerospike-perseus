@@ -12,14 +12,14 @@ import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
 
 import java.util.List;
 
-public class ExpressionWriterTest extends Test<Integer>{
+public class ExpressionWriterTest extends Test<Long>{
 
-    public ExpressionWriterTest(AerospikeConfiguration conf, KeyProvider<Integer> provider) {
+    public ExpressionWriterTest(AerospikeConfiguration conf, KeyProvider<Long> provider) {
         super(conf, provider);
     }
 
     @Override
-    protected void execute(Integer key) {
+    protected void execute(Long key) {
         Expression writeExp = Exp.build(
                     Exp.cond(
                         Exp.gt(

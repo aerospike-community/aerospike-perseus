@@ -1,6 +1,6 @@
 package com.aerospike.perseus.domain.key;
 
-public class CertainKeyProvider implements KeyProvider<Integer> {
+public class CertainKeyProvider implements KeyProvider<Long> {
     private final AutoDiscardingKeyCollector autoDiscardingKeyCollector;
 
     public CertainKeyProvider(AutoDiscardingKeyCollector autoDiscardingKeyCollector) {
@@ -8,7 +8,7 @@ public class CertainKeyProvider implements KeyProvider<Integer> {
     }
 
     @Override
-    public Integer next() {
+    public Long next() {
         return autoDiscardingKeyCollector.next();
     }
 }

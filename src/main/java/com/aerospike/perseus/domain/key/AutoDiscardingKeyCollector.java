@@ -10,10 +10,10 @@ import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, CollectorStats {
+public class AutoDiscardingKeyCollector implements KeyCollector<Long>, CollectorStats {
     private final int size;
     private final double saveRatio;
-    private final  Pair<Integer, Long>[] list;
+    private final  Pair<Long, Long>[] list;
     private final AtomicLong total = new AtomicLong(0);
     private final AtomicLong location = new AtomicLong(0);
     private final ThreadLocalRandom random;
@@ -25,7 +25,7 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
         random = ThreadLocalRandom.current();
     }
 
-    public void collect(Integer value){
+    public void collect(Long value){
         total.getAndIncrement();
         if(random.nextFloat(0, 1) > saveRatio )
             return;
@@ -34,12 +34,12 @@ public class AutoDiscardingKeyCollector implements KeyCollector<Integer>, Collec
         list[(int) (i % size)] = new ImmutablePair<>(value, System.currentTimeMillis());
     }
 
-    Integer next() {
+    Long next() {
         int l = (int) location.get();
         if(l > size)
             l = size;
         if(l == 0)
-            return random.nextInt();
+            return random.nextLong();
         return list[random.nextInt(l)].getKey();
     }
 

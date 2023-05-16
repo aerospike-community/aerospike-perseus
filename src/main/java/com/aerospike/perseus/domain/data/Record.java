@@ -5,15 +5,15 @@ import com.aerospike.client.Bin;
 import java.util.Map;
 
 public abstract class Record {
-    private final int key;
+    private final long key;
 
-    protected Record(int key) {
+    protected Record(long key) {
         this.key = key;
     }
 
     public abstract Bin[] getBins();
 
-    public int getKey() {
+    public long getKey() {
         return key;
     }
 }

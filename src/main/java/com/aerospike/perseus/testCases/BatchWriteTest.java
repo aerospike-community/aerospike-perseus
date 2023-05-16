@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BatchWriteTest extends Test<List<Record>>{
-    private final KeyCollector<Integer> keyCollector;
+    private final KeyCollector<Long> keyCollector;
     private final String namespace;
     private final String setName;
     private final int batchSize;
 
-    public BatchWriteTest(AerospikeConfiguration conf, DataProvider<List<Record>> provider, KeyCollector<Integer> keyCollector, int batchSize) {
+    public BatchWriteTest(AerospikeConfiguration conf, DataProvider<List<Record>> provider, KeyCollector<Long> keyCollector, int batchSize) {
         super(conf, provider);
         this.keyCollector = keyCollector;
         this.namespace = conf.getNamespace();

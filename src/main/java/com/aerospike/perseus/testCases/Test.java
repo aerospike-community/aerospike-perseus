@@ -93,7 +93,7 @@ public abstract class Test<T> implements LogableTest {
         return tpsCounter.getAndSet(0);
     }
 
-    protected Key getKey(int key) {
+    protected Key getKey(long key) {
         return new Key(conf.getNamespace(), conf.getSetName(), key);
     }
 

@@ -5,13 +5,13 @@ import com.aerospike.client.Value;
 
 public class SimpleRecord extends Record {
     private final int octet;
-    private final int keyPlus10;
-    private final int keyPlus20;
+    private final long keyPlus10;
+    private final long keyPlus20;
     private final String country;
     private final long date;
     private final String dummy;
 
-    public SimpleRecord(int key, int octet, int keyPlus10, int keyPlus20, String country, Long date, String dummy) {
+    public SimpleRecord(long key, int octet, long keyPlus10, long keyPlus20, String country, Long date, String dummy) {
         super(key);
         this.octet = octet;
         this.keyPlus10 = keyPlus10;

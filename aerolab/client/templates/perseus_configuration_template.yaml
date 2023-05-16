@@ -6,7 +6,7 @@ Password: ""
 Namespace: "_NAMESPACE_"
 SetName: "test"
 AutoDiscardingKeyCapacity: 50000000
-AutoDiscardingKeyRatio: .25
+AutoDiscardingKeyRatio: .2
 PrintIntervalSec: 1
 NumberOfLinesToReprintHeader: 25
 ColumnWidth: 13
@@ -14,4 +14,4 @@ ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
 SizeOfTheDummyPartOfTheRecord: 1220
 BatchSize: 10
-ReadHitRatio: .5
+ReadHitRatio: .08
