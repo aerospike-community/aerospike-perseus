@@ -13,5 +13,5 @@ ColumnWidth: 13
 ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
 SizeOfTheDummyPartOfTheRecord: 1220
-BatchSize: 10
-ReadHitRatio: .08
+BatchSize: 30
+ReadHitRatio: .50
