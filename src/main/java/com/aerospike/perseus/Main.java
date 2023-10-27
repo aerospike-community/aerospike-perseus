@@ -29,16 +29,16 @@ public class Main {
                 conf.getAutoDiscardingKeyRatio());
         var certainKeyProvider = new CertainKeyProvider(discardingKeyCollector);
         var randomKeyProvider = new RandomKeyProvider(discardingKeyCollector, conf.getReadHitRatio());
-        var timePeriodProvider = new TimePeriodDataProvider();
+//        var timePeriodProvider = new TimePeriodDataProvider();
 
         var writeTest = new WriteTest(conf, simpleDataProvider, discardingKeyCollector);
         var readTest = new ReadTest(conf, randomKeyProvider, conf.getReadHitRatio());
         var updateTest = new UpdateTest(conf, certainKeyProvider);
         var expressionReaderTest = new ExpressionReaderTest(conf, certainKeyProvider);
         var expressionWriterTest = new ExpressionWriterTest(conf, certainKeyProvider);
-        var searchTest = new SearchTest(conf, certainKeyProvider);
-        var udfTest = new UDFTest(conf, certainKeyProvider);
-        var udfAggregationTest = new UDFAggregationTest(conf, timePeriodProvider);
+//        var searchTest = new SearchTest(conf, certainKeyProvider);
+//        var udfTest = new UDFTest(conf, certainKeyProvider);
+//        var udfAggregationTest = new UDFAggregationTest(conf, timePeriodProvider);
         var batchWriteTest = new BatchWriteTest(conf, batchSimpleDataProvider, discardingKeyCollector, conf.getBatchSize());
 
         var list = new ArrayList<LogableTest>();
@@ -48,9 +48,9 @@ public class Main {
         list.add(expressionReaderTest);
         list.add(expressionWriterTest);
         list.add(batchWriteTest);
-        list.add(searchTest);
-        list.add(udfTest);
-        list.add(udfAggregationTest);
+//        list.add(searchTest);
+//        list.add(udfTest);
+//        list.add(udfAggregationTest);
         list.add(Test.totalTps);
 
         new StatLogger(list, discardingKeyCollector, conf.getPrintDelay(), conf.getColumnWidth(), conf.getHeaderBreak());
@@ -61,9 +61,9 @@ public class Main {
         tests.put("Update", updateTest);
         tests.put("ExpRead", expressionReaderTest);
         tests.put("ExpWrite", expressionWriterTest);
-        tests.put("UDF", udfTest);
-        tests.put("Search", searchTest);
-        tests.put("UDFAgg", udfAggregationTest);
+//        tests.put("UDF", udfTest);
+//        tests.put("Search", searchTest);
+//        tests.put("UDFAgg", udfAggregationTest);
         tests.put("BatchW", batchWriteTest);
         new ThreadAdjuster(tests, conf.getThreadYamlFilePath());
     }
