@@ -16,7 +16,7 @@ STORAGE_ENGINE=""
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
   STORAGE_ENGINE="storage-engine device {\\n"
-  STORAGE_ENGINE+="\\t\\twrite-block-size 1024K\\n"
+  STORAGE_ENGINE+="\\t\\twrite-block-size 2048K\\n"
   PARTITION_SIZE=$(expr 100 / $CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME)
   NVME_SETUP=""
 
