@@ -19,8 +19,9 @@ if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
   aerolab files upload -n ${CLUSTER_NAME} nvme_setup.sh /root/nvme_setup.sh || exit 1
   rm -f nvme_setup.sh
   aerolab attach shell -n ${CLUSTER_NAME} -l all -- bash /root/nvme_setup.sh || exit 1
-  aerolab aerospike start -n ${CLUSTER_NAME} -l all
 fi
+
+aerolab aerospike start -n ${CLUSTER_NAME} -l all
 
 # let the cluster do it's thing
 echo "Wait"
