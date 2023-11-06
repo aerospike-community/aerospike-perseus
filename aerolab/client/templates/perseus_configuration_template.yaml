@@ -5,13 +5,13 @@ Username: ""
 Password: ""
 Namespace: "_NAMESPACE_"
 SetName: "test"
-AutoDiscardingKeyCapacity: 50000000
+AutoDiscardingKeyCapacity: 100000000
 AutoDiscardingKeyRatio: .2
 PrintIntervalSec: 1
 NumberOfLinesToReprintHeader: 25
-ColumnWidth: 13
+ColumnWidth: 15
 ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
 SizeOfTheDummyPartOfTheRecord: 100
 BatchSize: 30
-ReadHitRatio: .50
+ReadHitRatio: 1
