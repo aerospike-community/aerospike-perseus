@@ -38,7 +38,6 @@ if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
       NVME_SETUP+=$NVME_ZERO
       NVME_SETUP+="\n"
   done
-  STORAGE_ENGINE+="\\t\\tdata-in-memory false\\n"
   STORAGE_ENGINE+="\\t}"
   echo  $NVME_SETUP > nvme_setup.sh
 fi
@@ -51,6 +50,5 @@ fi
 # prepare Aerospike.conf file
 Aerospike_Conf=$prefix"cluster/templates/aerospike_template.conf"
 sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Aerospike_Conf} |
-sed "s/_MEMORY_SIZE_/${CLUSTER_INSTANCE_USABLE_MEMORY}/g" |
 sed "s/_REPLICATION_FACTOR_/${CLUSTER_REPLICATION_FACTOR}/g" |
 sed "s/_STORAGE_ENGINE_/${STORAGE_ENGINE}/g" > aerospike.conf

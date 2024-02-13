@@ -12,6 +12,6 @@ NumberOfLinesToReprintHeader: 25
 ColumnWidth: 15
 ThreadYamlFilePath: "threads.yaml"
 LuaFilePath: "lua/example.lua"
-SizeOfTheDummyPartOfTheRecord: 100
+SizeOfTheDummyPartOfTheRecord: 1100
 BatchSize: 30
-ReadHitRatio: 1.0
+ReadHitRatio: 0.8

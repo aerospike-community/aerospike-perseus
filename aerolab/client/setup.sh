@@ -16,7 +16,8 @@ aerolab files upload -c -n ${CLIENT_NAME} $prefix"client/templates/perseus_setup
 aerolab files upload -c -n ${CLIENT_NAME} $prefix"client/templates/perseus.sh" /root/perseus.sh || exit 1
 
 echo "Uploading the configuration.yaml"
-nip=$(aerolab cluster list -j |grep -A7 ${CLUSTER_NAME} |grep IpAddress |head -1 |egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
+nip=$(aerolab cluster list -i |grep -A7 ${CLUSTER_NAME} | head -1 | grep -E -o 'int_ip=.{0,15}' | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' )
+
 Perseus_Conf=$prefix"client/templates/perseus_configuration_template.yaml"
 sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Perseus_Conf} | sed "s/_IP_/${nip}/g" > configuration.yaml
 aerolab files upload -c -n ${CLIENT_NAME} configuration.yaml /root/configuration.yaml || exit 1

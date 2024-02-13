@@ -6,6 +6,8 @@ This tool was tested against a 4-node aerospike cluster on i4i.4xlarge EC2 insta
 This document explains how to use this tool.
 
 Note: This codebase is written for JDK 18 and won’t compile on lower versions!
+Note2: This script has been updated to work with the changes in aerospike 7+. If you need to use older versions of Aerospike, use an older commit than this one. 
+
 
 ## How to use the tool locally
 
