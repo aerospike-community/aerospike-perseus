@@ -12,6 +12,7 @@ fi
 # create cluster
 New_Node_Number=$(aerolab cluster list | wc -l)
 New_Node_Number=$((New_Node_Number-2))
+New_Node_Number=11
 
 echo "Grow the cluster"
 aerolab cluster grow -n ${CLUSTER_NAME} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n || exit 1
