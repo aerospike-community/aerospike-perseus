@@ -44,7 +44,7 @@ fi
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "MEMORY" ]; then
   STORAGE_ENGINE="storage-engine memory\\n"
-  STORAGE_ENGINE+="\\tpartition-tree-sprigs 4096"
+  #STORAGE_ENGINE+="\\tpartition-tree-sprigs 4096"
 fi
 
 # prepare Aerospike.conf file
