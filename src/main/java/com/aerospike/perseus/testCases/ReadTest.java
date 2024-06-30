@@ -1,14 +1,12 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.perseus.domain.key.KeyProvider;
-import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
-
-import java.util.List;
+import com.aerospike.client.AerospikeClient;
+import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
 
 public class ReadTest extends Test<Long>{
     private final double hitRatio;
-    public ReadTest(AerospikeConfiguration conf, KeyProvider<Long> provider, double hitRatio) {
-        super(conf, provider);
+    public ReadTest(AerospikeClient client, CacheHitAndMissKeyProvider provider, String namespace, String setName, double hitRatio) {
+        super(client, provider, namespace, setName);
         this.hitRatio = hitRatio;
     }
 
@@ -17,7 +15,7 @@ public class ReadTest extends Test<Long>{
         client.get(null, getKey(key));
     }
 
-    public String getHeader(){
-        return String.format("Read(Hit %s%d)", "%", (int)(hitRatio*100));
+    public String[] getHeader(){
+        return String.format("Read\nHitRate %s%d", "%", (int)(hitRatio*100)).split("\n");
     }
 }

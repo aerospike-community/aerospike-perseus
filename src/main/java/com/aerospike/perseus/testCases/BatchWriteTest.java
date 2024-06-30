@@ -1,29 +1,21 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.BatchRecord;
-import com.aerospike.client.BatchWrite;
-import com.aerospike.client.Key;
-import com.aerospike.client.Operation;
-import com.aerospike.perseus.domain.data.DataProvider;
-import com.aerospike.perseus.domain.data.Record;
-import com.aerospike.perseus.domain.key.KeyCollector;
-import com.aerospike.perseus.utilities.aerospike.AerospikeConfiguration;
+import com.aerospike.client.*;
+import com.aerospike.perseus.data.Record;
+import com.aerospike.perseus.data.generators.BatchRecordsGenerator;
+import com.aerospike.perseus.keyCache.Cache;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BatchWriteTest extends Test<List<Record>>{
-    private final KeyCollector<Long> keyCollector;
-    private final String namespace;
-    private final String setName;
+    private final Cache<Long> cache;
     private final int batchSize;
 
-    public BatchWriteTest(AerospikeConfiguration conf, DataProvider<List<Record>> provider, KeyCollector<Long> keyCollector, int batchSize) {
-        super(conf, provider);
-        this.keyCollector = keyCollector;
-        this.namespace = conf.getNamespace();
-        this.setName = conf.getSetName();
+    public BatchWriteTest(AerospikeClient client, BatchRecordsGenerator batchSimpleRecordsGenerator, String namespace, String setName, Cache<Long> cache, int batchSize) {
+        super(client, batchSimpleRecordsGenerator, namespace, setName);
+        this.cache = cache;
         this.batchSize = batchSize;
     }
 
@@ -39,10 +31,10 @@ public class BatchWriteTest extends Test<List<Record>>{
                 .collect(Collectors.toList());
 
         client.operate(client.batchPolicyDefault, batchWrites);
-        records.stream().forEach(k -> keyCollector.collect(k.getKey()));
+        records.stream().forEach(k -> cache.store(k.getKey()));
     }
 
-    public String getHeader(){
-        return String.format("Batch W (%d)", batchSize);
+    public String[] getHeader(){
+        return String.format("Batch\nWrite (%d)", batchSize).split("\n");
     }
 }

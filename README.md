@@ -5,7 +5,7 @@ This tool was tested against a 4-node aerospike cluster on i4i.4xlarge EC2 insta
 
 This document explains how to use this tool.
 
-Note: This codebase is written for JDK 18 and won’t compile on lower versions!
+Note: This codebase is written for JDK 22 and won’t compile on lower versions!
 Note2: This script has been updated to work with the changes in aerospike 7+. If you need to use older versions of Aerospike, use an older commit than this one. 
 
 
@@ -16,7 +16,7 @@ To run the application, you need to have an aerospike cluster.
 ### The Aerospike cluster
 You can build one in the cloud or run one locally. To set up a one-node cluster locally using docker, run:
 
-```docker run --rm -d --name aerospike -p 3000-3002:3000-3002 aerospike:ce-6.2.0.2```
+```docker run --rm -d --name aerospike -p 3000-3002:3000-3002 aerospike:ce-7.1.0.2```
 
 You should be able to attach the node by running the following:
 
@@ -52,9 +52,9 @@ If the build is successful, the UberJar will be located in the following:
 
 ```./aerospike-perseus/target/perseus-1.0-SNAPSHOT.jar```
 
-To run the jar, you need JDK 18. You can run the jar with this command.
+To run the jar, you need JDK 22. You can run the jar with this command.
 
-```/opt/jdk-18/bin/java -jar perseus-1.0-SNAPSHOT-jar-with-dependencies.jar ```
+```/opt/jdk-22/bin/java -jar perseus-1.0-SNAPSHOT-jar-with-dependencies.jar ```
 
 The first time you run the application, configuration.yaml, threads.yaml, and lua/example.lua will be created in the working directory. After that, you can modify them to change the behaviour of Perseus.
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt update
-sudo apt install -y openjdk-18-jdk
+sudo apt install -y openjdk-22-jdk
 sudo apt install -y maven
 
 cd /root

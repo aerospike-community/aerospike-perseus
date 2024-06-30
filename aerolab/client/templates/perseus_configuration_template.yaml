@@ -1,17 +1,25 @@
-Hosts:
-  - IP: "_IP_"
-    Port: 3000
-Username: ""
-Password: ""
-Namespace: "_NAMESPACE_"
-SetName: "test"
-AutoDiscardingKeyCapacity: 100000000
-AutoDiscardingKeyRatio: .2
-PrintIntervalSec: 1
-NumberOfLinesToReprintHeader: 25
-ColumnWidth: 15
-ThreadYamlFilePath: "threads.yaml"
-LuaFilePath: "lua/example.lua"
-SizeOfTheDummyPartOfTheRecord: 1000
-BatchSize: 30
-ReadHitRatio: 1.0
+aerospikeConfiguration:
+  hosts:
+    -
+      ip: "_IP_"
+      port: 3000
+  username: ""
+  password: ""
+  namespace: "_NAMESPACE_"
+  set: "test"
+outputWindowConfiguration:
+  printIntervalSec: 1
+  numberOfLinesBeforeReprintingTheHeader: 25
+  columnWidth: 11
+testConfiguration:
+  keyCaching:
+    cacheCapacity: 100000000
+    discardRatio: .20
+  recordSize: 1220
+  readBatchSize: 50
+  writeBatchSize: 50
+  readHitRatio: 0.8
+  stringIndex: False
+  numericIndex: False
+  geoSpatialIndex: False
+  udfAggregation: False
