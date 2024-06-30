@@ -43,7 +43,10 @@ public class KeyCache implements Cache<Long>, CacheStats {
             l = size;
         if(l == 0)
             return random.nextLong();
-        return list[random.nextInt(l)].getKey();
+        Pair<Long, Long> pair = list[random.nextInt(l)];
+        if(pair == null)
+            return 0L;
+        return pair.getKey();
     }
 
     @Override

@@ -25,6 +25,7 @@ public class TestSetup {
     private final ArrayList<Test> testList = new ArrayList<Test>();
     private final ArrayList<LogableTest> loggableTestList = new ArrayList<LogableTest>();
     private final CacheStats cacheStats;
+    private final WriteTest writeTest;
 
     public TestSetup(AerospikeConfiguration aerospikeConfig, TestConfiguration testConfig) {
 
@@ -45,7 +46,8 @@ public class TestSetup {
         String namespace = aerospikeConfig.namespace;
         String set = aerospikeConfig.set;
 
-        testList.add(new WriteTest(client, recordGenerator, keyCache, namespace, set));
+        writeTest = new WriteTest(client, recordGenerator, keyCache, namespace, set);
+        testList.add(writeTest);
         testList.add(new ReadTest(client, cacheHitAndMissKeyProvider, namespace, set, testConfig.readHitRatio));
         testList.add(new UpdateTest(client, keyCache, namespace, set));
         testList.add(new ExpressionReadTest(client, keyCache, namespace, set));
@@ -80,9 +82,22 @@ public class TestSetup {
     }
 
     public void startTest() {
+        warmUp();
+
         var scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(
                 this::setThread, 0, 1, TimeUnit.SECONDS);
+    }
+
+    private void warmUp() {
+        writeTest.setThreads(5);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        writeTest.getTPS();
+        Test.totalTps.getTPS();
     }
 
     private void setThread() {

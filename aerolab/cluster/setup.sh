@@ -1,17 +1,8 @@
-if [ -f "configure.sh" ]; then
-    prefix=""
-fi
-
-if [ -f "../configure.sh" ]; then
-    prefix="../"
-fi
-
-. $prefix"configure.sh"
-. $prefix"cluster/templates/prepareTemplates.sh"
+. $PREFIX"/../cluster/templates/prepareTemplates.sh"
 
 # create cluster
 echo "Creating cluster"
-aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire 12h || exit 1
+aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire=0 || exit 1
 rm -rf aerospike.conf
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
@@ -29,4 +20,4 @@ sleep 10
 
 # exporter
 echo "Adding exporter"
-aerolab cluster add exporter -n ${CLUSTER_NAME} -o $prefix"cluster/templates/ape.toml"
+aerolab cluster add exporter -n ${CLUSTER_NAME} -o $PREFIX"/../cluster/templates/ape.toml"

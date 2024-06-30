@@ -34,7 +34,7 @@ public class OutputWindow {
         var scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(
                 this::printRow,
-                config.printIntervalSec,
+                2,
                 config.printIntervalSec,
                 TimeUnit.SECONDS);
     }

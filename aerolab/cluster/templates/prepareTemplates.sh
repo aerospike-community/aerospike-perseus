@@ -1,17 +1,3 @@
-if [ -f "configure.sh" ]; then
-    prefix=""
-fi
-
-if [ -f "../configure.sh" ]; then
-    prefix="../"
-fi
-
-if [ -f "../../configure.sh" ]; then
-    prefix="../../"
-fi
-
-. $prefix"configure.sh"
-
 STORAGE_ENGINE=""
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
@@ -48,7 +34,7 @@ if [ "${CLUSTER_STORAGE_TYPE}" = "MEMORY" ]; then
 fi
 
 # prepare Aerospike.conf file
-Aerospike_Conf=$prefix"cluster/templates/aerospike_template.conf"
+Aerospike_Conf=$PREFIX"/../cluster/templates/aerospike_template.conf"
 sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Aerospike_Conf} |
 sed "s/_REPLICATION_FACTOR_/${CLUSTER_REPLICATION_FACTOR}/g" |
 sed "s/_STORAGE_ENGINE_/${STORAGE_ENGINE}/g" > aerospike.conf
