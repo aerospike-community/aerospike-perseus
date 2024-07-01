@@ -1,6 +1,5 @@
 package com.aerospike.perseus.presentation;
 
-import com.aerospike.perseus.keyCache.CacheStats;
 import com.aerospike.perseus.configurations.pojos.OutputWindowConfiguration;
 
 import java.util.List;

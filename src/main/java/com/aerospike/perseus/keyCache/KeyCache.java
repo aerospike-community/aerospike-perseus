@@ -1,5 +1,6 @@
 package com.aerospike.perseus.keyCache;
 
+import com.aerospike.perseus.presentation.CacheStats;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -73,7 +74,7 @@ public class KeyCache implements Cache<Long>, CacheStats {
             numberOfItems = lastItemIndex;
         }
 
-        return String.format("Number of Records Inserted: %,d | Key Cache Capacity: %d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
+        return String.format("Written Records Count: %,d | Key Cache Capacity: %d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
                 numberOfItems,
                 size,
                 (int)(saveRatio*100),

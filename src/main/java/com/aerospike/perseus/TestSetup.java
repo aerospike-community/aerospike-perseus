@@ -6,7 +6,7 @@ import com.aerospike.perseus.configurations.ThreadsProvider;
 import com.aerospike.perseus.configurations.pojos.AerospikeConfiguration;
 import com.aerospike.perseus.data.generators.*;
 import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
-import com.aerospike.perseus.keyCache.CacheStats;
+import com.aerospike.perseus.presentation.CacheStats;
 import com.aerospike.perseus.keyCache.KeyCache;
 import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.*;
