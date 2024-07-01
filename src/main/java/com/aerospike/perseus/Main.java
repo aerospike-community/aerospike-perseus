@@ -1,6 +1,6 @@
 package com.aerospike.perseus;
 
-import com.aerospike.perseus.testCases.*;
+import com.aerospike.perseus.presentation.OutputWindow;
 import com.aerospike.perseus.configurations.*;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class Main {
         var config = new ConfigurationProvider().getConfiguration();
 
         var setup = new TestSetup(config.aerospikeConfiguration, config.testConfiguration);
-        new OutputWindow(config.outputWindowConfiguration, setup.getLoggableTestList(), setup.getCacheStats());
+        new OutputWindow(config.outputWindowConfiguration,setup.getCacheStats(), setup.getLoggableTestList(), setup.getTotalTps());
         setup.startTest();
 
 

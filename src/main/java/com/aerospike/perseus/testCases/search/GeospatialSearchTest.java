@@ -7,10 +7,12 @@ import com.aerospike.client.query.Statement;
 import com.aerospike.perseus.data.GeoPoint;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.generators.GeoPointGenerator;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
 public class GeospatialSearchTest extends BaseSearchTest<GeoPoint> {
-    public GeospatialSearchTest(AerospikeClient client, GeoPointGenerator geoPointGenerator, String namespace, String setName) {
-        super(client, geoPointGenerator, namespace, setName);
+    public GeospatialSearchTest(TestCaseConstructorArguments arguments, GeoPointGenerator geoPointGenerator) {
+        super(arguments, geoPointGenerator);
         client.createIndex(null,
                 namespace,
                 setName,

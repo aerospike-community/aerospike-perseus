@@ -4,4 +4,4 @@ if [ -z "$PREFIX" ];
     . $PREFIX/configure.sh
 fi
 
-aerolab files upload -c -n ${CLIENT_NAME} $prefix"threads.yaml" /root/threads.yaml || exit 1
+aerolab files upload -c -n ${CLIENT_NAME} $PREFIX"/threads.yaml" /root/threads.yaml || exit 1

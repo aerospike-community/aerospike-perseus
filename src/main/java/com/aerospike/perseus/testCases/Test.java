@@ -2,12 +2,14 @@ package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Key;
+import com.aerospike.perseus.presentation.TPSLogger;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public abstract class Test<T> implements LogableTest {
+public abstract class Test<T> extends TPSLogger {
     protected final AerospikeClient client;
     protected final Iterator<T> provider;
     protected final String namespace;
@@ -16,14 +18,14 @@ public abstract class Test<T> implements LogableTest {
     private final boolean[] terminated = new boolean[maxPoolSize];
     private static final int maxPoolSize = 500;
     protected final AtomicInteger threadCount = new AtomicInteger(  0);
-    public static final Total totalTps = new Total();
-    private final AtomicInteger tpsCounter = new AtomicInteger();
+    private final TotalTpsCounter totalTpsCounter;
 
-    protected Test(AerospikeClient client, Iterator<T> provider, String namespace, String setName) {
-        this.client = client;
+    protected Test(TestCaseConstructorArguments arguments, Iterator<T> provider) {
+        this.client = arguments.client();
         this.provider = provider;
-        this.namespace = namespace;
-        this.setName = setName;
+        this.namespace = arguments.namespace();
+        this.setName = arguments.setName();
+        this.totalTpsCounter = arguments.totalTpsCounter();
     }
 
     public synchronized void setThreads(int i){
@@ -78,14 +80,10 @@ public abstract class Test<T> implements LogableTest {
             setThreads(0);
         }
         tpsCounter.getAndIncrement();
-        totalTps.increment();
+        totalTpsCounter.increment();
     }
 
     protected abstract void execute(T t);
-
-    public int getTPS() {
-        return tpsCounter.getAndSet(0);
-    }
 
     protected Key getKey(long key) {
         return new Key(namespace, setName, key);

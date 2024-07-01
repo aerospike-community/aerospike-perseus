@@ -1,4 +1,4 @@
-. $prefix"/../cluster/templates/prepareTemplates.sh"
+. $PREFIX"/../cluster/templates/prepareTemplates.sh"
 
 # create cluster
 New_Node_Number=$(aerolab cluster list | wc -l)

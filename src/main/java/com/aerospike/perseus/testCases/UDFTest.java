@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class UDFTest extends Test<Long>{
 
-    public UDFTest(AerospikeClient client, Cache<Long> cache, String namespace, String setName) throws IOException {
-        super(client, cache, namespace, setName);
+    public UDFTest(TestCaseConstructorArguments arguments, Cache<Long> cache) throws IOException {
+        super(arguments, cache);
         LuaSetup.registerUDF(client, ResourceFileProvider.getUdfPath());
         System.out.println("UDF Code was registered successfully.");
     }
@@ -24,6 +24,6 @@ public class UDFTest extends Test<Long>{
     }
 
     public String[] getHeader(){
-        return "UDF\nLua".split("\n");
+        return "UDF (Lua)\n ".split("\n");
     }
 }

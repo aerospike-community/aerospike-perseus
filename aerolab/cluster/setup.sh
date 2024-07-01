@@ -2,7 +2,7 @@
 
 # create cluster
 echo "Creating cluster"
-aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire=0 || exit 1
+aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire=12h || exit 1
 rm -rf aerospike.conf
 
 if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then

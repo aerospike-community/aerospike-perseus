@@ -1,12 +1,11 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
 
 public class ReadTest extends Test<Long>{
     private final double hitRatio;
-    public ReadTest(AerospikeClient client, CacheHitAndMissKeyProvider provider, String namespace, String setName, double hitRatio) {
-        super(client, provider, namespace, setName);
+    public ReadTest(TestCaseConstructorArguments arguments, CacheHitAndMissKeyProvider provider, double hitRatio) {
+        super(arguments, provider);
         this.hitRatio = hitRatio;
     }
 

@@ -2,6 +2,7 @@ package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.*;
 import com.aerospike.perseus.data.generators.BatchKeyGenerator;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,8 +10,8 @@ import java.util.stream.Collectors;
 public class BatchReadTest extends Test<List<Long>>{
     private final int batchSize;
 
-    public BatchReadTest(AerospikeClient client, BatchKeyGenerator generator, String namespace, String setName, int batchSize) {
-        super(client, generator, namespace, setName);
+    public BatchReadTest(TestCaseConstructorArguments arguments, BatchKeyGenerator generator, int batchSize) {
+        super(arguments, generator);
         this.batchSize = batchSize;
     }
 
@@ -24,6 +25,6 @@ public class BatchReadTest extends Test<List<Long>>{
     }
 
     public String[] getHeader(){
-        return String.format("Batch\nRead (%d)", batchSize).split("\n");
+        return String.format("Batch Read\nSize: %d", batchSize).split("\n");
     }
 }

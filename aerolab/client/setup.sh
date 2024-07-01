@@ -1,5 +1,5 @@
 cho "Creating the nodes"
-aerolab client create base -c ${CLIENT_NUMBER_OF_NODES} -n ${CLIENT_NAME}  --instance-type ${CLIENT_INSTANCE_TYPE} --ebs=40  --aws-expire=0 || exit 1
+aerolab client create base -c ${CLIENT_NUMBER_OF_NODES} -n ${CLIENT_NAME}  --instance-type ${CLIENT_INSTANCE_TYPE} --ebs=40  --aws-expire=12h || exit 1
 
 echo "Uploading the Perseus"
 aerolab files upload -c -n ${CLIENT_NAME} $PREFIX"/../client/templates/perseus_setup.sh" /root/perseus_setup.sh || exit 1
@@ -26,9 +26,9 @@ for (( i=1; i  <= ${CLIENT_NUMBER_OF_NODES}; i++ ))
     chmod 744 "term"${i}".sh"
     open -a iTerm "term"${i}".sh"
     sleep 3
-    #rm -f "term"${i}".sh"
+    rm -f "term"${i}".sh"
   done
 
 if [ ! -f $prefix"threads.yaml" ]; then
-  cp $PREFIX"/../../src/main/resources/threads.yaml" $prefix"."
+  cp $PREFIX"/../../src/main/resources/threads.yaml" $PREFIX"/."
 fi

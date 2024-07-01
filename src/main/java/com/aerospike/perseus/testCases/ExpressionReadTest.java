@@ -8,10 +8,11 @@ import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpReadFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 public class ExpressionReadTest extends Test<Long>{
-    public ExpressionReadTest(AerospikeClient client, Cache<Long> cache, String namespace, String setName) {
-        super(client, cache, namespace, setName);
+    public ExpressionReadTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+        super(arguments, cache);
     }
 
     @Override

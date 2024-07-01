@@ -73,12 +73,11 @@ public class KeyCache implements Cache<Long>, CacheStats {
             numberOfItems = lastItemIndex;
         }
 
-        return String.format("Collected Keys Stat [Max: %d, Save Ratio: %d%s, # Processed: %d, # Collected: %d, Full Percent: %d%s, Duration: %s]",
+        return String.format("Number of Records Inserted: %,d | Key Cache Capacity: %d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
+                numberOfItems,
                 size,
                 (int)(saveRatio*100),
                 "%",
-                total.get(),
-                numberOfItems,
                 100*numberOfItems/size,
                 "%",
                 DurationFormatUtils.formatPeriod(earliest, latest, "HH:mm:ss"));

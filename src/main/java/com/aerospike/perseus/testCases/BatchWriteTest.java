@@ -4,6 +4,7 @@ import com.aerospike.client.*;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.generators.BatchRecordsGenerator;
 import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,8 +14,8 @@ public class BatchWriteTest extends Test<List<Record>>{
     private final Cache<Long> cache;
     private final int batchSize;
 
-    public BatchWriteTest(AerospikeClient client, BatchRecordsGenerator batchSimpleRecordsGenerator, String namespace, String setName, Cache<Long> cache, int batchSize) {
-        super(client, batchSimpleRecordsGenerator, namespace, setName);
+    public BatchWriteTest(TestCaseConstructorArguments arguments, BatchRecordsGenerator batchSimpleRecordsGenerator, Cache<Long> cache, int batchSize) {
+        super(arguments, batchSimpleRecordsGenerator);
         this.cache = cache;
         this.batchSize = batchSize;
     }
@@ -35,6 +36,6 @@ public class BatchWriteTest extends Test<List<Record>>{
     }
 
     public String[] getHeader(){
-        return String.format("Batch\nWrite (%d)", batchSize).split("\n");
+        return String.format("Batch Write\nSize: %d", batchSize).split("\n");
     }
 }

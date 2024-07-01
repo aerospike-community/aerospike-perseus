@@ -8,14 +8,16 @@ import com.aerospike.perseus.data.generators.*;
 import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
 import com.aerospike.perseus.keyCache.CacheStats;
 import com.aerospike.perseus.keyCache.KeyCache;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.*;
 import com.aerospike.perseus.testCases.search.GeospatialSearchTest;
 import com.aerospike.perseus.testCases.search.NumericSearchTest;
 import com.aerospike.perseus.testCases.search.StringSearchTest;
-import com.aerospike.perseus.testCases.LogableTest;
+import com.aerospike.perseus.presentation.TPSLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -23,9 +25,9 @@ import java.util.stream.Collectors;
 public class TestSetup {
     private final ThreadsProvider threadsProvider = new ThreadsProvider();
     private final ArrayList<Test> testList = new ArrayList<Test>();
-    private final ArrayList<LogableTest> loggableTestList = new ArrayList<LogableTest>();
     private final CacheStats cacheStats;
     private final WriteTest writeTest;
+    private final TotalTpsCounter totalTpsCounter;
 
     public TestSetup(AerospikeConfiguration aerospikeConfig, TestConfiguration testConfig) {
 
@@ -40,44 +42,40 @@ public class TestSetup {
         var batchSimpleRecordsGenerator = new BatchRecordsGenerator(recordGenerator, testConfig.writeBatchSize);
         var batchKeyGenerator = new BatchKeyGenerator(keyCache, testConfig.readBatchSize);
         var timePeriodGenerator = new TimePeriodGenerator();
-
+        totalTpsCounter = new TotalTpsCounter();
         var client = AerospikeClientProvider.getClient(aerospikeConfig);
 
-        String namespace = aerospikeConfig.namespace;
-        String set = aerospikeConfig.set;
+        var arguments = new TestCaseConstructorArguments(client, aerospikeConfig.namespace, aerospikeConfig.set, totalTpsCounter);
 
-        writeTest = new WriteTest(client, recordGenerator, keyCache, namespace, set);
+        writeTest = new WriteTest(arguments, recordGenerator, keyCache);
         testList.add(writeTest);
-        testList.add(new ReadTest(client, cacheHitAndMissKeyProvider, namespace, set, testConfig.readHitRatio));
-        testList.add(new UpdateTest(client, keyCache, namespace, set));
-        testList.add(new ExpressionReadTest(client, keyCache, namespace, set));
-        testList.add(new ExpressionWriteTest(client, keyCache, namespace, set));
-        testList.add(new BatchWriteTest(client, batchSimpleRecordsGenerator, namespace, set, keyCache, testConfig.writeBatchSize));
-        testList.add(new BatchReadTest(client, batchKeyGenerator, namespace, set, testConfig.writeBatchSize));
+        testList.add(new ReadTest(arguments, cacheHitAndMissKeyProvider, testConfig.readHitRatio));
+        testList.add(new UpdateTest(arguments, keyCache));
+        testList.add(new ExpressionReadTest(arguments, keyCache));
+        testList.add(new ExpressionWriteTest(arguments, keyCache));
+        testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, keyCache, testConfig.writeBatchSize));
+        testList.add(new BatchReadTest(arguments, batchKeyGenerator, testConfig.writeBatchSize));
         if(testConfig.numericIndex) {
-            testList.add(new NumericSearchTest(client, keyCache, namespace, set));
+            testList.add(new NumericSearchTest(arguments, keyCache));
         }
         if(testConfig.stringIndex) {
-            testList.add(new StringSearchTest(client, keyCache, namespace, set));
+            testList.add(new StringSearchTest(arguments, keyCache));
         }
         if(testConfig.geoSpatialIndex) {
-            testList.add(new GeospatialSearchTest(client, geoPointGenerator, namespace, set));
+            testList.add(new GeospatialSearchTest(arguments, geoPointGenerator));
         }
         try {
-            testList.add(new UDFTest(client, keyCache, namespace, set));
+            testList.add(new UDFTest(arguments, keyCache));
         } catch (IOException e) {
             System.out.println("UDF function couldn't be loaded. The UDF test is therefore disabled.");
         }
         if(testConfig.udfAggregation) {
             try {
-                testList.add(new UDFAggregationTest(client, timePeriodGenerator, namespace, set));
+                testList.add(new UDFAggregationTest(arguments, timePeriodGenerator));
             } catch (IOException e) {
                 System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
             }
         }
-
-        loggableTestList.addAll(testList);
-        loggableTestList.add(Test.totalTps);
         cacheStats = keyCache;
     }
 
@@ -97,7 +95,7 @@ public class TestSetup {
             throw new RuntimeException(e);
         }
         writeTest.getTPS();
-        Test.totalTps.getTPS();
+        totalTpsCounter.getTPS();
     }
 
     private void setThread() {
@@ -111,11 +109,15 @@ public class TestSetup {
         }
     }
 
-    public ArrayList<LogableTest> getLoggableTestList() {
-        return loggableTestList;
+    public List<TPSLogger> getLoggableTestList() {
+        return testList.stream().map(test -> (TPSLogger)test).toList();
     }
 
     public CacheStats getCacheStats() {
         return cacheStats;
+    }
+
+    public TotalTpsCounter getTotalTps() {
+        return totalTpsCounter;
     }
 }

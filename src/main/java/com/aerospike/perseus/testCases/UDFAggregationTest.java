@@ -16,8 +16,8 @@ import java.io.IOException;
 
 public class UDFAggregationTest extends Test<TimePeriod>{
 
-    public UDFAggregationTest(AerospikeClient client, TimePeriodGenerator timePeriodGenerator, String namespace, String setName) throws IOException {
-        super(client, timePeriodGenerator, namespace, setName);
+    public UDFAggregationTest(TestCaseConstructorArguments arguments, TimePeriodGenerator timePeriodGenerator) throws IOException {
+        super(arguments, timePeriodGenerator);
        LuaSetup.registerUDF(client, ResourceFileProvider.getUdfAggregationPath());
         System.out.println("UDF Aggregation Code and the related index were registered successfully.");
         client.createIndex(null, namespace, setName, "indexOnDate", Record.DATE, IndexType.NUMERIC).waitTillComplete();

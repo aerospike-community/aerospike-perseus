@@ -8,8 +8,8 @@ import com.aerospike.perseus.keyCache.Cache;
 public class WriteTest extends Test<Record>{
     private final Cache<Long> cache;
 
-    public WriteTest(AerospikeClient client, RecordGenerator provider, Cache<Long> cache, String namespace, String setName) {
-        super(client, provider, namespace, setName);
+    public WriteTest(TestCaseConstructorArguments arguments, RecordGenerator provider, Cache<Long> cache) {
+        super(arguments, provider);
         this.cache = cache;
     }
 

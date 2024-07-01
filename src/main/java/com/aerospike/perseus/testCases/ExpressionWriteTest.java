@@ -9,11 +9,12 @@ import com.aerospike.client.exp.ExpWriteFlags;
 import com.aerospike.client.exp.Expression;
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 public class ExpressionWriteTest extends Test<Long>{
 
-    public ExpressionWriteTest(AerospikeClient client, Cache<Long> cache, String namespace, String setName) {
-        super(client, cache, namespace, setName);
+    public ExpressionWriteTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+        super(arguments, cache);
     }
 
     @Override

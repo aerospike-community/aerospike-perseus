@@ -6,10 +6,12 @@ import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.Statement;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
 public class NumericSearchTest extends BaseSearchTest<Long> {
-    public NumericSearchTest(AerospikeClient client, Cache keyCache, String namespace, String setName) {
-        super(client, keyCache, namespace, setName);
+    public NumericSearchTest(TestCaseConstructorArguments arguments, Cache keyCache) {
+        super(arguments, keyCache);
         client.createIndex(null,
                 namespace,
                 setName,
