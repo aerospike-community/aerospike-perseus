@@ -13,13 +13,18 @@ import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 public class GeospatialSearchTest extends BaseSearchTest<GeoPoint> {
     public GeospatialSearchTest(TestCaseConstructorArguments arguments, GeoPointGenerator geoPointGenerator) {
         super(arguments, geoPointGenerator);
-        client.createIndex(null,
-                namespace,
-                setName,
-                "Geo_Location",
-                Record.GEO_BIN,
-                IndexType.GEO2DSPHERE).waitTillComplete();
-        System.out.println("GeoSpatial Index was created successfully.");
+        try
+        {
+            client.createIndex(null,
+                    namespace,
+                    setName,
+                    "Geo_Location",
+                    Record.GEO_BIN,
+                    IndexType.GEO2DSPHERE).waitTillComplete();
+            System.out.println("GeoSpatial Index was created successfully.");
+        } catch(Exception e) {
+            System.out.println("GeoSpatial index creation is still in progress, but the test can continue for now. Just keep in mind that the results of the SI queries won’t be fully accurate.");
+        }
     }
 
     @Override

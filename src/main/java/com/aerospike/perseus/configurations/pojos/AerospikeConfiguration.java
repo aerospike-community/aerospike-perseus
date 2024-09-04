@@ -9,6 +9,7 @@ public class AerospikeConfiguration {
     public String password;
     public String namespace;
     public String set;
+    public Boolean truncateSet;
 
     public com.aerospike.client.Host[] getHosts() {
         return hosts.stream().map(

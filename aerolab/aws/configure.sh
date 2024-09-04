@@ -24,6 +24,7 @@ CLIENT_NUMBER_OF_NODES=1
 # Perseus Additional Testcases
 KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 8 Bytes. 1 billion entries need 8 GB of Ram
 KEY_CACHE_SAVE_RATIO=.5
+TRUNCATE_SET=True
 STRING_INDEX=False
 NUMERIC_INDEX=False
 GEO_SPATIAL_INDEX=False

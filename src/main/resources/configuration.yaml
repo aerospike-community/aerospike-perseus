@@ -7,6 +7,7 @@ aerospikeConfiguration:
   password: ""
   namespace: "test"
   set: "test"
+  truncateSet: True
 outputWindowConfiguration:
   printIntervalSec: 1
   numberOfLinesBeforeReprintingTheHeader: 25

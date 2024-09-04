@@ -15,6 +15,11 @@ public class AerospikeClientProvider {
         policy.user = conf.username;
         policy.password = conf.password;
         client = new AerospikeClient(policy, conf.getHosts());
+        if(conf.truncateSet) {
+            client.truncate(null, conf.namespace, conf.set, null);
+            System.out.printf("The set: %s in namespace: %s was successfully truncated!\n", conf.set, conf.namespace);
+        }
+
         return client;
     }
 }

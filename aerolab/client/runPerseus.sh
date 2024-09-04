@@ -15,6 +15,7 @@ sed "s/_BATCH_READ_SIZE_/${BATCH_READ_SIZE}/g" | \
 sed "s/_BATCH_WRITE_SIZE_/${BATCH_WRITE_SIZE}/g" | \
 sed "s/_KEY_CACHE_CAPACITY_/${KEY_CACHE_CAPACITY}/g" | \
 sed "s/_KEY_CACHE_SAVE_RATIO_/${KEY_CACHE_SAVE_RATIO}/g" | \
+sed "s/_TRUNCATE_SET_/${TRUNCATE_SET}/g" | \
 sed "s/_READ_HIT_RATIO_/${READ_HIT_RATIO}/g" > configuration.yaml
 
 aerolab files upload -c -n ${CLIENT_NAME} configuration.yaml /root/configuration.yaml || exit 1
