@@ -13,13 +13,13 @@ outputWindowConfiguration:
   columnWidth: 11
 testConfiguration:
   keyCaching:
-    cacheCapacity: 100000000
-    discardRatio: .20
-  recordSize: 1220
-  readBatchSize: 50
-  writeBatchSize: 50
-  readHitRatio: 0.8
-  stringIndex: False
-  numericIndex: False
-  geoSpatialIndex: False
-  udfAggregation: False
+    cacheCapacity: _KEY_CACHE_CAPACITY_
+    discardRatio: _KEY_CACHE_SAVE_RATIO_
+  recordSize: _RECORD_SIZE_
+  readBatchSize: _BATCH_READ_SIZE_
+  writeBatchSize: _BATCH_WRITE_SIZE_
+  readHitRatio: _READ_HIT_RATIO_
+  stringIndex: _STRING_INDEX_
+  numericIndex: _NUMERIC_INDEX_
+  geoSpatialIndex: _GEO_SPATIAL_INDEX_
+  udfAggregation: _UDF_AFFREGATION_

@@ -74,7 +74,7 @@ public class KeyCache implements Cache<Long>, CacheStats {
             numberOfItems = lastItemIndex;
         }
 
-        return String.format("Written Records Count: %,d | Key Cache Capacity: %d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
+        return String.format("Written Records Count: %,d | Key Cache Capacity: %,d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
                 numberOfItems,
                 size,
                 (int)(saveRatio*100),

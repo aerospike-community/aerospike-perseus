@@ -2,9 +2,9 @@
 AWS_REGION="eu-west-1"
 
 # Cluster Detail
-VER="7.1.0.2"
-CLUSTER_NAME="S71"
-NAMESPACE="load_test"
+VER="7.1.0.5"
+CLUSTER_NAME="Tremend"
+NAMESPACE="Test"
 CLUSTER_STORAGE_TYPE="HYBRID" #HYBRID OR MEMORY
 CLUSTER_REPLICATION_FACTOR=2
 CLUSTER_NUMBER_OF_NODES="3"
@@ -18,8 +18,22 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 
 # Client Detail
 CLIENT_NAME="Perseus_${CLUSTER_NAME}"
-CLIENT_INSTANCE_TYPE="c7g.16xlarge"
+CLIENT_INSTANCE_TYPE="c6a.32xlarge"
 CLIENT_NUMBER_OF_NODES=1
+
+# Perseus Additional Testcases
+KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 8 Bytes. 1 billion entries need 8 GB of Ram
+KEY_CACHE_SAVE_RATIO=.5
+STRING_INDEX=False
+NUMERIC_INDEX=False
+GEO_SPATIAL_INDEX=False
+UDF_AFFREGATION=False
+
+# Perseus Details
+RECORD_SIZE=1000 #Bytes
+BATCH_READ_SIZE=50
+BATCH_WRITE_SIZE=50
+READ_HIT_RATIO=0.8
 
 # setup backend
 aerolab config backend -t aws -r ${AWS_REGION}

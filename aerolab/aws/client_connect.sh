@@ -4,4 +4,4 @@ if [ -z "$PREFIX" ];
     . $PREFIX/configure.sh
 fi
 
-. $PREFIX/../client/setup.sh
+. $PREFIX/../client/connect.sh $1

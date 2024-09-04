@@ -4,8 +4,6 @@ if [ -z "$PREFIX" ];
     . $PREFIX/configure.sh
 fi
 
-echo $PREFIX
-
-. $PREFIX/client_destroy.sh
-. $PREFIX/grafana_destroy.sh
-. $PREFIX/cluster_destroy.sh
+. $PREFIX/../client/setup.sh
+. $PREFIX/../client/buildPerseus.sh
+. $PREFIX/../client/runPerseus.sh
