@@ -18,15 +18,15 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 
 # Client Detail
 CLIENT_NAME="Perseus_${CLUSTER_NAME}"
-CLIENT_INSTANCE_TYPE="c6a.32xlarge"
+CLIENT_INSTANCE_TYPE="c6a.32xlarge" #Choose instances with more cpus, more than 32 GB of RAM, and no NVMe. C6a family are good choices.
 CLIENT_NUMBER_OF_NODES=1
 
 # Perseus Additional Testcases
-KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 8 Bytes. 1 billion entries need 8 GB of Ram
+KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 16 Bytes. 1 billion entries need 16 GB of Ram
 KEY_CACHE_SAVE_RATIO=1.0
-TRUNCATE_SET=True
-STRING_INDEX=True
-NUMERIC_INDEX=True
+TRUNCATE_SET=False
+STRING_INDEX=False
+NUMERIC_INDEX=False
 GEO_SPATIAL_INDEX=False
 UDF_AFFREGATION=False
 
