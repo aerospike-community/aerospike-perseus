@@ -2,8 +2,6 @@ package com.aerospike.perseus.keyCache;
 
 import com.aerospike.perseus.presentation.CacheStats;
 import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
@@ -11,7 +9,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class KeyCache implements Cache<Long>, CacheStats {
     private final int size;
     private final double saveRatio;
-    private final  Pair<Long, Long>[] list;
+    private final  Long[] listKey;
+    private final  Long[] listValue;
     private final AtomicLong total = new AtomicLong(0);
     private final AtomicLong location = new AtomicLong(0);
     private final ThreadLocalRandom random;
@@ -19,7 +18,8 @@ public class KeyCache implements Cache<Long>, CacheStats {
     public KeyCache(int size, double saveRatio) {
         this.size = size;
         this.saveRatio = saveRatio;
-        list = new Pair[size];
+        listKey = new Long[size];
+        listValue = new Long[size];
         random = ThreadLocalRandom.current();
     }
 
@@ -27,9 +27,10 @@ public class KeyCache implements Cache<Long>, CacheStats {
         total.getAndIncrement();
         if(random.nextFloat(0, 1) > saveRatio )
             return;
-        long i = location.getAndIncrement();
+        int i = (int) (location.getAndIncrement()% size);
 
-        list[(int) (i % size)] = new ImmutablePair<>(value, System.currentTimeMillis());
+        listValue[i] = value;
+        listKey[i] = System.currentTimeMillis();
     }
 
     @Override
@@ -44,38 +45,35 @@ public class KeyCache implements Cache<Long>, CacheStats {
             l = size;
         if(l == 0)
             return random.nextLong();
-        Pair<Long, Long> pair = list[random.nextInt(l)];
-        if(pair == null)
-            return 0L;
-        return pair.getKey();
+        return listKey[random.nextInt(l)];
     }
 
     @Override
     public String getStats() {
         long numberOfItems;
-        var firstItem = list[100];
-        var lastItem = list[size-1];
-        int lastItemIndex = ((int)(location.get() - 1)% size);
-        if(lastItemIndex<0)
+        var firstItem = listValue[0];
+        var lastItem = listValue[size-1];
+        int currentLatestItemIndex = ((int)(location.get() - 1)% size);
+        if(currentLatestItemIndex < 0)
             return "No Stats Populated Yet";
 
-        var previousItem = list[lastItemIndex];
-        var pastItem = list[(int) ((location.get()+10000) % size)];
-        if (firstItem == null)
+        var currentLatestItem = listValue[currentLatestItemIndex];
+        var pastItem = listValue[(int) ((location.get()+10000) % size)];
+        if (firstItem == 0)
             return "No Stats Populated Yet";
 
-        long latest = previousItem.getValue();
+        long latest = currentLatestItem;
         long earliest;
-        if(lastItem != null){
-            earliest = pastItem.getValue();
+        if(lastItem != 0){
+            earliest = pastItem;
             numberOfItems = size;
         } else {
-            earliest = firstItem.getValue();
-            numberOfItems = lastItemIndex;
+            earliest = firstItem;
+            numberOfItems = currentLatestItemIndex;
         }
 
         return String.format("Written Records Count: %,d | Key Cache Capacity: %,d, Save Rate: %d%s, Cache Full: %d%s, Cache Duration: %s",
-                numberOfItems,
+                total.get(),
                 size,
                 (int)(saveRatio*100),
                 "%",

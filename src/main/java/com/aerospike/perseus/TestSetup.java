@@ -29,7 +29,7 @@ public class TestSetup {
     private final WriteTest writeTest;
     private final TotalTpsCounter totalTpsCounter;
 
-    public TestSetup(AerospikeConfiguration aerospikeConfig, TestConfiguration testConfig) {
+    public TestSetup(AerospikeConfiguration aerospikeConfig, TestConfiguration testConfig) throws InterruptedException {
 
         var keyCache = new KeyCache(testConfig.keyCaching.cacheCapacity,testConfig.keyCaching.discardRatio);
         var cacheHitAndMissKeyProvider = new CacheHitAndMissKeyProvider(keyCache, testConfig.readHitRatio);

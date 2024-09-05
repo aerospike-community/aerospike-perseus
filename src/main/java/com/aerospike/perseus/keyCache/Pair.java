@@ -1,2 +1,3 @@
-package com.aerospike.perseus.keyCache;public class Pair {
-}
+package com.aerospike.perseus.keyCache;
+
+public record Pair <T, U> (T key, U value){}

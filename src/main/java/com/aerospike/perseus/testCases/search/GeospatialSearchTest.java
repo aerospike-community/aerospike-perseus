@@ -23,7 +23,7 @@ public class GeospatialSearchTest extends BaseSearchTest<GeoPoint> {
                     IndexType.GEO2DSPHERE).waitTillComplete();
             System.out.println("GeoSpatial Index was created successfully.");
         } catch(Exception e) {
-            System.out.println("GeoSpatial index creation is still in progress, but the test can continue for now. Just keep in mind that the results of the SI queries won’t be fully accurate.");
+            System.out.println("GeoSpatial index creation is still in progress, but the test can continue for now. However this index is not usable yet.");
         }
     }
 
