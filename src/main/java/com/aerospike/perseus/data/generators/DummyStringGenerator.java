@@ -23,7 +23,6 @@ public class DummyStringGenerator extends BaseGenerator<String> {
         numberOfBytes = numberOfBytes < 0 ? 10: numberOfBytes;
         byte[] array = new byte[numberOfBytes];
         random.nextBytes(array);
-        String dummy = new String(array, StandardCharsets.UTF_8);
-        return dummy;
+        return new String(array, StandardCharsets.UTF_8);
     }
 }

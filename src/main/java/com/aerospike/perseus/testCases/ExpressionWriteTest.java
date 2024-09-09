@@ -30,10 +30,9 @@ public class ExpressionWriteTest extends Test<Long>{
                         Exp.val("No")));
         Operation writeExpOp = ExpOperation.write("ExpRes",
                 writeExp,
-                ExpWriteFlags.DEFAULT);
+                ExpWriteFlags.POLICY_NO_FAIL);
 
-        WritePolicy policy = new WritePolicy(client.writePolicyDefault);
-        Record operate = client.operate(policy, getKey(key), writeExpOp);
+        Record operate = client.operate(null, getKey(key), writeExpOp);
 //        if(operate != null)
 //            System.out.println(operate.toString());
     }
