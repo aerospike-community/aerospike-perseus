@@ -1,6 +1,7 @@
 package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.AerospikeClient;
+import com.aerospike.client.AerospikeException;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
 import com.aerospike.client.exp.Exp;
@@ -31,10 +32,13 @@ public class ExpressionWriteTest extends Test<Long>{
         Operation writeExpOp = ExpOperation.write("ExpRes",
                 writeExp,
                 ExpWriteFlags.EVAL_NO_FAIL | ExpWriteFlags.POLICY_NO_FAIL);
-
-        Record operate = client.operate(null, getKey(key), writeExpOp);
-//        if(operate != null)
-//            System.out.println(operate.toString());
+        try {
+            Record operate = client.operate(null, getKey(key), writeExpOp);
+            //        if(operate != null)
+            //            System.out.println(operate.toString());
+        } catch (AerospikeException ignore) {
+            // if the data gets deleted, the expression may not be able to find the record and hence it may throw an exception. 
+        }
     }
 
     public String[] getHeader(){
