@@ -1,6 +1,7 @@
 write: 1
 read: 1
 update: 1
+delete: 0
 expressionRead: 1
 expressionWrite: 1
 batchWrite: 1

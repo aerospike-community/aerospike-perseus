@@ -5,7 +5,7 @@ aerospikeConfiguration:
       port: 3000
   username: ""
   password: ""
-  namespace: "_NAMESPACE_"
+  namespace: "_NAMESPACE_NAME_"
   set: "test"
   truncateSet: _TRUNCATE_SET_
 outputWindowConfiguration:

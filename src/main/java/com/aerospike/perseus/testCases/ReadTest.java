@@ -4,8 +4,8 @@ import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
 
 public class ReadTest extends Test<Long>{
     private final double hitRatio;
-    public ReadTest(TestCaseConstructorArguments arguments, CacheHitAndMissKeyProvider provider, double hitRatio) {
-        super(arguments, provider);
+    public ReadTest(TestCaseConstructorArguments arguments, CacheHitAndMissKeyProvider cache, double hitRatio) {
+        super(arguments, cache);
         this.hitRatio = hitRatio;
     }
 

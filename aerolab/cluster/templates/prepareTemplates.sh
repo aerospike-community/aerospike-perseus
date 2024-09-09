@@ -1,11 +1,12 @@
 STORAGE_ENGINE=""
 
-if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
+if [ "${NAMESPACE_STORAGE_TYPE}" = "HMA" ]; then
   STORAGE_ENGINE="storage-engine device {\\n"
   #STORAGE_ENGINE+="\\t\\twrite-block-size 2048K\\n"
-  PARTITION_SIZE=$(expr 85 / $CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME)
-  NVME_SETUP=""
+  OVERPROVISIONING=$(expr 100 - $CLUSTER_OVERPROVISIONING_PERCENTAGE)
+  PARTITION_SIZE=$(expr $OVERPROVISIONING / $CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME)
 
+  NVME_SETUP=""
   for (( i=1; i  <= CLUSTER_INSTANCE_NUMBER_OF_NVMES; i++ ))
   do
       NVME_ZERO=""
@@ -28,13 +29,14 @@ if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
   echo  $NVME_SETUP > nvme_setup.sh
 fi
 
-if [ "${CLUSTER_STORAGE_TYPE}" = "MEMORY" ]; then
+if [ "${NAMESPACE_STORAGE_TYPE}" = "MEMORY" ]; then
   STORAGE_ENGINE="storage-engine memory\\n"
   STORAGE_ENGINE+="\\tpartition-tree-sprigs 4096"
 fi
 
 # prepare Aerospike.conf file
 Aerospike_Conf=$PREFIX"/../cluster/templates/aerospike_template.conf"
-sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Aerospike_Conf} |
-sed "s/_REPLICATION_FACTOR_/${CLUSTER_REPLICATION_FACTOR}/g" |
+sed "s/_NAMESPACE_NAME_/${NAMESPACE_NAME}/g" ${Aerospike_Conf} |
+sed "s/_NAMESPACE_REPLICATION_FACTOR_/${NAMESPACE_REPLICATION_FACTOR}/g" |
+sed "s/_DEFAULT_TTL_/${NAMESPACE_DEFAULT_TTL}/g" |
 sed "s/_STORAGE_ENGINE_/${STORAGE_ENGINE}/g" > aerospike.conf

@@ -5,7 +5,7 @@ echo "Creating cluster"
 aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire=12h || exit 1
 rm -rf aerospike.conf
 
-if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
+if [ "${NAMESPACE_STORAGE_TYPE}" = "HMA" ]; then
   echo "Configure NVMe"
   aerolab files upload -n ${CLUSTER_NAME} nvme_setup.sh /root/nvme_setup.sh || exit 1
   rm -f nvme_setup.sh

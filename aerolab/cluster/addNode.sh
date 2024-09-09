@@ -7,7 +7,7 @@ echo "Grow the cluster"
 aerolab cluster grow -n ${CLUSTER_NAME} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n || exit 1
 rm -rf aerospike.conf
 
-if [ "${CLUSTER_STORAGE_TYPE}" = "HYBRID" ]; then
+if [ "${NAMESPACE_STORAGE_TYPE}" = "HMA" ]; then
   echo "Configure NVMe"
   aerolab files upload -n ${CLUSTER_NAME} -l ${New_Node_Number} nvme_setup.sh /root/nvme_setup.sh || exit 1
   rm -f nvme_setup.sh

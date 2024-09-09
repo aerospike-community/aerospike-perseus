@@ -12,8 +12,8 @@ import java.time.Instant;
 public class UpdateTest extends Test<Long>{
     private final WritePolicy policy;
 
-    public UpdateTest(TestCaseConstructorArguments arguments, Cache<Long> provider) {
-        super(arguments, provider);
+    public UpdateTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+        super(arguments, cache);
         policy = new WritePolicy();
         policy.recordExistsAction = RecordExistsAction.UPDATE_ONLY;
     }

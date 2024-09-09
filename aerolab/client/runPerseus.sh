@@ -4,7 +4,7 @@ aerolab files upload -c -n ${CLIENT_NAME} $PREFIX"/../client/templates/perseus.s
 nip=$(aerolab cluster list -i |grep -A7 ${CLUSTER_NAME} | head -1 | grep -E -o 'int_ip=.{0,15}' | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' )
 
 Perseus_Conf=$PREFIX"/../client/templates/perseus_configuration_template.yaml"
-sed "s/_NAMESPACE_/${NAMESPACE}/g" ${Perseus_Conf} | \
+sed "s/_NAMESPACE_NAME_/${NAMESPACE_NAME}/g" ${Perseus_Conf} | \
 sed "s/_IP_/${nip}/g" | \
 sed "s/_STRING_INDEX_/${STRING_INDEX}/g" | \
 sed "s/_NUMERIC_INDEX_/${NUMERIC_INDEX}/g"| \

@@ -51,6 +51,7 @@ public class TestSetup {
         testList.add(writeTest);
         testList.add(new ReadTest(arguments, cacheHitAndMissKeyProvider, testConfig.readHitRatio));
         testList.add(new UpdateTest(arguments, keyCache));
+        testList.add(new DeleteTest(arguments, keyCache));
         testList.add(new ExpressionReadTest(arguments, keyCache));
         testList.add(new ExpressionWriteTest(arguments, keyCache));
         testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, keyCache, testConfig.writeBatchSize));
