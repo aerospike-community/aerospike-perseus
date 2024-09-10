@@ -25,20 +25,22 @@ CLIENT_NAME="Perseus_${CLUSTER_NAME}"
 CLIENT_INSTANCE_TYPE="c6a.32xlarge" #Choose instances with more cpus, more than 32 GB of RAM, and no NVMe. C6a family are good choices.
 CLIENT_NUMBER_OF_NODES=1
 
-# Perseus Additional Testcases
-KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 16 Bytes. 1 billion entries need 16 GB of Ram
-KEY_CACHE_SAVE_RATIO=1.0
+# Testcases
+STRING_INDEX=True
+NUMERIC_INDEX=True
+GEO_SPATIAL_INDEX=True
+UDF_AFFREGATION=True
 TRUNCATE_SET=False
-STRING_INDEX=False
-NUMERIC_INDEX=False
-GEO_SPATIAL_INDEX=False
-UDF_AFFREGATION=False
 
-# Perseus Details
+# Workload Details
 RECORD_SIZE=1000 #Bytes
 BATCH_READ_SIZE=50
 BATCH_WRITE_SIZE=50
 READ_HIT_RATIO=0.8
+
+# Perseus Detail
+KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 16 Bytes. 1 billion entries need 16 GB of Ram
+KEY_CACHE_SAVE_RATIO=1.0
 
 # setup backend
 aerolab config backend -t aws -r ${AWS_REGION}

@@ -34,9 +34,16 @@ if [ "${NAMESPACE_STORAGE_TYPE}" = "MEMORY" ]; then
   STORAGE_ENGINE+="\\tpartition-tree-sprigs 4096"
 fi
 
+if [[ $VER == 6* ]]; then
+  _MEMORY_SIZE_="memory-size 1T"
+else
+  _MEMORY_SIZE_=""
+fi
+
 # prepare Aerospike.conf file
 Aerospike_Conf=$PREFIX"/../cluster/templates/aerospike_template.conf"
 sed "s/_NAMESPACE_NAME_/${NAMESPACE_NAME}/g" ${Aerospike_Conf} |
 sed "s/_NAMESPACE_REPLICATION_FACTOR_/${NAMESPACE_REPLICATION_FACTOR}/g" |
+sed "s/_MEMORY_SIZE_/${_MEMORY_SIZE_}/g" |
 sed "s/_DEFAULT_TTL_/${NAMESPACE_DEFAULT_TTL}/g" |
 sed "s/_STORAGE_ENGINE_/${STORAGE_ENGINE}/g" > aerospike.conf
