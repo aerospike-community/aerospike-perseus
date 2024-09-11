@@ -1,11 +1,12 @@
 . $PREFIX"/../cluster/templates/prepareTemplates.sh"
 
 # create cluster
-New_Node_Number=$(aerolab cluster list -i| wc -l)
 
 echo "Grow the cluster"
 aerolab cluster grow -n ${CLUSTER_NAME} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n || exit 1
 rm -rf aerospike.conf
+
+New_Node_Number=$(aerolab cluster list -i| wc -l)
 
 if [ "${NAMESPACE_STORAGE_TYPE}" = "HMA" ]; then
   echo "Configure NVMe"

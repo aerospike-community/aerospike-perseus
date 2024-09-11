@@ -11,10 +11,10 @@ NAMESPACE_REPLICATION_FACTOR=2
 # Cluster Detail
 CLUSTER_NAME="Aerospike"
 CLUSTER_NUMBER_OF_NODES="3"
-CLUSTER_INSTANCE_TYPE="i4i.4xlarge"
+CLUSTER_INSTANCE_TYPE="i4i.2xlarge"
 CLUSTER_INSTANCE_NUMBER_OF_NVMES="1"
 CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME="4"
-CLUSTER_OVERPROVISIONING_PERCENTAGE=20
+CLUSTER_OVERPROVISIONING_PERCENTAGE=0
 
 # GRAFANA Detail
 GRAFANA_NAME=${CLUSTER_NAME}"_GRAFANA"
@@ -26,10 +26,10 @@ CLIENT_INSTANCE_TYPE="c6a.32xlarge" #Choose instances with more cpus, more than 
 CLIENT_NUMBER_OF_NODES=1
 
 # Testcases
-STRING_INDEX=True
-NUMERIC_INDEX=True
-GEO_SPATIAL_INDEX=True
-UDF_AFFREGATION=True
+STRING_INDEX=False
+NUMERIC_INDEX=False
+GEO_SPATIAL_INDEX=False
+UDF_AFFREGATION=False
 TRUNCATE_SET=False
 
 # Workload Details
@@ -39,7 +39,7 @@ BATCH_WRITE_SIZE=50
 READ_HIT_RATIO=0.8
 
 # Perseus Detail
-KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 16 Bytes. 1 billion entries need 16 GB of Ram
+KEY_CACHE_CAPACITY=1000000000 #The instance must have enough RAM to keep the key cache in memory. Each entry is 8 Bytes. 1 billion entries need 8 GB of Ram
 KEY_CACHE_SAVE_RATIO=1.0
 
 # setup backend
