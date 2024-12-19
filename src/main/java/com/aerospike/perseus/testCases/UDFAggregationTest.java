@@ -1,6 +1,5 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Value;
 import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
@@ -18,7 +17,7 @@ public class UDFAggregationTest extends Test<TimePeriod>{
 
     public UDFAggregationTest(TestCaseConstructorArguments arguments, TimePeriodGenerator timePeriodGenerator) throws IOException {
         super(arguments, timePeriodGenerator);
-       LuaSetup.registerUDF(client, ResourceFileProvider.getUdfAggregationPath());
+        LuaSetup.registerUDF(client, ResourceFileProvider.getUdfAggregationPath());
         System.out.println("UDF Aggregation Code and the related index were registered successfully.");
         client.createIndex(null, namespace, setName, "indexOnDate", Record.DATE, IndexType.NUMERIC).waitTillComplete();
     }

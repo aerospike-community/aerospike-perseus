@@ -26,7 +26,7 @@ There are 4 files in the src/main/resources. These files control the behaviour o
 📦src\main\java\resources\
 ┣ 📜configuration.yaml
 
-┣ 📜threads.yaml 
+┣ 📜threads.yaml
 
 ┣ 📜same_as_expression.lua 
 
@@ -123,57 +123,123 @@ If the resources of the single-node cluster are exhausted, the simplest solution
 ```docker container stop aerospike```
 
 ## Creating Aerospike cluster on AWS using Aerolab
-<<Under construction>>
-This repository also has the scripts to set up an Aerospike cluster on AWS, configure the Aerospike monitoring stack, and run the Perseus in a single command.
+This repository also includes scripts that make it a comprehensive toolkit to streamline your Aerospike Proof of Technology! Using these scripts you can easily:
+Set up an Aerospike cluster of any size on AWS.
+Configure the Aerospike monitoring stack to monitor the cluster.
+Run multiple instances of Perseus to create any load on the cluster.
+Scale the Aerospike cluster up or down.
+Kill a node.
 
-To use these scripts, you must install and configure Aerolab on your machine: https://github.com/aerospike/aerolab. Follow the https://github.com/aerospike/aerolab/blob/master/docs/GETTING_STARTED.md guide to install and configure aws-cli.
+To use these scripts, you’ll need to install and configure Aerolab on your machine. You can find the Aerolab repository here: Aerolab on GitHub.
+Follow the instructions in the Getting Started Guide to install Aerolab.
+To enable Aerolab to work with AWS, set up the AWS CLI and configure Aerolab for AWS integration by following the steps outlined in the AWS Setup Guide.
+Once configured, you’ll be ready to use the scripts for your Aerospike deployment!
+These scripts are designed with the assumption that you have access to an Aerospike Enterprise license. If you don’t have one, you can apply for a free 60-day trial license here: Get Started with Aerospike.
 
-After the setup is complete, open a terminal and cd to the Aerolab directory in this repository. 
+The root of the project includes a folder named aerolab, which contains four subfolders:
 
-This demo requires Aerospike Enterprise License. You can get a 60-day license for free from here: https://aerospike.com/get-started-aerospike-database/. If you need your dev license to get extended, please contact Aerospike. We will be more than happy to help you. 
+┣ 📜aws
 
-Configurations of the demo are in configure.sh file. You must change the 'FEATURES' to the address of the license key you downloaded from our website. The rest of the configurations in this file define the specifications of the demo. They are self-explanatory.
+┣ 📜client
 
-Now run:
-```./setup.sh```
+┣ 📜cluster
 
-NOTE: *Very important* You MUST remember to run ```./destroy.sh``` soon. This demo uses relatively expensive hardware. Running the demo costs roughly $7 per hour. Forgetting to release the resources can cost hundreds of dollars. 
+┗ 📜grafana
 
-The script first creates a cluster by running ```./cluster/setup.sh```.
-Then it creates the requested number of clients by running ```./client/setup.sh```. This script open new terminals that tail the result of the demo. (You must have iTerm installed.)
-Then it creates the Grafana dashboard by running ```./grafana.setup.sh```, and open a window to its interface (user: admin, password: admin). 
-If any of the steps above fail, you can run the scripts individually.
+The client, cluster, and grafana folders contain scripts related to Aerolab. Unless you’re planning to customise something specific, there’s no need to modify these.
+Our focus will primarily be on the contents of the aws folder.
 
-If everything runs successfully, the terminals should show you something like this:
-```
-=================================================================================================================================================================================
-| Collected Keys Stat [Max: 5000000, Save Ratio: 10%, # Processed: 6461, # Collected: 618, Full Percent: 0%, Duration: 00:00:00]                                                |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Task          | Write         | Read(Hit %50) | Update        | Expression R  | Expression W  | Batch W (10)  | Search        | UDF           | UDF Aggregate | Total TPS     |
-| Thread        | 10 (10)       | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         | 0 (0)         |               |
-=================================================================================================================================================================================
-| 1             | 6711          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 6711          |
-| 2             | 7702          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 7702          |
-| 3             | 6567          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 6567          |
-| 4             | 5721          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 5721          |
-| 5             | 9420          | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 0             | 9420          |
-```
+### configure.sh
+This is the only file you need to modify to control the cluster size or specify the workload you want to run against it.
 
-NOTE: Perseus (the load tester app) runs in the background, if you accidentally Ctrl-C, it will continue running in the background. You can tail the nohup file to monitor the output again. 
+- AWS_REGION: Specifies the AWS region to use.
+- AWS_EXPIRE: 
+- VER: Aerospike server version.
+- NAMESPACE_NAME: The name of the namespace Perseus should use. (If you modify this, update the namespace configuration in aerospike.conf.)
+- NAMESPACE_DEFAULT_TTL: Default TTL (time-to-live) for all records inserted into the database. Set to 0 to disable TTL.
+- NAMESPACE_STORAGE_TYPE: Choose between HMA or MEMORY. (For HMA, NVMe devices must be attached to the machine.)
+- NAMESPACE_REPLICATION_FACTOR: The replication factor of the namespace.
+- CLUSTER_NAME: Name of the Aerospike cluster.
+- CLUSTER_NUMBER_OF_NODES: Number of Aerospike nodes in the cluster.
+- CLUSTER_INSTANCE_TYPE: AWS instance type for the cluster.
+- CLUSTER_INSTANCE_NUMBER_OF_NVMES: Number of NVMe devices attached to each machine.
+- CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME: Number of partitions per NVMe device.
+- CLUSTER_OVERPROVISIONING_PERCENTAGE: Percentage of overprovisioning required. (AWS recommends overprovisioning for some instance types. Overprovisioning might not be necessary for light workloads.)
+- GRAFANA_NAME: Name of the Grafana instance.
+- GRAFANA_INSTANCE_TYPE: AWS instance type for Grafana.
+- CLIENT_NAME: Name of the instance running Perseus.
+- CLIENT_INSTANCE_TYPE: Instance type for Perseus. (The machine requires enough RAM to cache inserted records and sufficient CPUs to handle queries. No disk is needed; the C6a family is a good choice.)
+- CLIENT_NUMBER_OF_NODES: Number of Perseus nodes. (For heavy workloads, running multiple Perseus instances can provide additional resources and network bandwidth.)
+- STRING_INDEX: Enables a secondary index of type string. (Disabling this will disable string search workloads. Note: Enabling this impacts write throughput.)
+- NUMERIC_INDEX: Enables a secondary index of type numeric. (Disabling this will disable numeric search workloads. Note: Enabling this impacts write throughput.)
+- GEO_SPATIAL_INDEX: Enables a secondary index of type geo-spatial. (Disabling this will disable geo-spatial search workloads. Note: Enabling this impacts write throughput.)
+- UDF_AGGREGATION: Enables UDF aggregation workloads. (Disabling this will disable the associated workload. Enabling it creates a secondary index and impacts write throughput.)
+- TRUNCATE_SET: Determines whether the data in the cluster should be truncated before the test starts. (Truncation on a large dataset may take time.)
+- RECORD_SIZE: Average size (in bytes) for each record.
+- BATCH_READ_SIZE: Number of requests in the batch read workload.
+- BATCH_WRITE_SIZE: Number of requests in the batch write workload.
+- READ_HIT_RATIO: A value between 0.0 and 1.0, indicating the percentage of read requests expected to find a record. (Read misses may exceed this value if a delete workload is active.)
+- KEY_CACHE_CAPACITY: Number of record IDs that Perseus caches for future read, write, or delete queries. (Each key requires 8 bytes. For example, 1 billion entries require 8 GB of RAM.)
+- KEY_CACHE_SAVE_RATIO: A value between 0.0 and 1.0, defining the percentage of inserted keys retained in the cache for reuse in read, update, and delete operations.
 
-In another terminal open ```./threads.yaml``` and enter the number of threads for each test case. Then run ```./copyThreads.sh``` to transfer the local file to all the clients.
+### setup.sh
+Running this single file performs the following tasks, based on the configuration specified in configure.sh:
+- Allocates instances in the specified AWS region.
+- Prepares the instances and deploys an Aerospike cluster on them.
+- Creates nodes designated for running Perseus.
+- Deploys Perseus on those nodes and configures it to connect to the Aerospike cluster created above.
+- Runs Perseus with a minimal workload.
+- Open new terminals that tail the result of the perseus instances. (You must have iTerm installed.)
+- Creates a node to host Grafana and Prometheus.
+- Deploys Grafana and configures it to display Aerospike cluster metrics.
+- Opens a browser window pointing to the Grafana dashboard. (Note: The username and password are both ‘admin’.)
 
-If you want to connect to any of the clients, run ```./connect_client.sh i``` where 'i' is the number of the client you want to connect to.
+This streamlined process sets up the entire environment for testing and monitoring with minimal effort.
 
-If you want to add a new node, run ```./cluster/addNode.sh```. 
+### copyThreads.sh
+Running this file copies the contents of threads.yaml to all nodes running Perseus. Details about threads.yaml can be found in the Perseus section.
+To modify the workload dynamically, simply update threads.yaml and rerun copyThreads.sh.
 
-If you want to stop the Aerospike process on a node, run ```./cluster/stopNode.sh i``` where 'i' is the number of the node you want to be stopped.
+### destroy.sh
+Tears down the entire setup, including the Aerospike cluster, Perseus instances, and monitoring instances.
 
-If you want to restart the Aerospike process on a node, run ```./cluster/restartNode.sh i``` where 'i' is the number of the node you want to be restarted.
+**NOTE**: Remember to run ```./destroy.sh```  when you don’t need the cluster. Running a large scale test is not cheap. If you don’t need the result, don’t waste money there.
 
-Don't forget to run ```./destroy.sh``` when you are done. Jeff doesn't need more money.
+### cluster_setup.sh
+Sets up an Aerospike cluster based on the specifications in configure.sh.
 
-You can also run either iof these if you want to bring down and redeploy parts of the demo:
- - ```./cluster/destroy.sh```
- - ```./client/destroy.sh```
- - ```./grafana/destroy.sh```
+### cluster_destroy.sh
+Destroys the Aerospike cluster without affecting other components.
+
+### cluster_add_node.sh
+Adds a new node to the Aerospike cluster. Once added, Aerospike will automatically start rebalancing the cluster.
+
+### cluster_restart_node.sh
+Restarts a previously stopped Aerospike node to simulate recovery. Provide the same index number used when stopping the node.
+
+### cluster_stop_node.sh
+Stops the Aerospike process on a specified node, reducing the number of active nodes in the cluster. You need to specify the index number of the node to stop.
+
+### client_setup.sh
+Sets up Perseus instances based on the specifications in configure.sh.
+
+### client_destroy.sh
+Destroys the Perseus nodes without affecting other components.
+
+### client_connect.sh
+Allows you to connect to a specific Perseus node by providing an index (minimum 1). Useful for diagnostics.
+
+### client_rebuild.sh
+Rebuilds the Perseus code across all nodes after changes are made. Before running this file, ensure your changes are pushed to the repository, as Perseus clones the repository before building. After running this file, the updated code is pulled, rebuilt, and restarted on all Perseus machines.
+
+### client_build_perseus.sh
+Similar to client_rebuild.sh, but does not automatically run Perseus after rebuilding.
+
+### client_rerun.sh
+Stops the Perseus process and reruns it.
+
+### grafana_setup.sh
+Configures the Grafana instance. Use this file if the Grafana setup in setup.sh fails for any reason.
+
+### grafana_destroy.sh
+Tears down the Grafana instance.

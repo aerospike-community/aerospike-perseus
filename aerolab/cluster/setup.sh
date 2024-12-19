@@ -2,7 +2,7 @@
 
 # create cluster
 echo "Creating cluster"
-aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=20 --start=n --aws-expire=12h || exit 1
+aerolab cluster create -n ${CLUSTER_NAME} -c ${CLUSTER_NUMBER_OF_NODES} -v ${VER} -o aerospike.conf --instance-type ${CLUSTER_INSTANCE_TYPE} --ebs=25 --start=n --aws-expire=${AWS_EXPIRE} || exit 1
 rm -rf aerospike.conf
 
 if [ "${NAMESPACE_STORAGE_TYPE}" = "HMA" ]; then
