@@ -152,35 +152,35 @@ Our focus will primarily be on the contents of the aws folder.
 ### configure.sh
 This is the only file you need to modify to control the cluster size or specify the workload you want to run against it.
 
-- AWS_REGION: Specifies the AWS region to use.
-- AWS_EXPIRE: 
-- VER: Aerospike server version.
-- NAMESPACE_NAME: The name of the namespace Perseus should use. (If you modify this, update the namespace configuration in aerospike.conf.)
-- NAMESPACE_DEFAULT_TTL: Default TTL (time-to-live) for all records inserted into the database. Set to 0 to disable TTL.
-- NAMESPACE_STORAGE_TYPE: Choose between HMA or MEMORY. (For HMA, NVMe devices must be attached to the machine.)
-- NAMESPACE_REPLICATION_FACTOR: The replication factor of the namespace.
-- CLUSTER_NAME: Name of the Aerospike cluster.
-- CLUSTER_NUMBER_OF_NODES: Number of Aerospike nodes in the cluster.
-- CLUSTER_INSTANCE_TYPE: AWS instance type for the cluster.
-- CLUSTER_INSTANCE_NUMBER_OF_NVMES: Number of NVMe devices attached to each machine.
-- CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME: Number of partitions per NVMe device.
-- CLUSTER_OVERPROVISIONING_PERCENTAGE: Percentage of overprovisioning required. (AWS recommends overprovisioning for some instance types. Overprovisioning might not be necessary for light workloads.)
-- GRAFANA_NAME: Name of the Grafana instance.
-- GRAFANA_INSTANCE_TYPE: AWS instance type for Grafana.
-- CLIENT_NAME: Name of the instance running Perseus.
-- CLIENT_INSTANCE_TYPE: Instance type for Perseus. (The machine requires enough RAM to cache inserted records and sufficient CPUs to handle queries. No disk is needed; the C6a family is a good choice.)
-- CLIENT_NUMBER_OF_NODES: Number of Perseus nodes. (For heavy workloads, running multiple Perseus instances can provide additional resources and network bandwidth.)
-- STRING_INDEX: Enables a secondary index of type string. (Disabling this will disable string search workloads. Note: Enabling this impacts write throughput.)
-- NUMERIC_INDEX: Enables a secondary index of type numeric. (Disabling this will disable numeric search workloads. Note: Enabling this impacts write throughput.)
-- GEO_SPATIAL_INDEX: Enables a secondary index of type geo-spatial. (Disabling this will disable geo-spatial search workloads. Note: Enabling this impacts write throughput.)
-- UDF_AGGREGATION: Enables UDF aggregation workloads. (Disabling this will disable the associated workload. Enabling it creates a secondary index and impacts write throughput.)
-- TRUNCATE_SET: Determines whether the data in the cluster should be truncated before the test starts. (Truncation on a large dataset may take time.)
-- RECORD_SIZE: Average size (in bytes) for each record.
-- BATCH_READ_SIZE: Number of requests in the batch read workload.
-- BATCH_WRITE_SIZE: Number of requests in the batch write workload.
-- READ_HIT_RATIO: A value between 0.0 and 1.0, indicating the percentage of read requests expected to find a record. (Read misses may exceed this value if a delete workload is active.)
-- KEY_CACHE_CAPACITY: Number of record IDs that Perseus caches for future read, write, or delete queries. (Each key requires 8 bytes. For example, 1 billion entries require 8 GB of RAM.)
-- KEY_CACHE_SAVE_RATIO: A value between 0.0 and 1.0, defining the percentage of inserted keys retained in the cache for reuse in read, update, and delete operations.
+- `AWS_REGION`: Specifies the AWS region to use.
+- `AWS_EXPIRE`: Length of life of nodes prior to expiry; seconds, minutes, hours, ex 20h 30m. 0 for no expiry.
+- `VER`: Aerospike server version.
+- `NAMESPACE_NAME`: The name of the namespace Perseus should use. (If you modify this, update the namespace configuration in aerospike.conf.)
+- `NAMESPACE_DEFAULT_TTL`: Default TTL (time-to-live) for all records inserted into the database. Set to 0 to disable TTL.
+- `NAMESPACE_STORAGE_TYPE`: Choose between HMA or MEMORY. (For HMA, NVMe devices must be attached to the machine.)
+- `NAMESPACE_REPLICATION_FACTOR`: The replication factor of the namespace.
+- `CLUSTER_NAME`: Name of the Aerospike cluster.
+- `CLUSTER_NUMBER_OF_NODES`: Number of Aerospike nodes in the cluster.
+- `CLUSTER_INSTANCE_TYPE`: AWS instance type for the cluster.
+- `CLUSTER_INSTANCE_NUMBER_OF_NVMES`: Number of NVMe devices attached to each machine.
+- `CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME`: Number of partitions per NVMe device.
+- `CLUSTER_OVERPROVISIONING_PERCENTAGE`: Percentage of overprovisioning required. (AWS recommends overprovisioning for some instance types. Overprovisioning might not be necessary for light workloads.)
+- `GRAFANA_NAME`: Name of the Grafana instance.
+- `GRAFANA_INSTANCE_TYPE`: AWS instance type for Grafana.
+- `CLIENT_NAME`: Name of the instance running Perseus.
+- `CLIENT_INSTANCE_TYPE`: Instance type for Perseus. (The machine requires enough RAM to cache inserted records and sufficient CPUs to handle queries. No disk is needed; the C6a family is a good choice.)
+- `CLIENT_NUMBER_OF_NODES`: Number of Perseus nodes. (For heavy workloads, running multiple Perseus instances can provide additional resources and network bandwidth.)
+- `STRING_INDEX`: Enables a secondary index of type string. (Disabling this will disable string search workloads. Note: Enabling this impacts write throughput.)
+- `NUMERIC_INDEX`: Enables a secondary index of type numeric. (Disabling this will disable numeric search workloads. Note: Enabling this impacts write throughput.)
+- `GEO_SPATIAL_INDEX`: Enables a secondary index of type geo-spatial. (Disabling this will disable geo-spatial search workloads. Note: Enabling this impacts write throughput.)
+- `UDF_AGGREGATION`: Enables UDF aggregation workloads. (Disabling this will disable the associated workload. Enabling it creates a secondary index and impacts write throughput.)
+- `TRUNCATE_SET`: Determines whether the data in the cluster should be truncated before the test starts. (Truncation on a large dataset may take time.)
+- `RECORD_SIZE`: Average size (in bytes) for each record.
+- `BATCH_READ_SIZE`: Number of requests in the batch read workload.
+- `BATCH_WRITE_SIZE`: Number of requests in the batch write workload.
+- `READ_HIT_RATIO`: A value between 0.0 and 1.0, indicating the percentage of read requests expected to find a record. (Read misses may exceed this value if a delete workload is active.)
+- `KEY_CACHE_CAPACITY`: Number of record IDs that Perseus caches for future read, write, or delete queries. (Each key requires 8 bytes. For example, 1 billion entries require 8 GB of RAM.)
+- `KEY_CACHE_SAVE_RATIO`: A value between 0.0 and 1.0, defining the percentage of inserted keys retained in the cache for reuse in read, update, and delete operations.
 
 ### setup.sh
 Running this single file performs the following tasks, based on the configuration specified in configure.sh:
@@ -203,7 +203,7 @@ To modify the workload dynamically, simply update threads.yaml and rerun copyThr
 ### destroy.sh
 Tears down the entire setup, including the Aerospike cluster, Perseus instances, and monitoring instances.
 
-**NOTE**: Remember to run ```./destroy.sh```  when you don’t need the cluster. Running a large scale test is not cheap. If you don’t need the result, don’t waste money there.
+**NOTE**: Remember to run ```./destroy.sh```  when you don’t need the cluster. Running a large scale test is not cheap. If you don’t need the result, don’t waste money.
 
 ### cluster_setup.sh
 Sets up an Aerospike cluster based on the specifications in configure.sh.
