@@ -7,9 +7,9 @@ public class DummyStringGenerator extends BaseGenerator<String> {
 
     public DummyStringGenerator(double size) {
         double temp;
-        temp = size - 256;
+        temp = size - 329;
         if(temp < 0){
-            temp =0;
+            temp = 0;
         }
         this.size = temp;
     }
