@@ -24,8 +24,8 @@ public class DummyStringGenerator extends BaseGenerator<String> {
             return "";
 
         int numberOfBytes = (int) Math.ceil(
-                random.nextGaussian(size, 5));
-        if(numberOfBytes < 0 )
+                random.nextGaussian(size, 30));
+        if(numberOfBytes < 0 || numberOfBytes > size*2)
             return "";
         byte[] array = new byte[numberOfBytes];
         random.nextBytes(array);
