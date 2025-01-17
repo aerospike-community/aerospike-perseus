@@ -1,14 +1,12 @@
 package com.aerospike.perseus.data.generators;
 
-import com.aerospike.perseus.data.Record;
-
 import java.nio.charset.StandardCharsets;
 
 public class DummyStringGenerator extends BaseGenerator<String> {
     private final double size;
 
     public DummyStringGenerator(double size) {
-        this.size = size - 200;
+        this.size = size - 350;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.aerospike.client.Value;
 
 public class GeoJsonGenerator extends BaseGenerator<Value.GeoJSONValue> {
     private final GeoPointGenerator geoPointGenerator;
-    final String geoJson = "{ \"type\": \"Point\", \"coordinates\": [%f, %f] }";
+    final String geoJson = "{\"type\":\"Point\",\"coordinates\":[%f,%f]}";
 
     public GeoJsonGenerator(GeoPointGenerator geoPointGenerator) {
         this.geoPointGenerator = geoPointGenerator;
