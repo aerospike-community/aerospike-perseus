@@ -24,8 +24,8 @@ public class RecordGenerator extends BaseGenerator<Record> {
     public Record next() {
         var key = random.nextLong();
         long date = dateGenerator.next();
-        String dummy = dummyStringGenerator.next();
         Value.GeoJSONValue geoJSONValue = geoJsonGenerator.next();
+        String dummy = dummyStringGenerator.next();
         return new Record(key, date, geoJSONValue, dummy);
     }
 }

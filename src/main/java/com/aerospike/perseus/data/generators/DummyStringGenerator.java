@@ -10,7 +10,7 @@ public class DummyStringGenerator extends BaseGenerator<String> {
         if(temp < 0){
             temp = 0;
         }
-        this.size = temp;
+        this.size = 0;
     }
 
     @Override
