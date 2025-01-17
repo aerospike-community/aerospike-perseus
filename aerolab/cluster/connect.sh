@@ -1,0 +1,1 @@
+aerolab cluster attach -n ${CLUSTER_NAME} -l $1 -- bash

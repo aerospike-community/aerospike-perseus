@@ -162,7 +162,6 @@ This is the only file you need to modify to control the cluster size or specify 
 - `CLUSTER_NAME`: Name of the Aerospike cluster.
 - `CLUSTER_NUMBER_OF_NODES`: Number of Aerospike nodes in the cluster.
 - `CLUSTER_INSTANCE_TYPE`: AWS instance type for the cluster.
-- `CLUSTER_INSTANCE_NUMBER_OF_NVMES`: Number of NVMe devices attached to each machine.
 - `CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME`: Number of partitions per NVMe device.
 - `CLUSTER_OVERPROVISIONING_PERCENTAGE`: Percentage of overprovisioning required. (AWS recommends overprovisioning for some instance types. Overprovisioning might not be necessary for light workloads.)
 - `GRAFANA_NAME`: Name of the Grafana instance.

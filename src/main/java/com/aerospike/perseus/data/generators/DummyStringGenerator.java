@@ -8,7 +8,7 @@ public class DummyStringGenerator extends BaseGenerator<String> {
     private final double size;
 
     public DummyStringGenerator(double size) {
-        this.size = size - Record.SIZE;
+        this.size = size - 200;
     }
 
     @Override
