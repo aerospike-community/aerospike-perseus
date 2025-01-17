@@ -35,7 +35,7 @@ public class TestSetup {
         var cacheHitAndMissKeyProvider = new CacheHitAndMissKeyProvider(keyCache, testConfig.readHitRatio);
 
         var dateGenerator = new DateGenerator();
-        var dummyStringGenerator = new DummyStringGenerator(testConfig.recordSize);
+        var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
         var geoPointGenerator = new GeoPointGenerator();
         var geoJsonGenerator = new GeoJsonGenerator(geoPointGenerator);
         var recordGenerator = new RecordGenerator(dateGenerator, dummyStringGenerator, geoJsonGenerator);

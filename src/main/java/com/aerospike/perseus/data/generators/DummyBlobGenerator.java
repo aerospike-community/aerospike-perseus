@@ -1,11 +1,9 @@
 package com.aerospike.perseus.data.generators;
 
-import java.nio.charset.StandardCharsets;
-
-public class DummyStringGenerator extends BaseGenerator<String> {
+public class DummyBlobGenerator extends BaseGenerator<byte[]> {
     private final double size;
 
-    public DummyStringGenerator(double size) {
+    public DummyBlobGenerator(double size) {
         double temp = size - 158;
         if(temp < 0){
             temp = 0;
@@ -19,16 +17,16 @@ public class DummyStringGenerator extends BaseGenerator<String> {
     }
 
     @Override
-    public String next() {
+    public byte[] next() {
         if(size == 0)
-            return "";
+            return null;
 
         int numberOfBytes = (int) Math.ceil(
                 random.nextGaussian(size, 30));
         if(numberOfBytes < 0 || numberOfBytes > size*2)
-            return "";
+            return null;
         byte[] array = new byte[numberOfBytes];
         random.nextBytes(array);
-        return new String(array, StandardCharsets.UTF_8);
+        return array;
     }
 }

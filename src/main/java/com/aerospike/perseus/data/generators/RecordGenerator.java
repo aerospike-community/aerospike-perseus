@@ -6,12 +6,12 @@ import com.aerospike.perseus.data.Record;
 public class RecordGenerator extends BaseGenerator<Record> {
 
     private final DateGenerator dateGenerator;
-    private final DummyStringGenerator dummyStringGenerator;
+    private final DummyBlobGenerator dummyBlobGenerator;
     private final GeoJsonGenerator geoJsonGenerator;
 
-    public RecordGenerator(DateGenerator dateGenerator, DummyStringGenerator dummyStringGenerator, GeoJsonGenerator geoJsonGenerator) {
+    public RecordGenerator(DateGenerator dateGenerator, DummyBlobGenerator dummyBlobGenerator, GeoJsonGenerator geoJsonGenerator) {
         this.dateGenerator = dateGenerator;
-        this.dummyStringGenerator = dummyStringGenerator;
+        this.dummyBlobGenerator = dummyBlobGenerator;
         this.geoJsonGenerator = geoJsonGenerator;
     }
 
@@ -25,7 +25,7 @@ public class RecordGenerator extends BaseGenerator<Record> {
         var key = random.nextLong();
         long date = dateGenerator.next();
         Value.GeoJSONValue geoJSONValue = geoJsonGenerator.next();
-        String dummy = dummyStringGenerator.next();
+        byte[] dummy = dummyBlobGenerator.next();
         return new Record(key, date, geoJSONValue, dummy);
     }
 }

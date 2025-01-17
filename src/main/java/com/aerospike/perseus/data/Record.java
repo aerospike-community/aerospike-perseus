@@ -10,7 +10,7 @@ public class Record {
     private final long keyPlus10;
     private final long date;
     private final Value.GeoJSONValue location;
-    private final String dummy;
+    private final byte[] dummy;
 
     public static final String NUMERIC_BIN = "keyN";
     public static final String STRING_BIN = "keyS";
@@ -20,7 +20,7 @@ public class Record {
     public static final String UPDATE_TIME = "updateT";
     public static final int SIZE = 300;
 
-    public Record(long key, long date, Value.GeoJSONValue location, String dummy) {
+    public Record(long key, long date, Value.GeoJSONValue location, byte[] dummy) {
         this.key = key;
         this.keyInNumber = key;
         this.keyInString = String.valueOf(key);
