@@ -7,7 +7,8 @@ public class DummyStringGenerator extends BaseGenerator<String> {
 
     public DummyStringGenerator(double size) {
         double temp;
-        temp = size - 350;
+        temp = size - 300;
+        temp = size - 300;
         if(temp < 0){
             temp = 0;
         }
