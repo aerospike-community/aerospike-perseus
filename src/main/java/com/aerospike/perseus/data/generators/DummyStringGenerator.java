@@ -6,7 +6,7 @@ public class DummyStringGenerator extends BaseGenerator<String> {
     private final double size;
 
     public DummyStringGenerator(double size) {
-        double temp = size - 400;
+        double temp = size - 158;
         if(temp < 0){
             temp = 0;
         }
@@ -24,7 +24,7 @@ public class DummyStringGenerator extends BaseGenerator<String> {
             return "";
 
         int numberOfBytes = (int) Math.ceil(
-                random.nextGaussian(size, size / 10));
+                random.nextGaussian(size, 5));
         if(numberOfBytes < 0 )
             return "";
         byte[] array = new byte[numberOfBytes];
