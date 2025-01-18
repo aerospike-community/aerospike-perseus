@@ -20,7 +20,7 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
     public byte[] next() {
         int numberOfBytes = 5;
         if(size > 9) {
-            numberOfBytes = random.nextInt( size -  size/10, size +  size/10);
+            numberOfBytes = random.nextInt( size -  size/10, size + 1 +  size/10);
         }
 
         byte[] array = new byte[numberOfBytes];
