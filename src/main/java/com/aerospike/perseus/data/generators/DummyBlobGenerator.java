@@ -18,10 +18,11 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
 
     @Override
     public byte[] next() {
-        if(size == 0)
-            return null;
+        int numberOfBytes = 2;
+        if(size > 4) {
+            numberOfBytes = random.nextInt(9 * size / 10, 11 * size / 10);
+        }
 
-        int numberOfBytes = random.nextInt(0, size * 2);
         byte[] array = new byte[numberOfBytes];
         random.nextBytes(array);
         return array;
