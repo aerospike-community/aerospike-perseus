@@ -18,9 +18,9 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
 
     @Override
     public byte[] next() {
-        int numberOfBytes = 2;
-        if(size > 4) {
-            numberOfBytes = random.nextInt(9 * size / 10, 11 * size / 10);
+        int numberOfBytes = 5;
+        if(size > 9) {
+            numberOfBytes = random.nextInt( size -  size/10, size +  size/10);
         }
 
         byte[] array = new byte[numberOfBytes];
