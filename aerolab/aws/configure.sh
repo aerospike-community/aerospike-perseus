@@ -33,7 +33,7 @@ UDF_AFFREGATION=False
 TRUNCATE_SET=False
 
 # Workload Details
-RECORD_SIZE=500 #Bytes. Should be larger than 350!
+RECORD_SIZE=500 #Bytes. This test doesn't allow records smaller than 178 bytes!
 BATCH_READ_SIZE=100
 BATCH_WRITE_SIZE=50
 READ_HIT_RATIO=0.80
