@@ -22,6 +22,8 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
         if(size > 9) {
             // numberOfBytes = random.nextInt( size -  size/10, size +  size/10);
             numberOfBytes = (int) random.nextGaussian( size, size/10);
+            if(numberOfBytes < 1)
+                return null;
         }
 
         byte[] array = new byte[numberOfBytes];
