@@ -55,7 +55,7 @@ public class TestSetup {
         testList.add(new ExpressionReadTest(arguments, keyCache));
         testList.add(new ExpressionWriteTest(arguments, keyCache));
         testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, keyCache, testConfig.writeBatchSize));
-        testList.add(new BatchReadTest(arguments, batchKeyGenerator, testConfig.writeBatchSize));
+        testList.add(new BatchReadTest(arguments, batchKeyGenerator, testConfig.readBatchSize));
         if(testConfig.numericIndex) {
             testList.add(new NumericSearchTest(arguments, keyCache));
         }
