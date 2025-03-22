@@ -31,6 +31,7 @@ NUMERIC_INDEX=True
 GEO_SPATIAL_INDEX=False
 UDF_AFFREGATION=False
 TRUNCATE_SET=False
+RANGE_QUERY=False
 
 # Workload Details
 RECORD_SIZE=500 #Bytes. This test doesn't allow records smaller than 178 bytes!

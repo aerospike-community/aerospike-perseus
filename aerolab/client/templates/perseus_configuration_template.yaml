@@ -24,3 +24,8 @@ testConfiguration:
   numericIndex: _NUMERIC_INDEX_
   geoSpatialIndex: _GEO_SPATIAL_INDEX_
   udfAggregation: _UDF_AFFREGATION_
+  rangeQuery: _RANGE_QUERY_
+  rangeQueryConfiguration:
+    maxTimeRangeChance: 0.00001
+    maxTimeRange: 100
+    normalTimeRange: 3
