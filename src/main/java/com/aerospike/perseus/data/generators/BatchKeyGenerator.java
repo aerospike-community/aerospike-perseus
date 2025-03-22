@@ -1,6 +1,5 @@
 package com.aerospike.perseus.data.generators;
 
-import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.keyCache.Cache;
 
 import java.util.List;

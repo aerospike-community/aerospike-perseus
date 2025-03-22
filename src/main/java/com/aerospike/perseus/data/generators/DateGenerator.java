@@ -1,11 +1,9 @@
 package com.aerospike.perseus.data.generators;
 
-import java.time.Instant;
-import java.time.Period;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class DateGenerator extends BaseGenerator<Long>{
-    private final Instant startInclusive = Instant.now().minus(Period.ofWeeks(540));
-    private final Instant endExclusive = Instant.now();
+    private final AtomicLong now = new AtomicLong(0);
 
     @Override
     public boolean hasNext() {
@@ -14,9 +12,10 @@ public class DateGenerator extends BaseGenerator<Long>{
 
     @Override
     public Long next() {
-        long startSeconds = startInclusive.getEpochSecond();
-        long endSeconds = endExclusive.getEpochSecond();
-        long randomDate = random.nextLong(startSeconds, endSeconds);
-        return Instant.ofEpochSecond(randomDate).getEpochSecond();
+        return now.getAndIncrement();
+    }
+
+    public long getNow() {
+        return now.get();
     }
 }

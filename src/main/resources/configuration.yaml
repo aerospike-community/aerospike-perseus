@@ -24,3 +24,8 @@ testConfiguration:
   numericIndex: False
   geoSpatialIndex: False
   udfAggregation: False
+  rangeQuery: False
+  rangeQueryConfiguration:
+    maxTimeRangeChance: 0.00001
+    maxTimeRange: 1000
+    normalTimeRange: 5

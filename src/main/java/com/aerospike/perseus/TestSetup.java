@@ -35,13 +35,13 @@ public class TestSetup {
         var cacheHitAndMissKeyProvider = new CacheHitAndMissKeyProvider(keyCache, testConfig.readHitRatio);
 
         var dateGenerator = new DateGenerator();
+        var timePeriodGenerator = new TimePeriodGenerator(dateGenerator, testConfig.rangeQueryConfiguration);
         var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
         var geoPointGenerator = new GeoPointGenerator();
         var geoJsonGenerator = new GeoJsonGenerator(geoPointGenerator);
         var recordGenerator = new RecordGenerator(dateGenerator, dummyStringGenerator, geoJsonGenerator);
         var batchSimpleRecordsGenerator = new BatchRecordsGenerator(recordGenerator, testConfig.writeBatchSize);
         var batchKeyGenerator = new BatchKeyGenerator(keyCache, testConfig.readBatchSize);
-        var timePeriodGenerator = new TimePeriodGenerator();
         totalTpsCounter = new TotalTpsCounter();
         var client = AerospikeClientProvider.getClient(aerospikeConfig);
 
@@ -73,6 +73,13 @@ public class TestSetup {
         if(testConfig.udfAggregation) {
             try {
                 testList.add(new UDFAggregationTest(arguments, timePeriodGenerator));
+            } catch (IOException e) {
+                System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
+            }
+        }
+        if(testConfig.rangeQuery) {
+            try {
+                testList.add(new RangeQueryTest(arguments, timePeriodGenerator));
             } catch (IOException e) {
                 System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
             }

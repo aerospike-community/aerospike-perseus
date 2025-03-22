@@ -33,12 +33,6 @@ public class UDFAggregationTest extends Test<TimePeriod>{
         ResultSet rs = client.queryAggregate(null, statement);
         while (rs.next()) {
             Object obj = rs.getObject();
-//            System.out.printf(
-//                    "Stats between %s and %s (%s mins): %s\n",
-//                    Instant.ofEpochSecond(begin).toString(),
-//                    Instant.ofEpochSecond(end),
-//                    Duration.of(end-begin, ChronoUnit.SECONDS).toMinutes(),
-//                    obj.toString());
         }
         rs.close();
     }

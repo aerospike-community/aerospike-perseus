@@ -11,3 +11,4 @@ stringSearch: 1
 geospatialSearch: 1
 udf: 1
 udfAggregation: 1
+rangeQuery: 1

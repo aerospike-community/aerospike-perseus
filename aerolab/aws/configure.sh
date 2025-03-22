@@ -1,20 +1,20 @@
 # AWS Detail
-AWS_REGION="eu-west-1"
-AWS_EXPIRE="0" # length of life of nodes prior to expiry; seconds, minutes, hours, ex 20h 30m. 0 for no expiry.
+AWS_REGION="us-east-1"
+AWS_EXPIRE="6h" # length of life of nodes prior to expiry; seconds, minutes, hours, ex 20h 30m. 0 for no expiry.
 
 # Aerospike Detail
-VER="7.2.0.4"
+VER="8.0.0.4"
 NAMESPACE_NAME="Test"
 NAMESPACE_DEFAULT_TTL="0"
 NAMESPACE_STORAGE_TYPE="HMA" #HMA OR MEMORY
 NAMESPACE_REPLICATION_FACTOR=2
 
 # Cluster Detail
-CLUSTER_NAME="DH"
+CLUSTER_NAME="MetaMapping"
 CLUSTER_NUMBER_OF_NODES="4"
-CLUSTER_INSTANCE_TYPE="i4i.4xlarge"
-CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME="5"
-CLUSTER_OVERPROVISIONING_PERCENTAGE=20
+CLUSTER_INSTANCE_TYPE="i4g.4xlarge"
+CLUSTER_INSTANCE_NUMBER_OF_PARTITION_ON_EACH_NVME="8"
+CLUSTER_OVERPROVISIONING_PERCENTAGE=0
 
 # GRAFANA Detail
 GRAFANA_NAME=${CLUSTER_NAME}"_GRAFANA"
@@ -26,15 +26,15 @@ CLIENT_INSTANCE_TYPE="c6i.8xlarge" #Choose instances with more cpus, more than 3
 CLIENT_NUMBER_OF_NODES=1
 
 # Testcases
-STRING_INDEX=False
-NUMERIC_INDEX=False
+STRING_INDEX=True
+NUMERIC_INDEX=True
 GEO_SPATIAL_INDEX=False
 UDF_AFFREGATION=False
 TRUNCATE_SET=False
 
 # Workload Details
-RECORD_SIZE=1024 #Bytes. This test doesn't allow records smaller than 178 bytes!
-BATCH_READ_SIZE=3500
+RECORD_SIZE=500 #Bytes. This test doesn't allow records smaller than 178 bytes!
+BATCH_READ_SIZE=100
 BATCH_WRITE_SIZE=50
 READ_HIT_RATIO=1.0
 

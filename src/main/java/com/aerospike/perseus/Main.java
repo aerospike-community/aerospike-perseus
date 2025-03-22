@@ -3,8 +3,6 @@ package com.aerospike.perseus;
 import com.aerospike.perseus.presentation.OutputWindow;
 import com.aerospike.perseus.configurations.*;
 
-import java.io.IOException;
-
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 

@@ -1,16 +1,14 @@
 package com.aerospike.perseus.testCases.search;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.Statement;
 import com.aerospike.perseus.data.Record;
-import com.aerospike.perseus.keyCache.Cache;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.keyCache.KeyCache;
 import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
 public class StringSearchTest extends BaseSearchTest<Long> {
-    public StringSearchTest(TestCaseConstructorArguments arguments, Cache keyCache) {
+    public StringSearchTest(TestCaseConstructorArguments arguments, KeyCache keyCache) {
         super(arguments, keyCache);
         try {
             client.createIndex(null,

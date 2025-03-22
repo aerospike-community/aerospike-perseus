@@ -69,10 +69,9 @@ public class OutputWindow {
     }
 
     private String getTemplate(String start, String cellFormat, String lastCellFormat) {
-        StringBuilder format = new StringBuilder(start);
-        format.append(String.valueOf(cellFormat).repeat(tpsLoggers.size()-1));
-        format.append(lastCellFormat);
-        format.append("\n");
+        String format = start + String.valueOf(cellFormat).repeat(tpsLoggers.size() - 1) +
+                lastCellFormat +
+                "\n";
 
         return "|" + format;
     }
