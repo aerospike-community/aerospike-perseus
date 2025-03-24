@@ -11,6 +11,9 @@ sed "s/_NUMERIC_INDEX_/${NUMERIC_INDEX}/g"| \
 sed "s/_GEO_SPATIAL_INDEX_/${GEO_SPATIAL_INDEX}/g" | \
 sed "s/_UDF_AFFREGATION_/${UDF_AFFREGATION}/g" | \
 sed "s/_RANGE_QUERY_/${RANGE_QUERY}/g" | \
+sed "s/_NORMAL_RANGE_/${NORMAL_RANGE}/g" | \
+sed "s/_MAX_RANGE_/${MAX_RANGE}/g" | \
+sed "s/_CHANCE_OF_MAX_/${CHANCE_OF_MAX}/g" | \
 sed "s/_RECORD_SIZE_/${RECORD_SIZE}/g" |  \
 sed "s/_BATCH_READ_SIZE_/${BATCH_READ_SIZE}/g" | \
 sed "s/_BATCH_WRITE_SIZE_/${BATCH_WRITE_SIZE}/g" | \

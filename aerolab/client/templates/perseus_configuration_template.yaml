@@ -26,6 +26,6 @@ testConfiguration:
   udfAggregation: _UDF_AFFREGATION_
   rangeQuery: _RANGE_QUERY_
   rangeQueryConfiguration:
-    maxTimeRangeChance: 0.00001
-    maxTimeRange: 100
-    normalTimeRange: 3
+    maxTimeRangeChance: _CHANCE_OF_MAX_
+    maxTimeRange: _MAX_RANGE_
+    normalTimeRange: _NORMAL_RANGE_

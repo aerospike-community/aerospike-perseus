@@ -16,6 +16,7 @@ udf_aggregation.lua
 .gradle
 build
 .DS_*
+*.tgz
 target
 
 # AWS User-specific
