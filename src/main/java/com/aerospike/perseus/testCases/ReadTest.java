@@ -16,7 +16,7 @@ public class ReadTest extends Test<Long>{
 
     public String[] getHeader(){
         if(hitRatio == 1){
-            return "Read\n".split("\n");
+            return "Read\n ".split("\n");
         }
         return String.format("Read\nHitRate %s%d", "%", (int)(hitRatio*100)).split("\n");
     }

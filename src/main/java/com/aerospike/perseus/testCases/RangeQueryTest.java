@@ -1,5 +1,6 @@
 package com.aerospike.perseus.testCases;
 
+import com.aerospike.client.policy.QueryPolicy;
 import com.aerospike.client.query.*;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.TimePeriod;
@@ -23,7 +24,10 @@ public class RangeQueryTest extends Test<TimePeriod>{
         statement.setNamespace(namespace);
         statement.setSetName(setName);
         statement.setFilter(Filter.range("date", timePeriod.begin(), timePeriod.end()));
-        RecordSet rs = client.query(null, statement);
+        QueryPolicy queryPolicy = new QueryPolicy();
+        queryPolicy.shortQuery = timePeriod.end() - timePeriod.begin() < 5;
+
+        RecordSet rs = client.query(queryPolicy, statement);
         while (rs.next()) {
             Object obj = rs.getRecord();
         }
