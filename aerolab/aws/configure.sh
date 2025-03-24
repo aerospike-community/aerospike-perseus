@@ -24,14 +24,19 @@ GRAFANA_INSTANCE_TYPE="t3.xlarge"
 CLIENT_NAME="Perseus_${CLUSTER_NAME}"
 CLIENT_INSTANCE_TYPE="c6i.8xlarge" #Choose instances with more cpus, more than 32 GB of RAM, and no NVMe. C6a family are good choices.
 CLIENT_NUMBER_OF_NODES=1
+TRUNCATE_SET=False
 
 # Testcases
 STRING_INDEX=True
 NUMERIC_INDEX=True
 GEO_SPATIAL_INDEX=False
 UDF_AFFREGATION=False
-TRUNCATE_SET=False
 RANGE_QUERY=True
+
+# Range Query and UDF Aggregation range generator config
+NORMAL_RANGE=5
+MAX_RANGE=100
+CHANCE_OF_MAX=.00001
 
 # Workload Details
 RECORD_SIZE=500 #Bytes. This test doesn't allow records smaller than 178 bytes!
