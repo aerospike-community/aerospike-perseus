@@ -1,1 +1,0 @@
-aerolab aerospike start -n ${CLUSTER_NAME} -l $1

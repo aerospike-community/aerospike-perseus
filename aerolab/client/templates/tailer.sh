@@ -1,1 +1,0 @@
-aerolab client attach -n ${CLIENT_NAME} -l ${1} -- tail -f /root/out.log
