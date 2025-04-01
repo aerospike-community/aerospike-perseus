@@ -1,5 +1,9 @@
-# 🚀 Perseus
+# 🛡️ Perseus
+Perseus is a powerful benchmarking tool designed to stress-test and validate Aerospike clusters under real-world conditions. It simulates diverse workloads—reads, writes, deletes, updates, and secondary index queries—with fine-grained control and visibility. Whether you're tuning for ultra-low latency or validating infrastructure scalability, Perseus gives you the precision and performance insights you need.
 
+Perseus works hand-in-hand with Pegasus, a companion orchestration tool that automates the deployment of Aerospike clusters, clients, and monitoring dashboards to run large-scale tests seamlessly. The tools are named after their mythological counterparts: Perseus, the hero who defeated Medusa, and Pegasus, the winged horse born from her blood. Just as Perseus and Pegasus joined forces to complete legendary quests, Aerospike-Perseus and Aerospike-Pegasus combine to deliver robust, automated, end-to-end performance testing.
+
+# 🚀 Introduction
 **Perseus** is a benchmarking tool designed to test and showcase the core capabilities of **Aerospike** technology. It can generate various workloads including reads, writes, updates, deletes, expressions, batch operations, User Defined Functions (via LUA), secondary index queries, and aggregations.
 
 Compared to tools like `asbench` and `YCSB`, **Perseus** offers several advantages:
