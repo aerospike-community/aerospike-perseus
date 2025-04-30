@@ -26,8 +26,13 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
                 return null;
         }
 
+        byte[] repeatedPartOfArray = new byte[numberOfBytes/3];
+        random.nextBytes(repeatedPartOfArray);
         byte[] array = new byte[numberOfBytes];
-        random.nextBytes(array);
+        for (int i = 0; i < 3; i++) {
+            System.arraycopy(repeatedPartOfArray, 0, array, i * repeatedPartOfArray.length, repeatedPartOfArray.length);
+        }
+        System.arraycopy(repeatedPartOfArray, 0, array, 3 * repeatedPartOfArray.length, array.length % repeatedPartOfArray.length);
         return array;
     }
 }
