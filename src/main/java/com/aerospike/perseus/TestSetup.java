@@ -33,7 +33,7 @@ public class TestSetup {
         var client = AerospikeClientProvider.getClient(aerospikeConfig);
         var keyProvider = new KeyGenerator(client, testConfig.perseusId, aerospikeConfig.namespace);
         var cachedKeyProvider = keyProvider.getCache();
-        var hitAndMissCachedKeys = new ProbabilisticKeyCache(cachedKeyProvider, testConfig.readHitRatio);
+        var probabilisticKeyCache = new ProbabilisticKeyCache(cachedKeyProvider, testConfig.readHitRatio);
         var dateGenerator = new DateGenerator();
         var timePeriodGenerator = new TimePeriodGenerator(dateGenerator, testConfig.rangeQueryConfiguration);
         var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
@@ -48,7 +48,7 @@ public class TestSetup {
 
         writeTest = new WriteTest(arguments, recordGenerator);
         testList.add(writeTest);
-        testList.add(new ReadTest(arguments, hitAndMissCachedKeys, testConfig.readHitRatio));
+        testList.add(new ReadTest(arguments, probabilisticKeyCache, testConfig.readHitRatio));
         testList.add(new UpdateTest(arguments, cachedKeyProvider));
         testList.add(new DeleteTest(arguments, cachedKeyProvider));
         testList.add(new ExpressionReadTest(arguments, cachedKeyProvider));

@@ -45,7 +45,11 @@ public class KeyCache implements Iterator<Long> {
 
     @Override
     public final Long next() {
-        long r = random.nextLong(lengthOfRange + getCurrent().get() - getCurrentStart() + 1);
+        long bound = lengthOfRange + getCurrent().get() - getCurrentStart();
+        if(bound < 1)
+            return random.nextLong();
+
+        long r = random.nextLong(bound);
         long currentRange = 0;
         for (String key: ranges.keySet()) {
             if( (r-currentRange) < (ranges.get(key).second().get() - ranges.get(key).first()))
