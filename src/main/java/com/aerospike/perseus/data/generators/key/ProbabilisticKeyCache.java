@@ -22,7 +22,7 @@ public class ProbabilisticKeyCache implements Iterator<Long> {
     @Override
     public final Long next() {
 
-        if(random.nextFloat(0, 1) > randomPercentage )
+        if(random.nextFloat(0, 1) <= randomPercentage )
             return random.nextLong();
 
         return cachedKeys.next();
