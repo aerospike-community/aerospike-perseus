@@ -13,7 +13,7 @@ outputWindowConfiguration:
   numberOfLinesBeforeReprintingTheHeader: 25
   columnWidth: 11
 testConfiguration:
-  perseusId: 1
+  perseusId: 0
   recordSize: 1220
   readBatchSize: 50
   writeBatchSize: 50
