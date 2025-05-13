@@ -9,10 +9,7 @@ public class Main {
         var config = new ConfigurationProvider().getConfiguration();
 
         var setup = new TestSetup(config.aerospikeConfiguration, config.testConfiguration);
-        new OutputWindow(config.outputWindowConfiguration,setup.getCacheStats(), setup.getLoggableTestList(), setup.getTotalTps());
+        new OutputWindow(config.outputWindowConfiguration, setup.getLoggableTestList(), setup.getTotalTps());
         setup.startTest();
-
-
     }
-
 }

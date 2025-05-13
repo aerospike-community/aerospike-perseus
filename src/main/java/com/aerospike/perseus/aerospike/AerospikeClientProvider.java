@@ -18,6 +18,7 @@ public class AerospikeClientProvider {
         if(conf.truncateSet) {
             System.out.printf("Truncating the set: %s in namespace: %s!\n", conf.set, conf.namespace);
             client.truncate(null, conf.namespace, conf.set, null);
+            client.truncate(null, conf.namespace, "KeyRanges", null);
             for (String indexName : new String[]{"Geo_Location", "Num_Key", "String_Key", "indexOnDate"}) {
                 try {
                     client.dropIndex(null, conf.namespace, conf.set, indexName);

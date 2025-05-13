@@ -1,17 +1,15 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
 import com.aerospike.client.exp.Exp;
 import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpReadFlags;
 import com.aerospike.client.exp.Expression;
-import com.aerospike.perseus.keyCache.Cache;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.data.generators.key.KeyCache;
 
 public class ExpressionReadTest extends Test<Long>{
-    public ExpressionReadTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+    public ExpressionReadTest(TestCaseConstructorArguments arguments, KeyCache cache) {
         super(arguments, cache);
     }
 

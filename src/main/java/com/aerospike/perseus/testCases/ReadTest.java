@@ -1,10 +1,10 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
+import com.aerospike.perseus.data.generators.key.ProbabilisticKeyCache;
 
 public class ReadTest extends Test<Long>{
     private final double hitRatio;
-    public ReadTest(TestCaseConstructorArguments arguments, CacheHitAndMissKeyProvider cache, double hitRatio) {
+    public ReadTest(TestCaseConstructorArguments arguments, ProbabilisticKeyCache cache, double hitRatio) {
         super(arguments, cache);
         this.hitRatio = hitRatio;
     }

@@ -1,16 +1,15 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.perseus.aerospike.LuaSetup;
 import com.aerospike.perseus.configurations.ResourceFileProvider;
-import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.data.generators.key.KeyCache;
 
 import java.io.IOException;
 
 public class UDFTest extends Test<Long>{
 
-    public UDFTest(TestCaseConstructorArguments arguments, Cache<Long> cache) throws IOException {
+    public UDFTest(TestCaseConstructorArguments arguments, KeyCache cache) throws IOException {
         super(arguments, cache);
         LuaSetup.registerUDF(client, ResourceFileProvider.getUdfPath());
         System.out.println("UDF Code was registered successfully.");

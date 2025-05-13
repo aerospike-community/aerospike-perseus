@@ -1,6 +1,5 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.AerospikeException;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
@@ -8,13 +7,11 @@ import com.aerospike.client.exp.Exp;
 import com.aerospike.client.exp.ExpOperation;
 import com.aerospike.client.exp.ExpWriteFlags;
 import com.aerospike.client.exp.Expression;
-import com.aerospike.client.policy.WritePolicy;
-import com.aerospike.perseus.keyCache.Cache;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.data.generators.key.KeyCache;
 
 public class ExpressionWriteTest extends Test<Long>{
 
-    public ExpressionWriteTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+    public ExpressionWriteTest(TestCaseConstructorArguments arguments, KeyCache cache) {
         super(arguments, cache);
     }
 

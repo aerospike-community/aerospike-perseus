@@ -5,9 +5,9 @@ import com.aerospike.perseus.configurations.TestConfiguration;
 import com.aerospike.perseus.configurations.ThreadsProvider;
 import com.aerospike.perseus.configurations.pojos.AerospikeConfiguration;
 import com.aerospike.perseus.data.generators.*;
-import com.aerospike.perseus.keyCache.CacheHitAndMissKeyProvider;
-import com.aerospike.perseus.presentation.CacheStats;
-import com.aerospike.perseus.keyCache.KeyCache;
+import com.aerospike.perseus.data.generators.key.BatchedFromKeyCacheGenerator;
+import com.aerospike.perseus.data.generators.key.ProbabilisticKeyCache;
+import com.aerospike.perseus.data.generators.key.KeyGenerator;
 import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.*;
 import com.aerospike.perseus.testCases.search.GeospatialSearchTest;
@@ -25,48 +25,47 @@ import java.util.stream.Collectors;
 public class TestSetup {
     private final ThreadsProvider threadsProvider = new ThreadsProvider();
     private final ArrayList<Test> testList = new ArrayList<Test>();
-    private final CacheStats cacheStats;
     private final WriteTest writeTest;
     private final TotalTpsCounter totalTpsCounter;
 
     public TestSetup(AerospikeConfiguration aerospikeConfig, TestConfiguration testConfig) throws InterruptedException {
 
-        var keyCache = new KeyCache(testConfig.keyCaching.cacheCapacity,testConfig.keyCaching.discardRatio);
-        var cacheHitAndMissKeyProvider = new CacheHitAndMissKeyProvider(keyCache, testConfig.readHitRatio);
-
+        var client = AerospikeClientProvider.getClient(aerospikeConfig);
+        var keyProvider = new KeyGenerator(client, testConfig.perseusId, aerospikeConfig.namespace);
+        var cachedKeyProvider = keyProvider.getCache();
+        var hitAndMissCachedKeys = new ProbabilisticKeyCache(cachedKeyProvider, testConfig.readHitRatio);
         var dateGenerator = new DateGenerator();
         var timePeriodGenerator = new TimePeriodGenerator(dateGenerator, testConfig.rangeQueryConfiguration);
         var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
         var geoPointGenerator = new GeoPointGenerator();
         var geoJsonGenerator = new GeoJsonGenerator(geoPointGenerator);
-        var recordGenerator = new RecordGenerator(dateGenerator, dummyStringGenerator, geoJsonGenerator);
+        var recordGenerator = new RecordGenerator(dateGenerator, dummyStringGenerator, geoJsonGenerator, keyProvider);
         var batchSimpleRecordsGenerator = new BatchRecordsGenerator(recordGenerator, testConfig.writeBatchSize);
-        var batchKeyGenerator = new BatchKeyGenerator(keyCache, testConfig.readBatchSize);
+        var batchCachedKeyGenerator = new BatchedFromKeyCacheGenerator(keyProvider.getCache(), testConfig.readBatchSize);
         totalTpsCounter = new TotalTpsCounter();
-        var client = AerospikeClientProvider.getClient(aerospikeConfig);
 
         var arguments = new TestCaseConstructorArguments(client, aerospikeConfig.namespace, aerospikeConfig.set, totalTpsCounter);
 
-        writeTest = new WriteTest(arguments, recordGenerator, keyCache);
+        writeTest = new WriteTest(arguments, recordGenerator);
         testList.add(writeTest);
-        testList.add(new ReadTest(arguments, cacheHitAndMissKeyProvider, testConfig.readHitRatio));
-        testList.add(new UpdateTest(arguments, keyCache));
-        testList.add(new DeleteTest(arguments, keyCache));
-        testList.add(new ExpressionReadTest(arguments, keyCache));
-        testList.add(new ExpressionWriteTest(arguments, keyCache));
-        testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, keyCache, testConfig.writeBatchSize));
-        testList.add(new BatchReadTest(arguments, batchKeyGenerator, testConfig.readBatchSize));
+        testList.add(new ReadTest(arguments, hitAndMissCachedKeys, testConfig.readHitRatio));
+        testList.add(new UpdateTest(arguments, cachedKeyProvider));
+        testList.add(new DeleteTest(arguments, cachedKeyProvider));
+        testList.add(new ExpressionReadTest(arguments, cachedKeyProvider));
+        testList.add(new ExpressionWriteTest(arguments, cachedKeyProvider));
+        testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, testConfig.writeBatchSize));
+        testList.add(new BatchReadTest(arguments, batchCachedKeyGenerator, testConfig.readBatchSize));
         if(testConfig.numericIndex) {
-            testList.add(new NumericSearchTest(arguments, keyCache));
+            testList.add(new NumericSearchTest(arguments, cachedKeyProvider));
         }
         if(testConfig.stringIndex) {
-            testList.add(new StringSearchTest(arguments, keyCache));
+            testList.add(new StringSearchTest(arguments, cachedKeyProvider));
         }
         if(testConfig.geoSpatialIndex) {
             testList.add(new GeospatialSearchTest(arguments, geoPointGenerator));
         }
         try {
-            testList.add(new UDFTest(arguments, keyCache));
+            testList.add(new UDFTest(arguments, cachedKeyProvider));
         } catch (IOException e) {
             System.out.println("UDF function couldn't be loaded. The UDF test is therefore disabled.");
         }
@@ -84,7 +83,6 @@ public class TestSetup {
                 System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
             }
         }
-        cacheStats = keyCache;
     }
 
     public void startTest() {
@@ -119,10 +117,6 @@ public class TestSetup {
 
     public List<TPSLogger> getLoggableTestList() {
         return testList.stream().map(test -> (TPSLogger)test).toList();
-    }
-
-    public CacheStats getCacheStats() {
-        return cacheStats;
     }
 
     public TotalTpsCounter getTotalTps() {

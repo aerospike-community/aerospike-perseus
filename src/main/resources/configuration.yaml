@@ -13,9 +13,7 @@ outputWindowConfiguration:
   numberOfLinesBeforeReprintingTheHeader: 25
   columnWidth: 11
 testConfiguration:
-  keyCaching:
-    cacheCapacity: 5000000
-    discardRatio: .25
+  perseusId: 1
   recordSize: 1220
   readBatchSize: 50
   writeBatchSize: 50

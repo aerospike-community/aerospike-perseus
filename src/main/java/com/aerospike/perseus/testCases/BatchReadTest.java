@@ -1,8 +1,7 @@
 package com.aerospike.perseus.testCases;
 
 import com.aerospike.client.*;
-import com.aerospike.perseus.data.generators.BatchKeyGenerator;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
+import com.aerospike.perseus.data.generators.key.BatchedFromKeyCacheGenerator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 public class BatchReadTest extends Test<List<Long>>{
     private final int batchSize;
 
-    public BatchReadTest(TestCaseConstructorArguments arguments, BatchKeyGenerator generator, int batchSize) {
+    public BatchReadTest(TestCaseConstructorArguments arguments, BatchedFromKeyCacheGenerator generator, int batchSize) {
         super(arguments, generator);
         this.batchSize = batchSize;
     }

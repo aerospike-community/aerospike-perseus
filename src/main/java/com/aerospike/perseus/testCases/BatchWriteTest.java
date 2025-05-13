@@ -3,20 +3,16 @@ package com.aerospike.perseus.testCases;
 import com.aerospike.client.*;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.generators.BatchRecordsGenerator;
-import com.aerospike.perseus.keyCache.Cache;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BatchWriteTest extends Test<List<Record>>{
-    private final Cache<Long> cache;
     private final int batchSize;
 
-    public BatchWriteTest(TestCaseConstructorArguments arguments, BatchRecordsGenerator batchSimpleRecordsGenerator, Cache<Long> cache, int batchSize) {
+    public BatchWriteTest(TestCaseConstructorArguments arguments, BatchRecordsGenerator batchSimpleRecordsGenerator, int batchSize) {
         super(arguments, batchSimpleRecordsGenerator);
-        this.cache = cache;
         this.batchSize = batchSize;
     }
 
@@ -32,7 +28,6 @@ public class BatchWriteTest extends Test<List<Record>>{
                 .collect(Collectors.toList());
 
         client.operate(client.batchPolicyDefault, batchWrites);
-        records.stream().forEach(k -> cache.store(k.getKey()));
     }
 
     public String[] getHeader(){

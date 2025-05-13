@@ -1,13 +1,11 @@
 package com.aerospike.perseus.testCases.search;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.query.Filter;
 import com.aerospike.client.query.IndexType;
 import com.aerospike.client.query.Statement;
 import com.aerospike.perseus.data.GeoPoint;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.generators.GeoPointGenerator;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
 public class GeospatialSearchTest extends BaseSearchTest<GeoPoint> {

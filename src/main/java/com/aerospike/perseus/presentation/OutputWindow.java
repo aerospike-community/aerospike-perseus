@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 public class OutputWindow {
     private final OutputWindowConfiguration config;
-    private final CacheStats cacheStats;
 
     private final List<TPSLogger> tpsLoggers;
     private final String headerCellFormat;
@@ -20,9 +19,8 @@ public class OutputWindow {
     private final int totalWidth;
     private long i = 1;
 
-    public OutputWindow(OutputWindowConfiguration outputWindowConfig, CacheStats keyCache, List<TPSLogger> testList, TotalTpsCounter totalTpsCounter) {
+    public OutputWindow(OutputWindowConfiguration outputWindowConfig, List<TPSLogger> testList, TotalTpsCounter totalTpsCounter) {
         config = outputWindowConfig;
-        cacheStats = keyCache;
 
         tpsLoggers = Stream.concat(testList.stream(), Stream.of(totalTpsCounter)).toList();
         int additionalWidthForTheTotalColumn = 3;
@@ -58,8 +56,6 @@ public class OutputWindow {
         String secondRowTemplate = getTemplate(String.format(headerCellFormat, ""), headerCellFormat, totalHeaderCellFormat);
         String thirdRowTemplate = getTemplate(String.format(headerCellFormat, "Threads:"), headerCellFormat, totalHeaderCellFormat);
         printLineOf("=");
-        System.out.printf(statRowFormat, cacheStats.getStats());
-        printLineOf("-");
 
         System.out.printf(firstRowTemplate, tpsLoggers.stream().map(t -> t.getHeader()[0]).toList().toArray());
         System.out.printf(secondRowTemplate, tpsLoggers.stream().map(t -> t.getHeader()[1]).toList().toArray());

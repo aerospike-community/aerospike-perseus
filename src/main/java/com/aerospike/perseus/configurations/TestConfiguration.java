@@ -1,10 +1,8 @@
 package com.aerospike.perseus.configurations;
 
-import com.aerospike.perseus.configurations.pojos.KeyCaching;
 import com.aerospike.perseus.configurations.pojos.RangeQueryConfiguration;
 
 public class TestConfiguration {
-    public KeyCaching keyCaching;
     public Integer recordSize;
     public Integer readBatchSize;
     public Integer writeBatchSize;
@@ -15,4 +13,5 @@ public class TestConfiguration {
     public Boolean udfAggregation;
     public RangeQueryConfiguration rangeQueryConfiguration;
     public Boolean rangeQuery;
+    public int perseusId;
 }

@@ -1,18 +1,17 @@
 package com.aerospike.perseus.testCases;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Bin;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.perseus.data.Record;
-import com.aerospike.perseus.keyCache.Cache;
+import com.aerospike.perseus.data.generators.key.KeyCache;
 
 import java.time.Instant;
 
 public class UpdateTest extends Test<Long>{
     private final WritePolicy policy;
 
-    public UpdateTest(TestCaseConstructorArguments arguments, Cache<Long> cache) {
+    public UpdateTest(TestCaseConstructorArguments arguments, KeyCache cache) {
         super(arguments, cache);
         policy = new WritePolicy();
         policy.recordExistsAction = RecordExistsAction.UPDATE_ONLY;

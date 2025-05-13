@@ -180,28 +180,13 @@ Controls how frequently Perseus prints test metrics to the console:
 
 ### 🧠 `testConfiguration`
 
-This section governs data generation, caching, and workload behaviour.
+This section governs data generation, and workload behaviour.
 
-#### 🔁 Key Caching
+#### 🧠 Perseus Memory
 
-Perseus generates random records during insertion. To ensure later read/update/delete workloads can operate on real data, keys are cached in memory:
+- **`perseusId`**: Perseus keeps track of which keys have already been inserted into the database—either by itself or by other Perseus instances—so it can consistently generate the correct ratio of hit vs. miss requests across the entire dataset. To achieve this, each instance maintains a record of the key ranges it has inserted in a dedicated set within Aerospike.
 
-- **`cacheCapacity`**: Maximum number of keys cached in memory. Each key consumes 8 bytes.
-
-  > Example:  
-  1 billion keys ≈ 8 GB RAM
-
-  The cache uses a circular buffer — when full, it overwrites the oldest entries.
-
-  > 💡 **Tip:**  
-  The full key cache buffer is allocated at startup. Setting a very high cacheCapacity can consume significant memory on the machine running Perseus. Be mindful of available RAM to avoid system instability.
-
-- **`discardRatio`**: A value between `0.0` and `1.0` controlling what percentage of keys are retained.
-  - `1.0` means the cache keeps only the most recent `cacheCapacity` entries.
-  - Lower values distribute cached keys more evenly across the entire insert history.
-
-  > 💡 **Tip:**  
-  Unless you're inserting billions of records, you can safely use `1.0` to cache all inserted keys.
+  You can assign a unique Perseus ID for each run or reuse the same ID when restarting a single instance, either approach works. Perseus always queries across all records inserted by any instance, regardless of the ID. However, if you're running multiple instances of Perseus concurrently, it's important to assign each one a distinct ID to avoid conflicts during insert tracking.
 
 #### 📦 Record and Batch Settings
 
@@ -259,7 +244,7 @@ Each entry in the file specifies the number of threads assigned to a particular 
 
 ### 🧱 Core Workloads
 
-> 🔑 **Note:** The following workloads **insert new records**, whose keys are **cached** in memory (keyCache). This enables other workloads (e.g. read/update/delete) to operate on known existing records. You can configure the cache in `configuration.yaml`.
+> 🔑 **Note:** The following workloads insert new records, which Perseus retains even across restarts. This persistence allows other workloads—such as read, update, or delete operations—to reliably interact with known existing records.
 
 - **`write`**: Inserts random records with an average size defined by `recordSize` in `configuration.yaml`.
 
@@ -267,7 +252,7 @@ Each entry in the file specifies the number of threads assigned to a particular 
 
 ### 📖 Accessing Existing Records
 
-> 🔁 **Note:** These workloads operate on records stored in the **keyCache**, ensuring that they access known existing data.
+> 🔁 **Note:** These workloads operate on records already inserted in the database, ensuring that they access known existing data.
 
 - **`read`**: Performs individual record reads. The ratio of successful hits is controlled by `readHitRatio` in `configuration.yaml`.
 
@@ -280,7 +265,7 @@ Each entry in the file specifies the number of threads assigned to a particular 
 ### 🧮 Expression and UDF Workloads
 
 > 🧠 **Note:** 
->  - These workloads also operate on records stored in the **keyCache**, ensuring that they access known existing data.
+>  -  These workloads operate on records already inserted in the database, ensuring that they access known existing data.
 >  - These workloads implement identical logic using different execution methods:  
 >   They subtract the value of one bin from another and return `"Yes"` if the result equals a predefined value; otherwise, `"No"`.
 
@@ -294,7 +279,7 @@ Each entry in the file specifies the number of threads assigned to a particular 
 ### 🔍 Secondary Index and Aggregation Workloads
 
 > ⚠️ **Note:** 
->  - These workloads also operate on records stored in the **keyCache**, ensuring that they access known existing data.
+> - These workloads operate on records already inserted in the database, ensuring that they access known existing data.
 > - These workloads are only available if explicitly **enabled** in `configuration.yaml`. They are **resource-intensive**, and running multiple of them simultaneously can significantly reduce throughput.
 
 - **`numericSearch`**: Queries a **Numeric** secondary index to retrieve a single record.

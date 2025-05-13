@@ -1,10 +1,8 @@
 package com.aerospike.perseus.testCases.search;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.policy.QueryPolicy;
 import com.aerospike.client.query.RecordSet;
 import com.aerospike.client.query.Statement;
-import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.Test;
 import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
