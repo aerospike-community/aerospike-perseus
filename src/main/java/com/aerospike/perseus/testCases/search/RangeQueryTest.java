@@ -1,15 +1,17 @@
-package com.aerospike.perseus.testCases;
+package com.aerospike.perseus.testCases.search;
 
 import com.aerospike.client.policy.QueryPolicy;
 import com.aerospike.client.query.*;
 import com.aerospike.perseus.data.Record;
 import com.aerospike.perseus.data.TimePeriod;
 import com.aerospike.perseus.data.generators.TimePeriodGenerator;
+import com.aerospike.perseus.testCases.Test;
+import com.aerospike.perseus.testCases.TestCaseConstructorArguments;
 
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RangeQueryTest extends Test<TimePeriod>{
+public class RangeQueryTest extends Test<TimePeriod> {
 
     ThreadLocalRandom random;
     public RangeQueryTest(TestCaseConstructorArguments arguments, TimePeriodGenerator timePeriodGenerator) throws IOException {

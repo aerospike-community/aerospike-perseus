@@ -12,6 +12,7 @@ import com.aerospike.perseus.presentation.TotalTpsCounter;
 import com.aerospike.perseus.testCases.*;
 import com.aerospike.perseus.testCases.search.GeospatialSearchTest;
 import com.aerospike.perseus.testCases.search.NumericSearchTest;
+import com.aerospike.perseus.testCases.search.RangeQueryTest;
 import com.aerospike.perseus.testCases.search.StringSearchTest;
 import com.aerospike.perseus.presentation.TPSLogger;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class TestSetup {
     private final ThreadsProvider threadsProvider = new ThreadsProvider();
-    private final ArrayList<Test> testList = new ArrayList<Test>();
+    private final ArrayList<Test> testList = new ArrayList<>();
     private final WriteTest writeTest;
     private final TotalTpsCounter totalTpsCounter;
 

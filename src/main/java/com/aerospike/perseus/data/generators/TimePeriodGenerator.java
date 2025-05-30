@@ -31,11 +31,8 @@ public class TimePeriodGenerator extends BaseGenerator<TimePeriod> {
             return new TimePeriod(begin, begin + maxTimeRange);
         }
         else {
-            double sum = 0;
-            for (int i = 0; i < normalTimeRange; i++) {
-                sum += random.nextDouble();
-            }
-            long duration = (long) (normalTimeRange * (Math.abs(-((double)normalTimeRange/2) + sum) / normalTimeRange));
+            double range = random.nextGaussian(normalTimeRange, normalTimeRange/4);
+            long duration = (range <= 1) ? 0L : (long)range;
             long end = begin + duration;
 
             return new TimePeriod(begin, end);
