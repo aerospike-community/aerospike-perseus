@@ -24,18 +24,16 @@ public class TimePeriodGenerator extends BaseGenerator<TimePeriod> {
 
     @Override
     public TimePeriod next() {
-        long start = 1;
-        long begin = random.nextLong(start, cachedKeyProvider.getCurrent().get());
-
+        long begin = random.nextLong(1, cachedKeyProvider.getCurrent().get());
+        long end;
         if(random.nextInt(0, (int)(1d/ maxTimeRangeChance)) == 0) {
-            return new TimePeriod(begin, begin + maxTimeRange);
+            end = begin + maxTimeRange;
         }
         else {
             double range = random.nextGaussian(normalTimeRange, normalTimeRange/4);
             long duration = (range <= 1) ? 0L : (long)range;
-            long end = begin + duration;
-
-            return new TimePeriod(begin, end);
+            end = begin + duration;
         }
+        return new TimePeriod(begin, end);
     }
 }
