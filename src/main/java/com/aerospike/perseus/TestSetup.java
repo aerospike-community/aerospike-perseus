@@ -35,12 +35,11 @@ public class TestSetup {
         var keyProvider = new KeyGenerator(client, testConfig.perseusId, aerospikeConfig.namespace);
         var cachedKeyProvider = keyProvider.getCache();
         var probabilisticKeyCache = new ProbabilisticKeyCache(cachedKeyProvider, testConfig.readHitRatio);
-        var dateGenerator = new DateGenerator();
-        var timePeriodGenerator = new TimePeriodGenerator(dateGenerator, testConfig.rangeQueryConfiguration);
+        var timePeriodGenerator = new TimePeriodGenerator(testConfig.rangeQueryConfiguration, cachedKeyProvider);
         var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
         var geoPointGenerator = new GeoPointGenerator();
         var geoJsonGenerator = new GeoJsonGenerator(geoPointGenerator);
-        var recordGenerator = new RecordGenerator(dateGenerator, dummyStringGenerator, geoJsonGenerator, keyProvider);
+        var recordGenerator = new RecordGenerator(dummyStringGenerator, geoJsonGenerator, keyProvider);
         var batchSimpleRecordsGenerator = new BatchRecordsGenerator(recordGenerator, testConfig.writeBatchSize);
         var batchCachedKeyGenerator = new BatchedFromKeyCacheGenerator(keyProvider.getCache(), testConfig.readBatchSize);
         totalTpsCounter = new TotalTpsCounter();

@@ -2,18 +2,19 @@ package com.aerospike.perseus.data.generators;
 
 import com.aerospike.perseus.configurations.pojos.RangeQueryConfiguration;
 import com.aerospike.perseus.data.TimePeriod;
+import com.aerospike.perseus.data.generators.key.KeyCache;
 
 public class TimePeriodGenerator extends BaseGenerator<TimePeriod> {
-    final DateGenerator dateGenerator;
     final double maxTimeRangeChance;
     final long maxTimeRange;
     final long normalTimeRange;
+    final KeyCache cachedKeyProvider;
 
-    public TimePeriodGenerator(DateGenerator dateGenerator, RangeQueryConfiguration rangeQueryConfiguration) {
-        this.dateGenerator = dateGenerator;
+    public TimePeriodGenerator(RangeQueryConfiguration rangeQueryConfiguration, KeyCache cachedKeyProvider) {
         this.maxTimeRangeChance = rangeQueryConfiguration.maxTimeRangeChance;
         this.maxTimeRange = rangeQueryConfiguration.maxTimeRange;
         this.normalTimeRange = rangeQueryConfiguration.normalTimeRange;
+        this.cachedKeyProvider = cachedKeyProvider;
     }
 
     @Override
@@ -24,8 +25,7 @@ public class TimePeriodGenerator extends BaseGenerator<TimePeriod> {
     @Override
     public TimePeriod next() {
         long start = 1;
-        long now = dateGenerator.getNow();
-        long begin = random.nextLong(start, now);
+        long begin = random.nextLong(start, cachedKeyProvider.getCurrent().get());
 
         if(random.nextInt(0, (int)(1d/ maxTimeRangeChance)) == 0) {
             return new TimePeriod(begin, begin + maxTimeRange);
