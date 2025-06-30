@@ -3,7 +3,7 @@ aerospikeConfiguration:
     -
       ip: "localhost"
       port: 3000
-  username: "s"
+  username: ""
   password: ""
   namespace: "test"
   set: "test"
