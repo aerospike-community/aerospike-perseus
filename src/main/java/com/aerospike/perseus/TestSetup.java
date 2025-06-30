@@ -36,10 +36,10 @@ public class TestSetup {
         var cachedKeyProvider = keyProvider.getCache();
         var probabilisticKeyCache = new ProbabilisticKeyCache(cachedKeyProvider, testConfig.readHitRatio);
         var timePeriodGenerator = new TimePeriodGenerator(testConfig.rangeQueryConfiguration, cachedKeyProvider);
-        var dummyStringGenerator = new DummyBlobGenerator(testConfig.recordSize);
+        var dummyStringGenerator100 = new DummyBlobGenerator(100);
+        var dummyStringGenerator2048 = new DummyBlobGenerator(2048);
         var geoPointGenerator = new GeoPointGenerator();
-        var geoJsonGenerator = new GeoJsonGenerator(geoPointGenerator);
-        var recordGenerator = new RecordGenerator(dummyStringGenerator, geoJsonGenerator, keyProvider);
+        var recordGenerator = new RecordGenerator(dummyStringGenerator100, dummyStringGenerator2048, keyProvider);
         var batchSimpleRecordsGenerator = new BatchRecordsGenerator(recordGenerator, testConfig.writeBatchSize);
         var batchCachedKeyGenerator = new BatchedFromKeyCacheGenerator(keyProvider.getCache(), testConfig.readBatchSize);
         totalTpsCounter = new TotalTpsCounter();
@@ -49,40 +49,10 @@ public class TestSetup {
         writeTest = new WriteTest(arguments, recordGenerator);
         testList.add(writeTest);
         testList.add(new ReadTest(arguments, probabilisticKeyCache, testConfig.readHitRatio));
-        testList.add(new UpdateTest(arguments, cachedKeyProvider));
         testList.add(new DeleteTest(arguments, cachedKeyProvider));
-        testList.add(new ExpressionReadTest(arguments, cachedKeyProvider));
-        testList.add(new ExpressionWriteTest(arguments, cachedKeyProvider));
         testList.add(new BatchWriteTest(arguments, batchSimpleRecordsGenerator, testConfig.writeBatchSize));
         testList.add(new BatchReadTest(arguments, batchCachedKeyGenerator, testConfig.readBatchSize));
-        if(testConfig.numericIndex) {
-            testList.add(new NumericSearchTest(arguments, cachedKeyProvider));
-        }
-        if(testConfig.stringIndex) {
-            testList.add(new StringSearchTest(arguments, cachedKeyProvider));
-        }
-        if(testConfig.geoSpatialIndex) {
-            testList.add(new GeospatialSearchTest(arguments, geoPointGenerator));
-        }
-        try {
-            testList.add(new UDFTest(arguments, cachedKeyProvider));
-        } catch (IOException e) {
-            System.out.println("UDF function couldn't be loaded. The UDF test is therefore disabled.");
-        }
-        if(testConfig.udfAggregation) {
-            try {
-                testList.add(new UDFAggregationTest(arguments, timePeriodGenerator));
-            } catch (IOException e) {
-                System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
-            }
-        }
-        if(testConfig.rangeQuery) {
-            try {
-                testList.add(new RangeQueryTest(arguments, timePeriodGenerator));
-            } catch (IOException e) {
-                System.out.println("UDF Aggregation function couldn't be loaded. The UDF Aggregation test is therefore disabled.");
-            }
-        }
+
     }
 
     public void startTest() {

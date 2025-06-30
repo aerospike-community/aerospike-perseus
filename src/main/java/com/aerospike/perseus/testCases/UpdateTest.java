@@ -18,11 +18,11 @@ public class UpdateTest extends Test<Long>{
     }
 
     protected void execute(Long key){
-        Bin updated = new Bin(Record.UPDATE_TIME, Instant.now().toString());
-        try{
-            client.put(policy, getKey(key), updated);
-        } catch(Exception ignored) {
-        }
+//        Bin updated = new Bin(Record.UPDATE_TIME, Instant.now().toString());
+//        try{
+//            client.put(policy, getKey(key), updated);
+//        } catch(Exception ignored) {
+//        }
     }
     public String[] getHeader(){
         return "Update\n ".split("\n");

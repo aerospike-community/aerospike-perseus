@@ -17,25 +17,25 @@ public class ExpressionWriteTest extends Test<Long>{
 
     @Override
     protected void execute(Long key) {
-        Expression writeExp = Exp.build(
-                Exp.cond(
-                        Exp.eq(
-                                Exp.sub(
-                                        Exp.intBin(com.aerospike.perseus.data.Record.KEY_PLUS_10),
-                                        Exp.intBin(com.aerospike.perseus.data.Record.NUMERIC_BIN)),
-                                Exp.val(10)),
-                        Exp.val("Yes"),
-                        Exp.val("No")));
-        Operation writeExpOp = ExpOperation.write("ExpRes",
-                writeExp,
-                ExpWriteFlags.EVAL_NO_FAIL | ExpWriteFlags.POLICY_NO_FAIL);
-        try {
-            Record operate = client.operate(null, getKey(key), writeExpOp);
-            //        if(operate != null)
-            //            System.out.println(operate.toString());
-        } catch (AerospikeException ignore) {
-            // if the data gets deleted, the expression may not be able to find the record and hence it may throw an exception. 
-        }
+//        Expression writeExp = Exp.build(
+//                Exp.cond(
+//                        Exp.eq(
+//                                Exp.sub(
+//                                        Exp.intBin(com.aerospike.perseus.data.Record.KEY_PLUS_10),
+//                                        Exp.intBin(com.aerospike.perseus.data.Record.NUMERIC_BIN)),
+//                                Exp.val(10)),
+//                        Exp.val("Yes"),
+//                        Exp.val("No")));
+//        Operation writeExpOp = ExpOperation.write("ExpRes",
+//                writeExp,
+//                ExpWriteFlags.EVAL_NO_FAIL | ExpWriteFlags.POLICY_NO_FAIL);
+//        try {
+//            Record operate = client.operate(null, getKey(key), writeExpOp);
+//            //        if(operate != null)
+//            //            System.out.println(operate.toString());
+//        } catch (AerospikeException ignore) {
+//            // if the data gets deleted, the expression may not be able to find the record and hence it may throw an exception.
+//        }
     }
 
     public String[] getHeader(){

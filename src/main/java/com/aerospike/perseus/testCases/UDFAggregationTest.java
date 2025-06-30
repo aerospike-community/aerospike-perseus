@@ -19,7 +19,6 @@ public class UDFAggregationTest extends Test<TimePeriod>{
         super(arguments, timePeriodGenerator);
         LuaSetup.registerUDF(client, ResourceFileProvider.getUdfAggregationPath());
         System.out.println("UDF Aggregation Code and the related index were registered successfully.");
-        client.createIndex(null, namespace, setName, "indexOnDate", Record.DATE, IndexType.NUMERIC).waitTillComplete();
     }
 
     protected void execute(TimePeriod timePeriod){
@@ -28,7 +27,7 @@ public class UDFAggregationTest extends Test<TimePeriod>{
         statement.setNamespace(namespace);
         statement.setSetName(setName);
         statement.setFilter(Filter.range("date", timePeriod.begin(), timePeriod.end()));
-        statement.setAggregateFunction("udf_aggregation", "average_range", Value.get(Record.NUMERIC_BIN));
+        //statement.setAggregateFunction("udf_aggregation", "average_range", Value.get(Record.NUMERIC_BIN));
 
         ResultSet rs = client.queryAggregate(null, statement);
         while (rs.next()) {

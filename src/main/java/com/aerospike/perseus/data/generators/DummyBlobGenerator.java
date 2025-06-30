@@ -4,11 +4,7 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
     private final int size;
 
     public DummyBlobGenerator(int size) {
-        int temp = size - 173;
-        if(temp < 0){
-            temp = 0;
-        }
-        this.size = temp;
+        this.size = size;
     }
 
     @Override
@@ -18,13 +14,7 @@ public class DummyBlobGenerator extends BaseGenerator<byte[]> {
 
     @Override
     public byte[] next() {
-        int numberOfBytes = 4;
-        if(size > 9) {
-            // numberOfBytes = random.nextInt( size -  size/10, size +  size/10);
-            numberOfBytes = (int) random.nextGaussian( size, size/10);
-            if(numberOfBytes < 1)
-                return null;
-        }
+        int numberOfBytes = size;
 
         byte[] repeatedPartOfArray = new byte[numberOfBytes/3];
         random.nextBytes(repeatedPartOfArray);

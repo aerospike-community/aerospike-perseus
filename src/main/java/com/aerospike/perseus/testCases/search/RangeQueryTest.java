@@ -16,8 +16,8 @@ public class RangeQueryTest extends Test<TimePeriod> {
     ThreadLocalRandom random;
     public RangeQueryTest(TestCaseConstructorArguments arguments, TimePeriodGenerator timePeriodGenerator) throws IOException {
         super(arguments, timePeriodGenerator);
-        client.createIndex(null, namespace, setName, "indexOnDate", Record.DATE, IndexType.NUMERIC).waitTillComplete();
-        random = ThreadLocalRandom.current();
+//        client.createIndex(null, namespace, setName, "indexOnDate", Record.DATE, IndexType.NUMERIC).waitTillComplete();
+//        random = ThreadLocalRandom.current();
     }
 
     protected void execute(TimePeriod timePeriod){
